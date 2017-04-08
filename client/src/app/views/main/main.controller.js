@@ -4,11 +4,15 @@
     angular.module('opmopApp').controller('MainController', MainController);
 
     /** @ngInject */
-    function MainController($ros, toastr, $scope, $log, RosTopic) {
+    function MainController(toastr, $scope, $log, ExampleService) {
         var $ctrl = this;
 
-        $ctrl.name = ["bolous", "ahdab"];
+        $ctrl.person = undefined
 
+        ExampleService.getPerson('Bolous').then(function(person){
+            $log.debug(person);
+            $ctrl.person = person.data;
+        })
     }
 
 })();

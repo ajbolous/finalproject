@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-import maps.views as mapViews
+import example.views
+
 urlpatterns = [
-	url(r'^admin/', admin.site.urls),
-	url(r'^map/get', mapViews.getMaps)
+    url(r'^admin/', admin.site.urls),
+    url(r'^persons/get',  example.views.getPerson),
+    url(r'^persons/new',  example.views.addPerson)
+
 
 ]

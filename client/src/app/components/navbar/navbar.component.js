@@ -12,10 +12,7 @@
         $ctrl.navbarCollapsed = true;
 
         $ctrl.links = [
-            { label: 'Monitor', path: 'monitor/', active: true },
-            { label: 'Map', path: '/map', active: false },
-            { label: 'Machines', path: '/machines', active: false },
-            { label: 'Tasks', path: '/tasks', active: false },
+            { label: 'Home', path: '/', active: true },
 
         ]
 
