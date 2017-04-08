@@ -1,2 +1,1 @@
-var ROS_IP = "localhost";
-var EUCLID_IP = "localhost"
+var DJANGOURL = "http://localhost:8000";

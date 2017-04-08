@@ -5,18 +5,24 @@
         .module('opmopApp')
         .service('ExampleService', ExampleService);
 
-    function ExampleService($q, $http) {
+    function ExampleService($q, $http ) {
 
         function addPerson(fname, lname) {
-            return $http.get('http://localhost:8000/persons/new', { params: { fname: fname, lname: lname } })
+            return $http.get(DJANGOURL + '/persons/new', { params: { fname: fname, lname: lname } })
         }
 
         function getPerson(name) {
-            return $http.get('http://localhost:8000/persons/get', { params: { name: name } })
+            return $http.get(DJANGOURL + '/persons/get', { params: { name: name } })
         }
+
+        function getAll(){
+            return $http.get(DJANGOURL + '/persons/all');
+        }
+
         return {
             getPerson: getPerson,
-            addPerson: addPerson
+            addPerson: addPerson,
+            getAll: getAll
         }
     }
 })();

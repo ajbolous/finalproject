@@ -22,4 +22,11 @@ def addPerson(request):
     return HttpResponse('Person added',200)
 
 
+def getAll(request):
+    persons = Person.objects.all()
+
+    personsJson = [p.toJSON() for p in persons]
+
+    return JsonResponse(personsJson, safe=False)
+
 # Create your views here.

@@ -20,7 +20,9 @@ import example.views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^persons/get',  example.views.getPerson),
-    url(r'^persons/new',  example.views.addPerson)
+    url(r'^persons/new',  example.views.addPerson),
+        url(r'^persons/all',  example.views.getAll)
+
 
 
 ]
