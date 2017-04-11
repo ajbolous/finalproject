@@ -1,0 +1,9 @@
+echo "Stopping running servers"
+pkill python
+pkill gulp
+echo "Starting Django Server..."
+python server/manage.py runserver &
+cd client
+echo "Starting HTTP server gulp"
+gulp serve&
+cd ..
