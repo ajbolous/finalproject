@@ -7,3 +7,6 @@ Django update database:
 
 Django startServer:
     ./manage.py runserver <ip>:<port>
+
+View DataBase:
+    sqliteman <db>
