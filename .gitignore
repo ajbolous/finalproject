@@ -1,6 +1,8 @@
 node_modules/
 bower_components/
 .sass-cache/
+.vscode/
+.history/
 .idea/
 .tmp/
 dist/
