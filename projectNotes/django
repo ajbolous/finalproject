@@ -1,0 +1,9 @@
+Django start a new API:
+    ./manage.py startapp <appname>
+
+Django update database:
+    ./manage.py makemigrations
+    ./manage.py migrate
+
+Django startServer:
+    ./manage.py runserver <ip>:<port>
