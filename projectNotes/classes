@@ -1,0 +1,67 @@
+
+Machine:
+    id
+    Type
+    ModelName
+    SerialNumber
+    Year
+    Weight
+    Speed
+    Capacity
+    WeightCapacity
+    FuelConsumption
+    FuelCapacity
+    long
+    lat
+    IsAvailable
+    FuelTank
+    NumberOfTasks
+
+
+Task:
+    id
+    name (string)
+    description 
+    Site (Site)
+    priority (int)
+    subtasks (Subtask) 1 -> many
+    deadline (date)
+    start (date)
+
+TaskMachineType:
+    taskType = TaskMachineType
+    Mining : MiningMachine
+    Mining : Shovel
+    Loading : Truck
+    Loading : BigTruck
+    Loading : Helicopter
+
+
+Subtask:
+    id
+    description
+    taskType
+    location (long ,lat)
+    startDate
+    finishDate
+    Capacity
+
+
+Site:
+    id
+    name
+    type
+    long, lat
+    material
+    Capacity
+
+Road:
+    id
+    type
+    incline
+    vertex1 (lat, long)
+    vertex2 (lat, long)
+    length
+
+here ?
+
