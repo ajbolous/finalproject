@@ -4,22 +4,20 @@
     angular.module('opmopApp').controller('MainController', MainController);
 
     /** @ngInject */
-    function MainController(toastr, $scope, $log, ExampleService) {
+    function MainController(toastr, $scope, $log, MachineService) {
         var $ctrl = this;
 
-        $ctrl.person = undefined;
-        $ctrl.persons = [];
+        console.log(this);
+        $ctrl.columns = ['name', 'lastname'];
+        MachineService.getAll().then(function(response) {
+            var machine = response.data[0];
 
+            $ctrl.columns = Object.keys(machine);
+            $log.debug($ctrl.columns);
+            $ctrl.data = response.data;
 
-        ExampleService.getPerson('Bolous').then(function(person){
-            $log.debug(person);
-            $ctrl.person = person.data;
         });
 
-        ExampleService.getAll().then(function(response){
-            $log.debug(response);
-            $ctrl.persons = response.data;
-        });
     }
 
 })();

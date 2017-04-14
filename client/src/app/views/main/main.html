@@ -1,22 +1,4 @@
 <div class="container">
+    <opm-data-table columns="$ctrl.columns" data="$ctrl.data"> </opm-data-table>
 
-    <div class="panel row-centered" style="background-color:#111;">
-        First Name = {{$ctrl.person.firstName}}
-        <br> Last Name = {{$ctrl.person.lastName}}
-    </div>
-
-    <table class='table table-striped'>
-        <thead>
-            <tr>
-                <th>Firstname</th>
-                <th>Lastname</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="person in $ctrl.persons">
-                <td>{{person.firstName}}</td>
-                <td>{{person.lastName}}</td>
-            </tr>
-        </tbody>
-    </table>
 </div>
