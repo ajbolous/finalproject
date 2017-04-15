@@ -15,9 +15,10 @@ Including another URLconf
 
 from django.conf.urls import url
 from django.contrib import admin
-
+import machines.views as machineViews 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^machines/getAll',machineViews.getMachines),
     
 ]
