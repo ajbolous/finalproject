@@ -1,24 +1,6 @@
 <div class="container">
-<<<<<<< HEAD
     <div class="jumbotron">
 
-        <table class='table table-striped'>
-            <thead>
-                <tr>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="person in $ctrl.persons">
-                    <td>{{person.firstName}}</td>
-                    <td>{{person.lastName}}</td>
-                </tr>
-            </tbody>
-        </table>
+        <opm-data-table columns="$ctrl.columns" data="$ctrl.data"> </opm-data-table>
     </div>
-=======
-    <opm-data-table columns="$ctrl.columns" data="$ctrl.data"> </opm-data-table>
-
->>>>>>> 44184c3aacb3ad5bbe8594a0ef55bf50b9042bf4
 </div>

@@ -14,10 +14,6 @@
         <div class="collapse navbar-collapse" id="mainnavbar" collapse="$ctrl.navbarCollapsed">
 
             <ul class="nav navbar-nav">
-                <li>
-                    <img src="../../../assets/images/icon.png" width="50px"></img>
-                </li>
-
                 <li ng-repeat="link in $ctrl.links" ng-class="{'active' : link.active}" ng-click="$ctrl.selectLink(link)">
                     <a href style="color:aliceblue">{{link.label}}</a>
                 </li>

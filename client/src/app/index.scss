@@ -27,20 +27,25 @@ $icon-font-path: "../../bower_components/bootstrap-sass-official/assets/fonts/bo
     }
 }
 
+.navbar-default .navbar-nav>.active>a {
+    background-color: #5AADBB;
+}
+
 body {
     padding-top: 80px;
     background-color: #fff
 }
 
 .jumbotron {
-    background-color: #fff;
+    background-color: whitesmoke;
     padding-top: 20px;
     width: 100%;
 }
 
 .navbar-default {
-    background-color: cornflowerblue;
+    background-color: deepskyblue;
     border-color: #fff;
+    color: black;
     color: deep;
 }
 
