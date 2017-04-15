@@ -1,22 +1,19 @@
 <div class="container">
+    <div class="jumbotron">
 
-    <div class="panel row-centered" style="background-color:#111;">
-        First Name = {{$ctrl.person.firstName}}
-        <br> Last Name = {{$ctrl.person.lastName}}
+        <table class='table table-striped'>
+            <thead>
+                <tr>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="person in $ctrl.persons">
+                    <td>{{person.firstName}}</td>
+                    <td>{{person.lastName}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-
-    <table class='table table-striped'>
-        <thead>
-            <tr>
-                <th>Firstname</th>
-                <th>Lastname</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="person in $ctrl.persons">
-                <td>{{person.firstName}}</td>
-                <td>{{person.lastName}}</td>
-            </tr>
-        </tbody>
-    </table>
 </div>

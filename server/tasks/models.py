@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.forms.models import model_to_dict
 
 # Create your models here.
 
@@ -39,25 +40,3 @@ class Location(models.Model):
 
     def toJSON(self):
         return model_to_dict(self)
-
-
-
-
-# Site:
-#     id
-#     name
-#     type
-#     long, lat
-#     material
-#     Capacity
-
-# Road:
-#     id
-#     type
-#     incline
-#     vertex1 (lat, long)
-#     vertex2 (lat, long)
-#     length
-# rType=  models.CharField(
-#         choices=('Dirt', 'Asphalt', 'Mud', 'Rock'),
-#         default='Dirt')
