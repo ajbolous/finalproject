@@ -13,6 +13,7 @@
             'ngRoute',
             'ui.bootstrap',
             'ui.toggle',
+            'ui.grid',
             'vAccordion',
         ]);
 
