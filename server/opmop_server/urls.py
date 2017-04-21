@@ -15,12 +15,17 @@ Including another URLconf
 
 from django.conf.urls import url
 from django.contrib import admin
+#import view files here
 import machines.views as machineViews 
+import tasks.views as tasksViews
 
 import maps.views as mapViews
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^machines/getAll',machineViews.getMachines),
+    url(r'^tasks/getAll',tasksViews.getTasks),
+    url(r'^machines/add',machineViews.addMachine),
     url(r'^machines/get-all',machineViews.getMachines),
     url(r'^maps/get-roads', mapViews.getRoads),
     url(r'^maps/save-roads', mapViews.saveRoads)

@@ -18,6 +18,6 @@ class Machine(models.Model):
     mLat = models.FloatField()
     mIsAvailable = models.BooleanField()
     mFuelLevel = models.FloatField()
-
+    mYear=models.IntegerField()
     def toJSON(self):
         return model_to_dict(self)
