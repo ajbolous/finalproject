@@ -1,0 +1,22 @@
+<div class="container" style="width:100%; height:100%">
+
+    <div class="jumbotron">
+        <div>
+            <div style="float:left">
+                <h2>Map Editor</h2>
+            </div>
+            <div style="padding-top:10px; padding-bottom:5px; bottom:5px; float:right">
+                <button class="btn btn-default" ng-click="$ctrl.toggleEditRoads()">Edit Roads</button>
+                <button class="btn btn-default" ng-click="$ctrl.addRoad()" ng-disabled="!$ctrl.editRoads">Add Road</button>
+                <button class="btn btn-error" ng-click="$ctrl.addRoad()" ng-disabled="!$ctrl.editRoads">Delete Road</button>
+                <button class="btn btn-primary" ng-click="$ctrl.exportRoads()">Export Roads</button>
+            </div>
+        </div>
+
+        <div id="map" style="height:800px;width:100%"></div>
+
+
+    </div>
+
+
+</div>

@@ -10,7 +10,7 @@
 
 
         function getAll() {
-            return $http.get(DJANGOURL + '/machines/getAll');
+            return $http.get(DJANGOURL + '/machines/get-all');
         }
 
         return {

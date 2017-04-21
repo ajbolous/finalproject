@@ -15,6 +15,13 @@
             controller: 'MainController',
             controllerAs: '$ctrl'
         });
+
+        $routeProvider.when('/maps', {
+            templateUrl: 'app/views/maps/maps.html',
+            controller: 'MapsController',
+            controllerAs: '$ctrl'
+        });
+
     }
 
 })();

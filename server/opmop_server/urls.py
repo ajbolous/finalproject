@@ -17,8 +17,11 @@ from django.conf.urls import url
 from django.contrib import admin
 import machines.views as machineViews 
 
+import maps.views as mapViews
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^machines/getAll',machineViews.getMachines),
-    
+    url(r'^machines/get-all',machineViews.getMachines),
+    url(r'^maps/get-roads', mapViews.getRoads),
+    url(r'^maps/save-roads', mapViews.saveRoads)
 ]
