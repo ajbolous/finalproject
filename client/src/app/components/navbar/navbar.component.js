@@ -13,9 +13,9 @@
 
         $ctrl.links = [
             { label: 'Home', path: '/', active: true },
+            { label: 'Maps', path: '/maps', active: false },
             { label: 'Machines', path: '/machines', active: false },
             { label: 'Tasks', path: '/tasks', active: false },
-            { label: 'Maps', path: '/maps', active: false },
             { label: 'Admin', path: '/admin', active: false },
             { label: 'Help', path: '/help', active: false },
 

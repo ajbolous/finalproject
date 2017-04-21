@@ -3,18 +3,16 @@
 
     angular
         .module('opmopApp')
-        .service('MachineService', MachineService);
+        .service('MachinesService', MachinesService);
 
-    function MachineService($q, $http) {
-
-
-
+    function MachinesService($q, $http) {
         function getAll() {
             return $http.get(DJANGOURL + '/machines/getAll');
         }
 
-        return {
 
+
+        return {
             getAll: getAll
         }
     }

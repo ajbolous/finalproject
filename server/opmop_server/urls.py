@@ -15,10 +15,13 @@ Including another URLconf
 
 from django.conf.urls import url
 from django.contrib import admin
+#import view files here
 import machines.views as machineViews 
+import tasks.views as tasksViews
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^machines/getAll',machineViews.getMachines),
-    
+    url(r'^tasks/getAll',tasksViews.getTasks),
+    url(r'^machines/add',machineViews.addMachine),
 ]
