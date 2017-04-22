@@ -23,10 +23,10 @@ import maps.views as mapViews
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^machines/getAll',machineViews.getMachines),
-    url(r'^tasks/getAll',tasksViews.getTasks),
+    url(r'^tasks/get-all',tasksViews.getTasks),
     url(r'^machines/add',machineViews.addMachine),
     url(r'^machines/get-all',machineViews.getMachines),
     url(r'^maps/get-roads', mapViews.getRoads),
-    url(r'^maps/save-roads', mapViews.saveRoads)
+    url(r'^maps/save-roads', mapViews.saveRoads),
+    url(r'^maps/get-shortest', mapViews.getShortestPath)
 ]

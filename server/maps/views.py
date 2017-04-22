@@ -12,7 +12,7 @@ def getRoads(request):
     return JsonResponse(getRoadsNodes(), safe=False)
 
 def getShortestPath(request):
-    return JsonResponse(calcShortestPath(0,20))
+    return JsonResponse(calcShortestPath(45,70),safe=False)
 
 @csrf_exempt
 def saveRoads(request):

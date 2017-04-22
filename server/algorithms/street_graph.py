@@ -100,4 +100,3 @@ def calcShortestPath(source, target):
 roads = []
 g = nx.Graph()
 buildGraph()
-drawRoads()

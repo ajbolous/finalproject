@@ -12,6 +12,7 @@
         var mapCoords = { lat: 40.519897, lng: -112.148473 }
 
         methods.initMap = function(el) {
+
             map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 15,
                 center: mapCoords,
@@ -38,7 +39,7 @@
                 path: path,
                 geodesic: true,
                 strokeColor: '#000077',
-                strokeOpacity: 0.3,
+                strokeOpacity: 0.4,
                 strokeWeight: 6
             });
             road.setMap(map);
@@ -62,9 +63,19 @@
             $log.debug(jsonStr);
         }
 
-        methods.getShortestPath = function() {
-            $http.get(DJANGOURL + '/maps/get-roads').then(function(response) {
-
+        methods.getShortestPath = function(source, destination) {
+            $http.get(DJANGOURL + '/maps/get-shortest', { params: { source: source, dest: destination } }).then(function(response) {
+                var road = new google.maps.Polyline({
+                    editable: false,
+                    path: response.data,
+                    geodesic: true,
+                    strokeColor: '#ff0000',
+                    strokeOpacity: 0.2,
+                    strokeWeight: 8
+                });
+                road.setMap(map);
+                roads.push(road)
+                return road;
             });
 
         }
