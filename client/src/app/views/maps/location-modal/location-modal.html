@@ -1,0 +1,38 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2>Add New Location</h2>
+        Please fill the required fields and press Save to add the new location.
+    </div>
+
+    <div class="panel-body">
+
+        <div class="form-group">
+            <label for="type">Type:</label>
+            <select class="form-control" id="type">
+                <option>Digging</option>
+                <option>Dump</option>
+                <option>Process</option>
+            </select>
+
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name">
+
+            <label for="lat">Latitude:</label>
+            <input type="text" class="form-control" id="lat">
+
+            <label for="lng">Longitude:</label>
+            <input type="text" class="form-control" id="lng">
+
+            <label for="desc">Description:</label>
+            <input type="text" class="form-control" id="desc">
+        </div>
+
+    </div>
+
+    <div class="panel-footer">
+        <button class="btn btn-default" ng-click="$ctrl.save()">Save</button>
+        <button class="btn btn-error" ng-click="$ctrl.discard()">Discard</button>
+
+    </div>
+
+</div>

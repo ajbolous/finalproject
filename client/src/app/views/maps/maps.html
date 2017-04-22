@@ -6,6 +6,8 @@
                 <h2>Map Editor</h2>
             </div>
             <div style="padding-top:10px; padding-bottom:5px; bottom:5px; float:right">
+                <button class="btn btn-default" ng-click="$ctrl.addLocation()">Edit Roads</button>
+
                 <button class="btn btn-default" ng-click="$ctrl.toggleEditRoads()">Edit Roads</button>
                 <button class="btn btn-default" ng-click="$ctrl.addRoad()" ng-disabled="!$ctrl.editRoads">Add Road</button>
                 <button class="btn btn-error" ng-click="$ctrl.addRoad()" ng-disabled="!$ctrl.editRoads">Delete Road</button>
