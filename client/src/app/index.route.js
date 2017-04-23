@@ -10,6 +10,13 @@
         $locationProvider.html5Mode(true);
         $locationProvider.hashPrefix('#');
 
+
+        $routeProvider.when('/', {
+            templateUrl: 'app/views/main/main.html',
+            controller: 'MainController',
+            controllerAs: '$ctrl'
+        });
+
         $routeProvider.when('/machines', {
             templateUrl: 'app/views/machines/machines.html',
             controller: 'MachinesController',

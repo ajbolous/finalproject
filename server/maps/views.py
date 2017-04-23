@@ -11,8 +11,12 @@ import json
 def getRoads(request):
     return JsonResponse(getRoadsNodes(), safe=False)
 
+
 def getShortestPath(request):
-    return JsonResponse(calcShortestPath(45,70),safe=False)
+    dest = int(request.GET['dest'])
+    src = int(request.GET['source'])
+    return JsonResponse(calcShortestPath(src, dest), safe=False)
+
 
 @csrf_exempt
 def saveRoads(request):

@@ -4,6 +4,7 @@ from math import radians, cos, sin, asin, sqrt
 import json
 
 
+
 def haversine(lon1, lat1, lon2, lat2):
     """
     Calculate the great circle distance between two points 
@@ -36,26 +37,33 @@ def readJson():
         return roads
 
 
+
+def connectRoadsMap():
+    i,j = 0,0
+    mdist = 0.008
+    count = 0
+    for i in range(len(roads)):
+        for j in range(i+1, len(roads)):
+            for n1 in roads[i]:
+                for n2 in roads[j]:
+                    dist = haversine(n1['lat'], n1['lng'], n2['lat'], n2['lng'])
+                    if dist < mdist:
+                        n1['lat'], n1['lng'] = n2['lat'], n2['lng']
+
+
 def connectRoads():
     i = 0
     nodes = g.nodes()
-    mdist = 0.007
+    mdist = 0.008
     count = 0
     for i in range(len(nodes)):
-        for j in range(i, len(nodes)):
-            if i == j:
-                continue
+        for j in range(i+1, len(nodes)):
             n1 = g.node[nodes[i]]
             n2 = g.node[nodes[j]]
             dist = haversine(n1['lat'], n1['lng'], n2['lat'], n2['lng'])
             if dist < mdist:
                 addEdge(g, nodes[i], nodes[j])
                 n1['lat'], n1['lng'] = n2['lat'], n2['lng']
-                print dist
-                count += 1
-
-    print "connected roads: ", count
-
 
 def buildGraph():
     roads = readJson()
@@ -63,7 +71,7 @@ def buildGraph():
     for road in roads:
         buildRoad(road)
     connectRoads()
-
+    connectRoadsMap()
 
 def buildRoad(points):
     i = g.number_of_nodes()
@@ -88,7 +96,6 @@ def drawRoads():
         pos[node] = (g.node[node]['lat'],  g.node[node]['lng'])
     nx.draw(g, pos, node_size=20)
     plt.show()
-
 
 def calcShortestPath(source, target):
     path = []

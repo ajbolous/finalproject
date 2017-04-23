@@ -12,7 +12,13 @@
         MapsService.initMap();
         MapsService.buildRoads();
         MapsService.setEditRoads($ctrl.editRoads);
-        MapsService.getShortestPath();
+        MapsService.getShortestPath(1, 20);
+
+        MapsService.getShortestPath(224, 20);
+
+        MapsService.getShortestPath(144, 20);
+
+        MapsService.getShortestPath(21, 5);
 
         $ctrl.toggleEditRoads = function() {
             $ctrl.editRoads = !$ctrl.editRoads;
