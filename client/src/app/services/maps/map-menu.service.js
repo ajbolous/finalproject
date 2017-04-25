@@ -9,34 +9,14 @@
 
         var MapMenu = function() {
 
-            function addOption(parent, option, callback) {
-
-                var op = document.createElement("button");
-                op.className = "btn btn-default btn-xs";
-                op.innerHTML = option;
-                google.maps.event.addDomListener(op, 'click', function() {
-                    callback()
-                });
-                parent.appendChild(op);
-
-                return op;
-            }
 
             this.div_ = document.createElement('div');
             this.div_.innerHTML = "";
             this.div_.className = 'delete-menu';
             var menu = this;
 
-            addOption(this.div_, "Delete", function() {
+            this.addOption("Delete", function() {
                 menu.removeVertex()
-            });
-
-            addOption(this.div_, "Set Location", function() {
-                $log.debug("set location")
-            });
-
-            addOption(this.div_, "Set All", function() {
-                $log.debug("set location")
             });
         }
         MapMenu.prototype = new google.maps.OverlayView();
@@ -53,6 +33,22 @@
                 }
             }, true);
         };
+
+        MapMenu.prototype.addOption = function(option, callback) {
+
+            var op = document.createElement("button");
+            op.className = "btn btn-default btn-xs";
+            op.innerHTML = option;
+            var self = this;
+            google.maps.event.addDomListener(op, 'click', function() {
+                var path = self.get('path');
+                var vertex = self.get('vertex');
+                callback(path, vertex);
+            });
+            this.div_.appendChild(op);
+
+            return op;
+        }
 
         MapMenu.prototype.onRemove = function() {
             google.maps.event.removeListener(this.divListener_);

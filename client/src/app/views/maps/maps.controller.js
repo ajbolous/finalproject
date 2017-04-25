@@ -14,11 +14,7 @@
         MapsService.setEditRoads($ctrl.editRoads);
         MapsService.getShortestPath(1, 20);
 
-        MapsService.getShortestPath(224, 20);
 
-        MapsService.getShortestPath(144, 20);
-
-        MapsService.getShortestPath(21, 5);
 
         $ctrl.toggleEditRoads = function() {
             $ctrl.editRoads = !$ctrl.editRoads;
@@ -34,23 +30,26 @@
 
         }
 
-        $ctrl.addLocation = function() {
+        $ctrl.addLocation = function(path, vertex) {
+
             var modalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: 'app/views/maps/location-modal/location-modal.html',
                 controller: 'LocationModalController',
                 controllerAs: '$ctrl',
                 resolve: {
-                    items: function() {
-                        return $ctrl.items;
+                    vertex: function() {
+                        return vertex;
+                    },
+                    path: function() {
+                        return path;
                     }
                 }
             });
-
-            modalInstance.result.then(function(items) {
-                $log.debug(items);
-            })
         }
+
+        MapsService.addMapMenuOption('Set Location', $ctrl.addLocation);
+
     }
 
 })();

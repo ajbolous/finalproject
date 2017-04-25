@@ -24,6 +24,10 @@
             return map
         }
 
+        methods.addMapMenuOption = function(option, callback) {
+            return mapMenu.addOption(option, callback);
+        }
+
         methods.addNewRoad = function() {
             var road = methods.addRoad([mapCoords, mapCoords], '#ffffff', 0.5, true, 4);
             roads.push(road)

@@ -4,15 +4,18 @@
     angular.module('opmopApp').controller('LocationModalController', LocationModalController);
 
     /** @ngInject */
-    function LocationModalController(toastr, $scope, $log, MapsService, $uibModalInstance) {
+    function LocationModalController(toastr, $scope, $log, MapsService, $uibModalInstance, path, vertex) {
         var $ctrl = this;
-        $ctrl = this;
+        $ctrl.vertex = path.getAt(vertex);
+        $ctrl.path = path;
+
         $ctrl.location = {
             type: 'Dig',
-            lat: '0',
-            lng: '0',
+            lat: $ctrl.vertex.lat(),
+            lng: $ctrl.vertex.lng(),
             name: ''
         }
+        $log.debug($ctrl);
 
         $ctrl.save = function() {
             return $uibModalInstance.close($ctrl.location);

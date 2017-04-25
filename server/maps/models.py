@@ -4,9 +4,9 @@ from django.db import models
 # Create your models here.
 
 class Location(models.Model):
-    lName=models.CharField(max_length=50)
-    lType=models.CharField(max_length=50)
-    lLong=models.FloatField()
-    lLate=models.FloatField()
-    lMaterial=models.CharField(max_length=50)
-    lCapacity=models.CharField(max_length=50)
+    Name=models.CharField(max_length=50)
+    site=models.CharField(max_length=50)
+    lng=models.FloatField()
+    lat=models.FloatField()
+    material=models.CharField(max_length=50)
+    capacity=models.CharField(max_length=50)
