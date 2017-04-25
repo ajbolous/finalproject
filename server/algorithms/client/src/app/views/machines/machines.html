@@ -1,0 +1,26 @@
+<div class="container" style="width:95%">
+    <div class="jumbotron">
+
+
+        <div class="jumbotron">
+            <div>
+                <div style="position:relative; left:0px;">
+                    <h2>Machines</h2>
+                </div>
+                <div style="position:relative; left:0px; padding-bottom:15px;">
+                    <button class="btn btn-default " ng-click="$ctrl.toggleEditRoads() ">Add Machine</button>
+                    <button class="btn btn-default " ng-click="$ctrl.addRoad() ">Edit Machine</button>
+                    <button class="btn btn-error " ng-click="$ctrl.addRoad() ">Delete Machine</button>
+                    <button class="btn btn-primary " ng-click="$ctrl.exportRoads() ">Export Machines</button>
+
+                </div>
+            </div>
+
+            <div ui-grid="$ctrl.gridOptions " style="height:400px; "></div>
+
+
+        </div>
+
+
+    </div>
+</div>

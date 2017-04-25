@@ -2,7 +2,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from math import radians, cos, sin, asin, sqrt
 import json
-
+import os 
 
 
 def haversine(lon1, lat1, lon2, lat2):
@@ -32,7 +32,8 @@ def addEdge(g, vid, uid):
 
 def readJson():
     global roads
-    with open('/home/bolous/projects/finalproject/server/algorithms/roads.json') as data_file:
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    with open(dir_path + '/roads.json') as data_file:
         roads = json.load(data_file)
         return roads
 
