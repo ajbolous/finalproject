@@ -1,0 +1,62 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2>Add New Machine</h2>
+        Please fill the required fields and press Save to add the new machine.
+    </div>
+
+    <div class="panel-body">
+
+        <div class="form-group">
+            <label for="type">Model:</label>
+            <select ng-model="$ctrl.machine.model" class="form-control" id="type">
+                <option>Shovel</option>
+                <option>Truck</option>
+                <option>Loader</option>
+            </select>
+
+            <label for="name">Weight:</label>
+            <input ng-model="$ctrl.machine.weight" type="text" class="form-control" id="name">
+
+            <label for="lat">Speed :</label>
+            <input type="text" class="form-control" id="lat">
+
+            <label for="lng">Capacity:</label>
+            <input type="text" class="form-control" id="lng">
+
+            <label for="desc">WeightCapacity:</label>
+            <input type="text" class="form-control" id="desc">
+
+            <label for="desc">FuelCapacity:</label>
+            <input type="text" class="form-control" id="desc">
+
+
+            <label for="desc">FuelConsumption :</label>
+            <input type="text" class="form-control" id="desc">
+
+
+            <label for="desc">Long :</label>
+            <input type="text" class="form-control" id="desc">
+
+            <label for="desc">Lat :</label>
+            <input type="text" class="form-control" id="desc">
+
+            <label for="desc">IsAvailable :</label>
+            <input type="text" class="form-control" id="desc">
+
+            <label for="desc">FuelLevel</label>
+            <input type="text" class="form-control" id="desc">
+
+            <label for="desc">Year</label>
+            <input type="text" class="form-control" id="desc">
+
+        </div>
+
+    </div>
+
+    <div class="panel-footer">
+        <button class="btn btn-default" ng-click="$ctrl.save()">Save</button>
+        <button class="btn btn-error" ng-click="$ctrl.discard()">Discard</button>
+
+    </div>
+
+</div>
