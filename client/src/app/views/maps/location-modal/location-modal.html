@@ -17,7 +17,7 @@
             </select>
 
             <label for="name">Name:</label>
-            <input type="text" class="form-control" id="name">
+            <input type="text" class="form-control" ng-model="$ctrl.location.name" id="name">
 
             <label for="lat">Latitude:</label>
             <input type="text" class="form-control" ng-model="$ctrl.location.lat" id="lat">
@@ -25,8 +25,11 @@
             <label for="lng">Longitude:</label>
             <input type="text" class="form-control" ng-model="$ctrl.location.lng" id="lng">
 
-            <label for="desc">Description:</label>
-            <input type="text" class="form-control" id="desc">
+            <label for="material">Material:</label>
+            <input type="text" class="form-control" ng-model="$ctrl.location.material" id="material">
+
+            <label for="site">Site Type:</label>
+            <input type="text" class="form-control" ng-model="$ctrl.location.site" id="site">
 
         </div>
 

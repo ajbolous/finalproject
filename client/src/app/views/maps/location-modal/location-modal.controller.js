@@ -10,12 +10,13 @@
         $ctrl.path = path;
 
         $ctrl.location = {
-            type: 'Dig',
+            site: 'Dig',
             lat: $ctrl.vertex.lat(),
             lng: $ctrl.vertex.lng(),
-            name: ''
+            name: 'D122',
+            material: 'iron',
+            capacity: 12411
         }
-        $log.debug($ctrl);
 
         $ctrl.save = function() {
             return $uibModalInstance.close($ctrl.location);
