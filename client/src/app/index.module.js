@@ -15,6 +15,8 @@
             'ui.toggle',
             'ui.grid',
             'vAccordion',
+            'ui.grid.selection',
+
         ]);
 
 })();

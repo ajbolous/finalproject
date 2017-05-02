@@ -9,16 +9,17 @@
                 </div>
 
                 <div style="position:relative; left:0px; padding-bottom:15px;">
-                    <button class="btn btn-default " ng-click="$ctrl.addMachine() ">Add Machine</button>
-                    <button class="btn btn-default " ng-click="$ctrl.editMachine ">Edit Machine</button>
-                    <button class="btn btn-error " ng-click="$ctrl.addRoad() ">Delete Machine</button>
-                    <button class="btn btn-primary " ng-click="$ctrl.exportRoads() ">Export Machines</button>
+                    <button class="btn btn-default" ng-click="$ctrl.addMachine() "><span class="fa fa-plus"> </span> Add</button>
+                    <button class="btn btn-default" ng-click="$ctrl.editMachine() "><span class="fa fa-edit"></span> Edit</button>
+                    <button class="btn btn-danger" ng-click="$ctrl.deleteMachine() "><span class="fa fa-remove"></span> Delete</button>
 
                 </div>
 
             </div>
 
-            <div ui-grid="$ctrl.gridOptions " style="height:400px; "></div>
+            <div ui-grid="$ctrl.gridOptions " ui-grid-selection style="height:600px; "></div>
+
+
 
 
         </div>

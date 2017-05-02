@@ -4,16 +4,19 @@
     angular.module('opmopApp').controller('MachinesModalController', MachinesModalController);
 
     /** @ngInject */
-    function MachinesModalController(toastr, $scope, $log, MachinesService, $uibModalInstance) {
+    function MachinesModalController(toastr, $scope, $log, MachinesService, $uibModalInstance, options) {
         var $ctrl = this;
-
-        $ctrl.machine = {
-
+        $ctrl.isEdit = options.isEdit;
+        if (options.isEdit) {
+            $ctrl.machine = options.machine;
+            $ctrl.title = "Edit Machine";
+        } else {
+            $ctrl.machine = {};
+            $ctrl.title = "Add Machine";
         }
 
         $ctrl.save = function() {
-            MachinesService.addMachine($ctrl.machine);
-            return $uibModalInstance.close($ctrl.location);
+            return $uibModalInstance.close($ctrl.machine);
         }
 
         $ctrl.discard = function() {

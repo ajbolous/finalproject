@@ -15,9 +15,21 @@
 
         }
 
+        function editMachine(machine) {
+            return $http.get(DJANGOURL + '/machines/edit', { params: machine })
+
+        }
+
+        function deleteMachine(machine) {
+            return $http.get(DJANGOURL + '/machines/delete', { params: machine })
+        }
+
         return {
             getAll: getAll,
-            addMachine: addMachine
+            addMachine: addMachine,
+            editMachine: editMachine,
+            deleteMachine: deleteMachine
+
         }
     }
 })();
