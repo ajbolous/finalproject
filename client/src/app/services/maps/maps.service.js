@@ -28,6 +28,10 @@
             return mapMenu.addOption(option, callback);
         }
 
+        methods.addLocation = function(location) {
+            return $http.get(DJANGOURL + '/maps/add-location', { params: location });
+        }
+
         methods.addNewRoad = function() {
             var road = methods.addRoad([mapCoords, mapCoords], '#ffffff', 0.5, true, 4);
             roads.push(road)
@@ -80,7 +84,40 @@
 
         }
 
+        methods.getLocations = function() {
 
+            return $http.get(DJANGOURL + '/maps/get-locations').then(function(response) {
+                return response.data;
+            });
+        }
+
+        methods.buildLocations = function() {
+            return methods.getLocations().then(function(locations) {
+                locations.forEach(function(location) {
+                    $log.debug(location);
+                    var marker = new google.maps.Marker({
+                        position: { lat: location.lat, lng: location.lng },
+                        map: map,
+                        label: location.site,
+                        title: location.name + " - " + location.site
+                    });
+
+                    var contentString = '<div id="content">' +
+                        '<div id="bodyContent">' +
+                        '<p><b>' + location.site + '</b>' +
+                        '</div>' +
+                        '</div>';
+
+                    var infowindow = new google.maps.InfoWindow({
+                        content: contentString
+                    });
+
+                    marker.addListener('click', function() {
+                        infowindow.open(map, marker);
+                    });
+                })
+            });
+        }
         methods.getNodes = function() {
             return $http.get(DJANGOURL + '/maps/get-roads');
         }

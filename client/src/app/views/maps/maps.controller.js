@@ -13,8 +13,7 @@
         MapsService.buildRoads();
         MapsService.setEditRoads($ctrl.editRoads);
         MapsService.getShortestPath(1, 20);
-
-
+        MapsService.buildLocations();
 
         $ctrl.toggleEditRoads = function() {
             $ctrl.editRoads = !$ctrl.editRoads;
@@ -46,7 +45,14 @@
                     }
                 }
             });
+
+            modalInstance.result.then(function(location) {
+                $log.debug(location)
+                MapsService.addLocation(location);
+            });
         }
+
+
 
         MapsService.addMapMenuOption('Set Location', $ctrl.addLocation);
 
