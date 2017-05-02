@@ -23,6 +23,7 @@
             });
         }
 
+
         MachinesService.getAll().then(function(response) {
             $ctrl.gridOptions.data = response.data;
 

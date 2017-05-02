@@ -10,10 +10,14 @@
             return $http.get(DJANGOURL + '/machines/get-all');
         }
 
+        function addMachine(machine) {
+            return $http.get(DJANGOURL + '/machines/add', { params: machine })
 
+        }
 
         return {
-            getAll: getAll
+            getAll: getAll,
+            addMachine: addMachine
         }
     }
 })();

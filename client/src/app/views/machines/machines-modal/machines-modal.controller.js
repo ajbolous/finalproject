@@ -8,12 +8,11 @@
         var $ctrl = this;
 
         $ctrl.machine = {
-            name: "ahdab",
-            model: "Truck",
-            weight: 120
+
         }
 
         $ctrl.save = function() {
+            MachinesService.addMachine($ctrl.machine);
             return $uibModalInstance.close($ctrl.location);
         }
 
