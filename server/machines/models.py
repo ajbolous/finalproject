@@ -4,23 +4,21 @@ from django.db import models
 from django.forms.models import model_to_dict
 
 # Create your models here.
-
-
 class Machine(models.Model):
-    mModel = models.CharField(max_length=50)
-    mType = models.CharField(max_length=50)
-    mSerial = models.CharField(max_length=50)
-    mWeight = models.IntegerField()
-    mSpeed = models.IntegerField()
-    mCapacity = models.IntegerField()
-    mWeightCapacity = models.IntegerField()
-    mFuelCapacity = models.IntegerField()
-    mFuelConsumption = models.IntegerField()
-    mLong = models.FloatField()
-    mLat = models.FloatField()
-    mIsAvailable = models.BooleanField()
-    mFuelLevel = models.FloatField()
-    mYear = models.IntegerField()
-
+    model = models.CharField(max_length=50)
+    type = models.CharField(max_length=50)
+    serial = models.CharField(max_length=50)   
+    weight = models.IntegerField(null = True)
+    speed = models.IntegerField(null = True)
+    capacity = models.IntegerField(null = True)
+    weightCapacity = models.IntegerField(null = True)
+    fuelCapacity = models.IntegerField(null = True)
+    fuelConsumption = models.IntegerField(null = True)
+    lng = models.FloatField(null = True)
+    lat = models.FloatField(null = True)
+    isAvailable = models.BooleanField()
+    fuelLevel = models.FloatField(null = True)
+    modalYear=models.IntegerField(null = True)
     def toJSON(self):
         return model_to_dict(self)
+
