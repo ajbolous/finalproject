@@ -1,4 +1,43 @@
 <div class="container" style="width:100%">
-    <div class="jumbotron" style="height:500px;">
+    <div class="jumbotron">
+        <div>
+            <div>
+                <h2>Main</h2>
+            </div>
+            <div style="padding-top:10px; padding-bottom:5px; bottom:5px;">
+                <button class="btn btn-default" ng-click="$ctrl.addLocation()">Edit Roads</button>
+
+                <button class="btn btn-default" ng-click="$ctrl.toggleEditRoads()">Edit Roads</button>
+                <button class="btn btn-default" ng-click="$ctrl.addRoad()" ng-disabled="!$ctrl.editRoads">Add Road</button>
+                <button class="btn btn-error" ng-click="$ctrl.addRoad()" ng-disabled="!$ctrl.editRoads">Delete Road</button>
+                <button class="btn btn-primary" ng-click="$ctrl.exportRoads()">Export Roads</button>
+            </div>
+        </div>
+
+        <div style="margin-left:200px;">
+            <div class="row">
+                <div class="col-sm-3" style="background-color:whitesmoke;width:330px;height:350px; margin-left:20px; margin-top:20px;border:solid; border-color: whitesmoke; border-width:1px;">
+                    <div uib-datepicker ng-model="dt" class="well well-sm" datepicker-options="options" style="height:250px;margin-top:50px; width:300px;"></div>
+                </div>
+
+                <div class="col-sm-6" style="width:760px;margin-left:20px; margin-top:20px; background-color:whitesmoke;border:solid; border-color: whitesmoke; ; border-width:1px;">
+                    <nvd3 options="$ctrl.options" data="$ctrl.data"></nvd3>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-sm-4" style="margin-left:20px; margin-top:20px; background-color:whitesmoke;border:solid; border-color: whitesmoke; ; border-width:1px;">
+                    <nvd3 options="$ctrl.options2" data="$ctrl.data2"></nvd3>
+                </div>
+                <div class="col-sm-4" style="margin-left:20px; margin-top:20px; background-color:whitesmoke;border:solid; border-color: whitesmoke; ; border-width:1px;">
+                    <nvd3 options="$ctrl.options3" data="$ctrl.data3"></nvd3>
+                </div>
+            </div>
+        </div>
+
+        <div style="position:relative; bottom:0px;"> Opmop<sup>Ⓒ</sup> Application <br> By: Ahdab Serhan & Bolous AbuJaber.</div>
+
     </div>
 </div>

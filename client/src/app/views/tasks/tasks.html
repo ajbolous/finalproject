@@ -1,7 +1,22 @@
 <div class="container" style="width:95%">
     <div class="jumbotron">
+        <div>
+            <div>
+                <h2>Tasks Editor</h2>
+            </div>
+            <div style="position:relative; left:0px; padding-bottom:15px;">
+                <button class="btn btn-default" ng-click="$ctrl.addLocation()">Edit Roads</button>
 
-        <div ui-grid="$ctrl.gridOptions" style="height:200px"></div>
+                <button class="btn btn-default" ng-click="$ctrl.toggleEditRoads()">Edit Roads</button>
+                <button class="btn btn-default" ng-click="$ctrl.addRoad()" ng-disabled="!$ctrl.editRoads">Add Road</button>
+                <button class="btn btn-error" ng-click="$ctrl.addRoad()" ng-disabled="!$ctrl.editRoads">Delete Road</button>
+                <button class="btn btn-primary" ng-click="$ctrl.exportRoads()">Export Roads</button>
+            </div>
+        </div>
+
+        <div ui-grid="$ctrl.gridOptions" style="height:600px"></div>
+        <div style="position:relative; bottom:0px;"> Opmop<sup>Ⓒ</sup> Application <br> By: Ahdab Serhan & Bolous AbuJaber.</div>
 
     </div>
+
 </div>

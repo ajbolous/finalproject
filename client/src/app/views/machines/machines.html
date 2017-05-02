@@ -1,29 +1,22 @@
 <div class="container" style="width:95%">
     <div class="jumbotron">
 
-
-        <div class="jumbotron">
+        <div>
             <div>
-                <div style="position:relative; left:0px;">
-                    <h2>Machines</h2>
-                </div>
+                <h2>Machines</h2>
+            </div>
 
-                <div style="position:relative; left:0px; padding-bottom:15px;">
-                    <button class="btn btn-default" ng-click="$ctrl.addMachine() "><span class="fa fa-plus"> </span> Add</button>
-                    <button class="btn btn-default" ng-click="$ctrl.editMachine() "><span class="fa fa-edit"></span> Edit</button>
-                    <button class="btn btn-danger" ng-click="$ctrl.deleteMachine() "><span class="fa fa-remove"></span> Delete</button>
-
-                </div>
+            <div style="position:relative; left:0px; padding-bottom:15px;">
+                <button class="btn btn-default" ng-click="$ctrl.addMachine() "><span class="fa fa-plus"> </span> Add</button>
+                <button class="btn btn-default" ng-click="$ctrl.editMachine() "><span class="fa fa-edit"></span> Edit</button>
+                <button class="btn btn-danger" ng-click="$ctrl.deleteMachine() "><span class="fa fa-remove"></span> Delete</button>
 
             </div>
 
-            <div ui-grid="$ctrl.gridOptions " ui-grid-selection style="height:600px; "></div>
-
-
-
-
         </div>
-
+        <div ui-grid="$ctrl.gridOptions " ui-grid-selection style="height:650px; "></div>
+        <div style="position:relative; bottom:0px;"> Opmop<sup>Ⓒ</sup> Application <br> By: Ahdab Serhan & Bolous AbuJaber.</div>
 
     </div>
+
 </div>
