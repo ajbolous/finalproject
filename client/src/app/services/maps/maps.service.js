@@ -54,12 +54,21 @@
                 strokeWeight: width
             });
             road.setMap(map);
+            $log.debug(path);
+            var i = 0;
+            road.getPath().forEach(function(v) {
+                v.id = path[i].id;
+                i++;
+                $log.debug(v);
 
+            })
             google.maps.event.addListener(road, 'rightclick', function(e) {
                 // Check if click was on a vertex control point
                 if (e.vertex == undefined) {
                     return;
                 }
+                $log.debug(e.vertex);
+                $log.debug(road.getPath().getAt(e.vertex));
                 mapMenu.open(map, road.getPath(), e.vertex);
             });
             return road;
@@ -118,6 +127,7 @@
                 })
             });
         }
+
         methods.getNodes = function() {
             return $http.get(DJANGOURL + '/maps/get-roads');
         }

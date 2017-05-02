@@ -22,9 +22,7 @@ def saveRoads(request):
 
 
 def getLocations(request):
-
-    locations = Location.objects.all()
-    locations = [location.toJSON() for location in locations]
+    locations = [location.toJSON() for location in Location.objects.all()]
     return JsonResponse(locations, safe=False)
 
 

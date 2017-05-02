@@ -78,10 +78,12 @@ def buildGraph():
 def buildRoad(points):
     i = g.number_of_nodes()
     addNode(g, i,  points[0]['lat'], points[0]['lng'])
+    points[0]['id'] = i
     for point in points[1:]:
         i += 1
         addNode(g, i, point['lat'], point['lng'])
         addEdge(g, i - 1, i)
+        point['id'] = i
 
 
 def getNode(id):
