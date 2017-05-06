@@ -9,7 +9,7 @@
 
     function TopNavbar($log, $scope, $location) {
         var $ctrl = this;
-        $ctrl.navbarCollapsed = true;
+        $ctrl.navbarCollapsed = false;
 
         $ctrl.links = [
             { label: 'Home', path: '/', active: true },

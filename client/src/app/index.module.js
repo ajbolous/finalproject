@@ -16,7 +16,8 @@
             'ui.grid',
             'vAccordion',
             'ui.grid.selection',
-            'nvd3'
+            'nvd3',
+            'ui.calendar'
         ]);
 
 })();
