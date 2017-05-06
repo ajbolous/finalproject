@@ -11,9 +11,33 @@ def load(filePath):
         return pickle.load(f)
 
 
-def saveTasks(data):
-    save(data, 'tasks.pkl')
+class Database():
+    def __init__(self, filePath):
+        try:
+            self.loadData(filePath)
+        except:
+            self.machines = []
+            self.tasks = []
+            self.missions = []
 
+    def loadData(self,filePath):
+        data = load(filePath)
+        self.machines = data['machines']
+        self.tasks = data['tasks']
+        self.missions = data['missions']
 
-def loadTasks():
-    return load('tasks.pkl')
+    def saveData(self, filePath):
+        save({
+            'machines': self.machines,
+            'tasks': self.tasks,
+            'missions': self.missions
+        }, filePath)
+
+    def getMachines(self):
+        return self.machines
+
+    def getTasks(self):
+        return self.tasks
+
+    def getMissions(self):
+        return self.missions
