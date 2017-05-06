@@ -1,4 +1,5 @@
 from machine import Machine
+
 class Truck(Machine):
     def __init__(self,loadCapacity,weightCapacity,id,model,weight,speed,fuelCapacity,fulConsumption,location,isAvailable):
         Machine.__init__(self,id,model,weight,speed,fuelCapacity,fulConsumption,location,isAvailable)
