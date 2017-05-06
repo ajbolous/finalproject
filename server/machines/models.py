@@ -5,6 +5,9 @@ from django.forms.models import model_to_dict
 
 # Create your models here.
 class Machine(models.Model):
+    """
+    class machine object .... bla bla bla 
+    """
     model = models.CharField(max_length=50)
     type = models.CharField(max_length=50)
     serial = models.CharField(max_length=50)   
@@ -20,5 +23,9 @@ class Machine(models.Model):
     fuelLevel = models.FloatField(null = True)
     modalYear=models.IntegerField(null = True)
     def toJSON(self):
+        """
+        Returns the object as a json
+        """
         return model_to_dict(self)
+
 
