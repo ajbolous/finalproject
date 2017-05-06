@@ -1,1 +1,0 @@
-var DJANGOURL = "http://localhost:8000";
