@@ -1,3 +1,4 @@
+
 import json
 
 class Machine():
@@ -24,7 +25,11 @@ class Machine():
     def setOffer(self):
         pass
 
-    def makeOffer(self, task):
+    def makeOffer(self, task, mapGraph):
+        
+        lastPosition = self.tasks[len(self.tasks)-1].location
+
+        path = mapGraph.calcShortestPath(lastPosition, task.location)
         pass
 
     def __repr__(self):
@@ -41,6 +46,9 @@ class Truck(Machine):
         self.loadCapacity = loadCapacity
         self.weightCapacity = weightCapacity
 
+    def makeOffer(self, task, path):
+        offer = Machine.makeOffer(task,path)
+        
 
 class Shovel(Machine):
 

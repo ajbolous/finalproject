@@ -32,5 +32,7 @@ class Application():
 
 Application.initialize()
 
+
+
+
 Application.database.save()
-print Application.calc()

@@ -20,7 +20,7 @@ class Database():
     def __init__(self):
         self.machines = []
         self.map = None
-        self.tasks = None
+        self.missions = None
 
     def load(self):
 
@@ -32,12 +32,16 @@ class Database():
             self.map.loadFromJson()
 
         self.machines = data['machines']
-        self.tasks = data['tasks']
-        
+        if 'missions' in data:
+            self.missions = data['missions']
+        else:
+            self.missions = []
+
     def save(self):
         data = {
             'map': self.map,
-            'machines': self.machines
+            'machines': self.machines,
+            'missions': self.missions
         }
         save(data, 'data.pkl')
         with open(os.path.join(PATH, 'data.json'), 'w') as f:
@@ -51,3 +55,6 @@ class Database():
 
     def getLocations(self):
         return self.map['locations']
+
+    def getMissions(self):
+        return self.missions

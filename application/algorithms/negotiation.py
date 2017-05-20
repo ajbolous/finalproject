@@ -1,6 +1,5 @@
 from operator import itemgetter
 
-
 def negotiation(agents, schedule):
     for task in schedule.tasks:
         offers = []

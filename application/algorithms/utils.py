@@ -31,3 +31,10 @@ def pairwise(iterable):
     a, b = tee(iterable)
     next(b, None)
     return izip(a, b)
+
+def printMission(mission):
+    print mission
+    for sch in mission.schedules:   
+        print "\t ", sch
+        for task in sch.tasks:
+            print "\t \t", task

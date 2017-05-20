@@ -1,9 +1,14 @@
 model
-weight
-speed
-fuelCapacity
-feulConsumption
+weight Kg
+speed   Km/h
+fuelCapacity    Liter
+feulConsumption     Liter/Km
 point
 isAvailable
 weightCapacity
 loadCapacity
+
+
+100 200 300
+1/3 2/3 1 
+

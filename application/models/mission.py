@@ -1,16 +1,19 @@
 class Mission():
-    def __init__(self, title, startDate, location, target):
+    def __init__(self, title, startDate, endDate, location, target):
         self.title = title
         self.startDate = startDate
+        self.endDate = endDate
         self.location = location
         self.target = target
-        self.tasks = []
+        self.schedules = []
 
     def addTask(self, task):
-        self.tasks.append(task)
+        self.schedules.append(task)
 
     def removeTask(self, task):
-        self.tasks.remove(task)
+        self.schedules.remove(task)
 
     def __repr__(self):
-        return "Mission({},{},{},{},{})".format(self.title, self.startDate, self.location, self.target, len(self.tasks))
+        return "Mission({},{},{},{},{})".format(self.title, self.startDate, self.location, self.target, len(self.schedules))
+
+
