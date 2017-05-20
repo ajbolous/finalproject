@@ -20,6 +20,7 @@ class Database():
     def __init__(self):
         self.machines = []
         self.map = None
+        self.tasks = None
 
     def load(self):
 
@@ -31,7 +32,8 @@ class Database():
             self.map.loadFromJson()
 
         self.machines = data['machines']
-
+        self.tasks = data['tasks']
+        
     def save(self):
         data = {
             'map': self.map,

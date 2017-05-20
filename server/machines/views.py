@@ -27,6 +27,7 @@ def addMachine(request):
     m.lat = float(request.GET.get('lat'))
     m.isAvailable = bool(request.GET.get('isAvailable'))
     m.fuelLevel = float(request.GET.get('fuelLevel'))
+    
     return HttpResponse("Called add machine", 200)
 
 
