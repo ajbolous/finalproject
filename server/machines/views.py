@@ -1,53 +1,53 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
-from machines.models import Machine     
+import json
+from main import Application
+from models.machine import Machine
 
 # Create your views here.
 
+
 def getMachines(request):
-    machines  = Machine.objects.all()
-    machinesJson = [m.toJSON() for m in machines]
+    machinesJson = [machine.toJSON() for machine in Application.getMachines()]
     return JsonResponse(machinesJson, safe=False)
 
 
 def addMachine(request):
-    m=Machine()
-    m.type= request.GET.get('type')
-    m.model= request.GET.get('model')
-    m.capacity= request.GET.get('capacity')
-    m.weight=int(request.GET.get('weight'))
-    m.modalYear=int(request.GET.get('modalYear'))
-    m.speed=int(request.GET.get('speed'))
-    m.fuelCapacity=int(request.GET.get('fuelCapacity'))
-    m.weightCapacity=int(request.GET.get('weightCapacity'))
-    m.fuelConsumption=float(request.GET.get('fuelConsumption'))
-    m.lng=float(request.GET.get('lng'))
-    m.lat=float(request.GET.get('lat'))
-    m.isAvailable=bool(request.GET.get('isAvailable'))
-    m.fuelLevel=float(request.GET.get('fuelLevel'))
-    m.save()
+    m = Machine()
+    m.type = request.GET.get('type')
+    m.model = request.GET.get('model')
+    m.capacity = request.GET.get('capacity')
+    m.weight = int(request.GET.get('weight'))
+    m.modalYear = int(request.GET.get('modalYear'))
+    m.speed = int(request.GET.get('speed'))
+    m.fuelCapacity = int(request.GET.get('fuelCapacity'))
+    m.weightCapacity = int(request.GET.get('weightCapacity'))
+    m.fuelConsumption = float(request.GET.get('fuelConsumption'))
+    m.lng = float(request.GET.get('lng'))
+    m.lat = float(request.GET.get('lat'))
+    m.isAvailable = bool(request.GET.get('isAvailable'))
+    m.fuelLevel = float(request.GET.get('fuelLevel'))
     return HttpResponse("Called add machine", 200)
 
+
 def editMachine(request):
-    m=Machine.objects.get(id=int(request.GET.get('id')))
-    m.type= request.GET.get('type')
-    m.model= request.GET.get('model')
-    m.capacity= request.GET.get('capacity')
-    m.weight=int(request.GET.get('weight'))
-    m.modalYear=int(request.GET.get('modalYear'))
-    m.speed=int(request.GET.get('speed'))
-    m.fuelCapacity=int(request.GET.get('fuelCapacity'))
-    m.weightCapacity=int(request.GET.get('weightCapacity'))
-    m.fuelConsumption=float(request.GET.get('fuelConsumption'))
-    m.lng=float(request.GET.get('lng'))
-    m.lat=float(request.GET.get('lat'))
-    m.isAvailable=bool(request.GET.get('isAvailable'))
-    m.fuelLevel=float(request.GET.get('fuelLevel'))
-    
-    m.save()
+    m = Machine.objects.get(id=int(request.GET.get('id')))
+    m.type = request.GET.get('type')
+    m.model = request.GET.get('model')
+    m.capacity = request.GET.get('capacity')
+    m.weight = int(request.GET.get('weight'))
+    m.modalYear = int(request.GET.get('modalYear'))
+    m.speed = int(request.GET.get('speed'))
+    m.fuelCapacity = int(request.GET.get('fuelCapacity'))
+    m.weightCapacity = int(request.GET.get('weightCapacity'))
+    m.fuelConsumption = float(request.GET.get('fuelConsumption'))
+    m.lng = float(request.GET.get('lng'))
+    m.lat = float(request.GET.get('lat'))
+    m.isAvailable = bool(request.GET.get('isAvailable'))
+    m.fuelLevel = float(request.GET.get('fuelLevel'))
+
     return HttpResponse("Called edit machine", 200)
 
+
 def deleteMachine(request):
-     m=Machine.objects.get(id=int(request.GET.get('id')))
-     m.delete()
-     return HttpResponse("Succesfuly Deleted the machine ",200) 
+    return HttpResponse("Succesfuly Deleted the machine ", 200)

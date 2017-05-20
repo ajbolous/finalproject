@@ -1,4 +1,5 @@
 from math import radians, cos, sin, asin, sqrt
+from itertools import tee, izip
 
 
 def haversine(lon1, lat1, lon2, lat2):
@@ -23,3 +24,10 @@ def getLocationDistance(l1, l2):
     on the earth (specified in decimal degrees)
     """
     return haversine(l1.lng, l1.lat, l2.lng, l2.lat)
+
+
+def pairwise(iterable):
+    "s -> (s0,s1), (s1,s2), (s2, s3), ..."
+    a, b = tee(iterable)
+    next(b, None)
+    return izip(a, b)

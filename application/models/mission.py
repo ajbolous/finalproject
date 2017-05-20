@@ -11,7 +11,6 @@ class Mission():
 
     def removeTask(self, task):
         self.tasks.remove(task)
-        
 
     def __repr__(self):
         return "Mission({},{},{},{},{})".format(self.title, self.startDate, self.location, self.target, len(self.tasks))
