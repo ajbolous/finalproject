@@ -26,5 +26,15 @@ class LoadTask(Task):
 class HaulageTask(Task):
     def __init__(self, location, dumpLocation, startTime, endTime, amount, material, comments=""):
         Task.__init__(self, location, startTime, endTime, comments=comments)
+        self.dumpLocation = dumpLocation
         self.amount = amount
         self.material = material
+
+class SubTask():
+    def __init__(self, startTime, endTime, location, machine, amount, cost):
+        self. startTime = startTime
+        self.endTime = endTime
+        self.location = location
+        self.machine = machine
+        self.amount = amount
+        self.cost = cost

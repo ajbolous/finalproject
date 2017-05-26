@@ -6,6 +6,9 @@ class Schedule():
         self.location = location
         self.tasks = []
 
+    def getTasks(self):
+        return self.tasks
+        
     def addTask(self, task):
         self.tasks.append(task)
 

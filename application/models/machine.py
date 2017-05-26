@@ -1,5 +1,7 @@
-
+from datetime import datetime, timedelta
 import json
+from models.task import HaulageTask, LoadTask, DigTask, SubTask
+
 
 class Machine():
     def __init__(self, id, model, weight, speed, fuelCapacity, fuelConsumption, point, isAvailable):
@@ -19,17 +21,23 @@ class Machine():
     def getTasks(self):
         return self.tasks
 
-    def calcPerformance(self):
-        pass
+    def getTimeWindows(self, date, size):
+        ws = datetime(year=date.year, month=date.month, day=date.day, hour=9)
+        we = ws + timedelta(hours=10)
+        windows = []
 
-    def setOffer(self):
-        pass
+        if len(self.tasks) == 0:
+            return [(ws, we, (we-ws), self.point)]
+
+        for task in self.tasks:
+            winSize = (task.starTime - ws).hours
+            if winSize >= size:
+                windows.append((ws, task.starTime, winSize, task.location))
+                ws = task.endTime
+
+        return windows
 
     def makeOffer(self, task, mapGraph):
-        
-        lastPosition = self.tasks[len(self.tasks)-1].location
-
-        path = mapGraph.calcShortestPath(lastPosition, task.location)
         pass
 
     def __repr__(self):
@@ -37,6 +45,7 @@ class Machine():
 
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__)
+
 
 class Truck(Machine):
 
@@ -46,9 +55,36 @@ class Truck(Machine):
         self.loadCapacity = loadCapacity
         self.weightCapacity = weightCapacity
 
-    def makeOffer(self, task, path):
-        offer = Machine.makeOffer(task,path)
-        
+    def makeOffer(self, task, mapGraph):
+        t = type(task)
+        print t
+        if not isinstance(task,HaulageTask):
+            print False
+            return False, -1
+
+        path, distance = mapGraph.calcShortestPath(
+            task.dumpLocation, task.location)
+
+        consumedFuel = distance * self.fuelConsumption
+        travelTime = distance / self.speed
+
+        loadSize = task.amount
+        loadWeight = task.amount * task.material
+        averageFillTime = 1
+
+        windows = Machine.getTimeWindows(self, task.startTime, travelTime + averageFillTime)
+
+        print path, distance
+        print windows
+        print travelTime, distance
+        numberOfTravels = loadWeight / self.weightCapacity
+        numberOfTravels = max(numberOfTravels, loadSize / self.loadCapacity)
+
+        numberOfRefeuls = (consumedFuel * numberOfTravels) / self.fuelCapacity
+
+        time = numberOfTravels * travelTime + numberOfTravels * \
+            averageFillTime + numberOfRefeuls * 1
+
 
 class Shovel(Machine):
 

@@ -7,6 +7,9 @@ class Mission():
         self.target = target
         self.schedules = []
 
+    def getSchedules(self):
+        return self.schedules
+        
     def addTask(self, task):
         self.schedules.append(task)
 

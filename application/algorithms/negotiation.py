@@ -1,7 +1,7 @@
 from operator import itemgetter
 
-def negotiation(agents, schedule):
-    for task in schedule.tasks:
+def negotiation(agents, missions, date):
+    for mission in missions:
         offers = []
         for agent in agents:
             offers.append((agent, agent.makeOffer(task)))

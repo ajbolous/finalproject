@@ -64,7 +64,7 @@ class MapGraph():
         self.connectGraph()
 
     def connectGraph(self):
-        threshold = 0.02
+        threshold = 0.01
         for p1 in self.graph.nodes():
             for p2 in self.graph.nodes():
                 if p1 == p2:
@@ -88,9 +88,14 @@ class MapGraph():
 
     def _calcShortestPath(self, source, dest):
         path = []
-        for node in nx.dijkstra_path(self.graph, source, dest):
+        w = 0
+        shortestPath = nx.dijkstra_path(self.graph, source, dest)
+        for i in range(len(shortestPath)-1):
+            w += self.graph[shortestPath[i]][shortestPath[i+1]]['weight']
+
+        for node in shortestPath:
             path.append(self.graph.node[node]['point'])
-        return path
+        return path, w
 
     def calcShortestPath(self, source, dest):
-        return _calcShortestPath(source.nid, dest.nid)
+        return self._calcShortestPath(source.nid, dest.nid)
