@@ -32,9 +32,13 @@ class HaulageTask(Task):
 
 class SubTask():
     def __init__(self, startTime, endTime, location, machine, amount, cost):
-        self. startTime = startTime
+        self.startTime = startTime
         self.endTime = endTime
         self.location = location
         self.machine = machine
         self.amount = amount
         self.cost = cost
+
+    def __repr__(self):
+        return "\n{}({},{})".format( self.startTime, self.endTime, self.cost)
+

@@ -25,7 +25,7 @@ def createMission(title, description, location, dumpLocation, startDate, endDate
 
         for i in range(6):
             sch.tasks.append(HaulageTask(mission.location, dumpLocation, sch.startTime + timedelta(
-                hours=2 * i), sch.startTime + timedelta(hours=2 * (i + 1)), target / numDays, 100, "Haul all day"))
+                hours=2 * i), sch.startTime + timedelta(hours=2 * (i + 1)), (target / numDays / 6), 100, "Haul all day"))
 
         mission.schedules.append(sch)
     return mission
@@ -43,7 +43,7 @@ l2 = db.map.getRoads()[random.randint(1, 10)].getPoints()[random.randint(1, 3)]
 
 
 mission = createMission("New mission", "dig", l1, l2, datetime(
-    2017, 5, 1, hour=0, minute=0, second=0), datetime(2017, 5, 10, hour=0, minute=0, second=0), 1000000)
+    2017, 5, 1, hour=0, minute=0, second=0), datetime(2017, 5, 10, hour=0, minute=0, second=0), 100000)
 
 db.missions = [mission]
 

@@ -57,25 +57,32 @@ class MapGraph():
 
     def buildGraph(self, map):
         for road in map.roads:
-            self.addNode(road.getPoints()[0])
-            for p1, p2 in utils.pairwise(road.getPoints()):
-                self.addNode(p2)
-                self.addEdge(p1, p2)
+            points = road.getPoints()
+            self.addNode(points[0])
+            for i in range(1,len(points)):
+                self.addNode(points[i])
+                self.addEdge(points[i-1], points[i])
         self.connectGraph()
 
     def connectGraph(self):
         threshold = 0.01
         for p1 in self.graph.nodes():
             for p2 in self.graph.nodes():
-                if p1 == p2:
+                if p1 != p2:
+                    point1 = self.graph.node[p1]['point']
+                    point2 = self.graph.node[p2]['point']
+                    dist = utils.haversine(
+                        point1.lng, point1.lat, point2.lng, point2.lat)
+                    if dist <= threshold:
+                        print p1, p2
+                        self.addEdge(point1, point2)
+
+        dist = nx.all_pairs_dijkstra_path(self.graph)
+        for k1 in dist:
+            for k2 in dist:
+                if k2 not in dist[k1]:
                     continue
-                point1 = self.graph.node[p1]['point']
-                point2 = self.graph.node[p2]['point']
-                dist = utils.haversine(
-                    point1.lng, point1.lat, point2.lng, point2.lat)
-                if dist < threshold:
-                    point1.lat, point1.lng = point2.lat, point2.lng
-                    self.addEdge(point1, point2)
+                    print k1,k2
 
     def drawMap(self):
         pos = {}
@@ -89,7 +96,11 @@ class MapGraph():
     def _calcShortestPath(self, source, dest):
         path = []
         w = 0
-        shortestPath = nx.dijkstra_path(self.graph, source, dest)
+        try:
+            shortestPath = nx.dijkstra_path(self.graph, source, dest)
+        except Exception as e:
+            print "Didnt pind a path", e
+            return None, -1
         for i in range(len(shortestPath)-1):
             w += self.graph[shortestPath[i]][shortestPath[i+1]]['weight']
 

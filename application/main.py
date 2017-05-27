@@ -15,6 +15,7 @@ class Application():
         Application.graph = MapGraph()
         Application.graph.buildGraph(Application.map)
         Application.graph.drawMap()
+        
     @staticmethod
     def getMachines():
         return Application.database.getMachines()
@@ -29,18 +30,34 @@ class Application():
 
     @staticmethod
     def negotiation():
-        machine = Application.database.getMachines()[47]
+        machines = Application.database.getMachines()
 
         mission = Application.database.getMissions()[0]
 
         sched = mission.getSchedules()[0]
-        print machine
+        offers = []
         for task in sched.getTasks():
-            machine.makeOffer(task, Application.graph)
+            remaining = task.amount
+            while remaining>0:
+                maxOffer = None
+                for machine in machines:
+                    offer = machine.makeOffer(task, Application.graph)
+                    if offer[0] == False:
+                        continue
+                    if maxOffer == None:
+                        maxOffer = offer
+                    elif maxOffer[2] > offer[2]:
+                        maxOffer = offer
 
+                if maxOffer == None:
+                    print "Didnt allocate all, remaining {}".format(remaining)
+                    break
+
+                for stask in maxOffer[1]:
+                    stask.machine.tasks.append(stask)
+                    remaining-= stask.amount
 
 Application.initialize()
 
 Application.negotiation()
-
 Application.database.save()
