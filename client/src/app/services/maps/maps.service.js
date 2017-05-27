@@ -60,8 +60,8 @@
                 v.id = path[i].id;
                 i++;
                 $log.debug(v);
-
             })
+
             google.maps.event.addListener(road, 'rightclick', function(e) {
                 // Check if click was on a vertex control point
                 if (e.vertex == undefined) {
@@ -135,8 +135,10 @@
         methods.buildRoads = function() {
             return methods.getNodes().then(function(response) {
                 roads = [];
+                $log.error(response);
                 response.data.forEach(function(road) {
-                    roads.push(methods.addRoad(road, '#0000aa', 0.4, false, 4));
+                    $log.info(road.points)
+                    roads.push(methods.addRoad(road.points, '#0000aa', 0.4, false, 4));
                 });
             });
         }

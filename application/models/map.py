@@ -17,13 +17,26 @@ class Map():
 
     def addRoad(self, points):
         r = Road(len(self.roads), 'R', 'dirt')
+        points = sorted(points,key=lambda el: el['index'])
         for p in points:
-            r.addPoint(Point(0, p['lat'], p['lng']))
+            r.addPoint(Point(p['index'], p['nid'], p['lat'], p['lng']))
         self.roads.append(r)
 
-    def buildRoads(self, roadsPoints):
-        for points in roadsPoints:
-            self.addRoad(points)
+    def buildRoads(self, roads):
+        threshold = 0.01
+        for road in roads:
+            for point in road:
+                for road2 in roads:
+                    for point2 in road2:
+                        if point == point2:
+                            continue
+                        dist = utils.haversine(point['lat'], point['lng'], point2['lat'], point2['lng'])
+                        if dist < threshold:
+                            print point,point2
+                            point['lat'] = point2['lat']
+                            point['lng'] = point2['lng']
+
+            self.addRoad(road)
 
     def loadFromJson(self):
         dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -48,7 +61,6 @@ class MapGraph():
         self.graph = nx.Graph()
 
     def addNode(self, p):
-        p.nid = self.graph.number_of_nodes()
         self.graph.add_node(p.nid, point=p)
 
     def addEdge(self, p1, p2):
@@ -58,14 +70,17 @@ class MapGraph():
     def buildGraph(self, map):
         for road in map.roads:
             points = road.getPoints()
+            points = sorted(points, key=lambda el: el.index)
             self.addNode(points[0])
             for i in range(1,len(points)):
                 self.addNode(points[i])
                 self.addEdge(points[i-1], points[i])
+                self.addEdge(points[i], points[i-1])
+
         self.connectGraph()
 
     def connectGraph(self):
-        threshold = 0.01
+        threshold = 0.02
         for p1 in self.graph.nodes():
             for p2 in self.graph.nodes():
                 if p1 != p2:
@@ -74,7 +89,6 @@ class MapGraph():
                     dist = utils.haversine(
                         point1.lng, point1.lat, point2.lng, point2.lat)
                     if dist <= threshold:
-                        print p1, p2
                         self.addEdge(point1, point2)
 
         dist = nx.all_pairs_dijkstra_path(self.graph)
@@ -101,6 +115,7 @@ class MapGraph():
         except Exception as e:
             print "Didnt pind a path", e
             return None, -1
+
         for i in range(len(shortestPath)-1):
             w += self.graph[shortestPath[i]][shortestPath[i+1]]['weight']
 

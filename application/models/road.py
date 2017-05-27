@@ -1,3 +1,6 @@
+import json
+
+
 class Road():
     def __init__(self, rid, name, rType):
         self.id = rid
@@ -16,3 +19,6 @@ class Road():
 
     def __repr__(self):
         return "Road({}, {}, {})".format(self.id, self.name, len(self.points))
+
+    def toJSON(self):
+        return {'id': self.id, 'name': self.name, 'type': self.type, 'points': [p.toJSON() for p in self.points]}

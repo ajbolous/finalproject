@@ -19,17 +19,11 @@ def load(filePath):
 class Database():
     def __init__(self):
         self.machines = []
-        self.map = None
         self.missions = None
 
     def load(self):
 
         data = load('data.pkl')
-
-        self.map = data['map']
-        if self.map == None:
-            self.map = Map()
-            self.map.loadFromJson()
 
         self.machines = data['machines']
         if 'missions' in data:
@@ -39,7 +33,6 @@ class Database():
 
     def save(self):
         data = {
-            'map': self.map,
             'machines': self.machines,
             'missions': self.missions
         }
@@ -49,12 +42,6 @@ class Database():
 
     def getMachines(self):
         return self.machines
-
-    def getRoads(self):
-        return self.map['roads']
-
-    def getLocations(self):
-        return self.map['locations']
 
     def getMissions(self):
         return self.missions

@@ -1,9 +1,8 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 import json
-from main import Application
-from models.machine import Machine
-
+from application.main import Application
+from application.models.machine import Machine
 # Create your views here.
 
 

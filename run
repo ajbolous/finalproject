@@ -1,6 +1,6 @@
 
-
-
+echo "Setting up env"
+export PYTHONPATH=$PYTHONPATH:$(pwd)/application:$(pwd)
 echo "Stopping running servers"
 pkill python
 pkill gulp

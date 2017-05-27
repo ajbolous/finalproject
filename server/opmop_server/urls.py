@@ -29,9 +29,5 @@ urlpatterns = [
     url(r'^machines/get-all', machineViews.getMachines),
     url(r'^machines/delete', machineViews.deleteMachine),
     url(r'^maps/get-roads', mapViews.getRoads),
-    url(r'^maps/save-roads', mapViews.saveRoads),
-    url(r'^maps/get-shortest', mapViews.getShortestPath),
     url(r'^maps/add-location', mapViews.addLocation),
-    url(r'^maps/get-locations', mapViews.getLocations)
-
 ]

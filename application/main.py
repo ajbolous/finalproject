@@ -6,16 +6,14 @@ class Application():
     # static properties
     database = Database()
     map = Map()
-    graph = None
+    graph = MapGraph()
 
     @staticmethod
     def initialize():
         Application.database.load()
-        Application.map = Application.database.map
-        Application.graph = MapGraph()
+        Application.map.loadFromJson()
         Application.graph.buildGraph(Application.map)
-        Application.graph.drawMap()
-        
+
     @staticmethod
     def getMachines():
         return Application.database.getMachines()

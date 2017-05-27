@@ -1,6 +1,6 @@
 from models.mission import Mission
 from models.task import Task, DigTask, HaulageTask, LoadTask
-
+from models.map import Map
 from models.schedule import Schedule
 from database.database import Database
 from datetime import datetime
@@ -35,15 +35,17 @@ import random
 
 
 db = Database()
-
 db.load()
 
-l1 = db.map.getRoads()[random.randint(1, 10)].getPoints()[random.randint(1, 3)]
-l2 = db.map.getRoads()[random.randint(1, 10)].getPoints()[random.randint(1, 3)]
+map = Map()
+map.loadFromJson()
+
+l1 = map.getRoads()[random.randint(1, 20)].getPoints()[random.randint(1, 3)]
+l2 = map.getRoads()[random.randint(1, 20)].getPoints()[random.randint(1, 3)]
 
 
 mission = createMission("New mission", "dig", l1, l2, datetime(
-    2017, 5, 1, hour=0, minute=0, second=0), datetime(2017, 5, 10, hour=0, minute=0, second=0), 100000)
+    2017, 5, 1, hour=0, minute=0, second=0), datetime(2017, 5, 10, hour=0, minute=0, second=0), 10000)
 
 db.missions = [mission]
 
