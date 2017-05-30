@@ -1,23 +1,41 @@
 from flask import Flask, render_template
 from flask_socketio import SocketIO,send,emit
 import random
+from application.main import Application
+import threading
+import time
+
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret!'
-socketio = SocketIO(app,engineio_logger=True, host="0.0.0.0")
+app.config['SECRET_KEY'] = 'opmop_secret_key'
+socketio = SocketIO(app,host="0.0.0.0", async_mode='threading')
 
+
+def updateMachines():
+    data = [];
+    for machine in Application.getMachines():
+        data.append({'label': machine.id , 'value':machine.fuelCapacity})
+    socketio.emit('service_response',{'data': data})
 
 @socketio.on('service_pipe', namespace='/')
 def service_handler(message):
-    data = [];
-    for i in range(1,10):
-        data.append({'label':i, 'value':random.randint(1,100)})
-    emit('service_response',{'data': data})
+    return updateMachines()
 
 @socketio.on('echo_pipe', namespace='/')
 def echo_handler(message):
     emit('echo_response', {'data': message})
 
 
+
+def periodicUpdate():
+    with app.test_request_context():
+        from flask import request
+        while True:
+            time.sleep(5)    
+            updateMachines()
+
 if __name__ == '__main__':
+    th = threading.Thread(target=periodicUpdate)
+    th.start()
+
     socketio.run(app, host="0.0.0.0")

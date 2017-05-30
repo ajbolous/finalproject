@@ -139,33 +139,18 @@
 
 
         $ctrl.data3 = [{
-                key: "One",
-                y: 5
+                key: "Active",
+                y: 15
             },
             {
-                key: "Two",
+                key: "Waiting",
                 y: 2
             },
             {
-                key: "Three",
-                y: 9
+                key: "Repair",
+                y: 1
             },
-            {
-                key: "Four",
-                y: 7
-            },
-            {
-                key: "Five",
-                y: 4
-            },
-            {
-                key: "Six",
-                y: 3
-            },
-            {
-                key: "Seven",
-                y: .5
-            }
+
         ];
 
 
