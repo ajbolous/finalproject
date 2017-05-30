@@ -25,15 +25,15 @@ def randomPoint():
     return points[random.randint(0,len(points)-1)]
 
 for i in range(0, 5):
-    machines.append(Loader(i, 'TRX', 10000, random.randint(25,30), random.randint(800,1200), random.randint(8,12),random.randint(4,6),randomPoint(), True, random.randint(20,40), 10))
+    machines.append(Loader(i, 'TRX', 10000, random.randint(25,30), random.randint(600,1200), random.randint(8,12),random.randint(4,6),randomPoint(), True, random.randint(20,40), 10))
 
 for i in range(5, 10):
     p  = map.getRoads()[0].getPoints()[0]
-    machines.append(Shovel(i, 'ZXF', 10000, random.randint(15,22), random.randint(1000,1500), random.randint(16,20),random.randint(8,12),randomPoint(), True, random.randint(40,80), 50))
+    machines.append(Shovel(i, 'ZXF', 10000, random.randint(15,22), random.randint(800,1500), random.randint(16,20),random.randint(8,12),randomPoint(), True, random.randint(40,80), 50))
 
-for i in range(10, 50):
+for i in range(10, 20):
     p  = map.getRoads()[0].getPoints()[0]
-    machines.append(Truck(i, 'TRK1', 10000, random.randint(40,60), random.randint(600,800), random.randint(6,10),1,randomPoint(), True, random.randint(400,800), 500))
+    machines.append(Truck(i, 'TRK1', 10000, random.randint(40,60), random.randint(500,900), random.randint(6,10),1,randomPoint(), True, random.randint(400,800), 500))
 
 
 db.machines = machines
