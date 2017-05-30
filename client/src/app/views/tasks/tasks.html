@@ -1,22 +1,17 @@
 <div class="container" style="width:95%">
-    <div class="jumbotron">
-        <div>
-            <div>
-                <h2>Tasks Editor</h2>
-            </div>
-            <div style="position:relative; left:0px; padding-bottom:15px;">
-                <button class="btn btn-default" ng-click="$ctrl.addLocation()">Edit Roads</button>
 
-                <button class="btn btn-default" ng-click="$ctrl.toggleEditRoads()">Edit Roads</button>
-                <button class="btn btn-default" ng-click="$ctrl.addRoad()" ng-disabled="!$ctrl.editRoads">Add Road</button>
-                <button class="btn btn-error" ng-click="$ctrl.addRoad()" ng-disabled="!$ctrl.editRoads">Delete Road</button>
-                <button class="btn btn-primary" ng-click="$ctrl.exportRoads()">Export Roads</button>
-            </div>
+    <div class="top-menu">
+        <h2 class="top-title"><span class="fa fa-tasks"></span> Tasks Editor</h2>
+        <div class="top-toolbar">
+            <button class="btn btn-default" ng-click="$ctrl.addLocation()">Edit Roads</button>
+
+            <button class="btn btn-default" ng-click="$ctrl.toggleEditRoads()">Edit Roads</button>
+            <button class="btn btn-default" ng-click="$ctrl.addRoad()" ng-disabled="!$ctrl.editRoads">Add Road</button>
+            <button class="btn btn-error" ng-click="$ctrl.addRoad()" ng-disabled="!$ctrl.editRoads">Delete Road</button>
+            <button class="btn btn-primary" ng-click="$ctrl.exportRoads()">Export Roads</button>
         </div>
-
-        <div ui-grid="$ctrl.gridOptions" style="height:600px"></div>
-        <div style="position:relative; bottom:0px;"> Opmop<sup>Ⓒ</sup> Application <br> By: Ahdab Serhan & Bolous AbuJaber.</div>
-
     </div>
-
+    <hr class="lblue">
+    <div ui-grid="$ctrl.gridOptions" style="height:650px"></div>
 </div>
+<div class="bottom-footer"> Opmop<sup>Ⓒ</sup> Application <br> By: Ahdab Serhan & Bolous AbuJaber.</div>

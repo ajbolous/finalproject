@@ -3,7 +3,7 @@
  *  The list of variables are listed here bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_variables.scss
  */
 
-$navbar-inverse-link-color: #222;
+$navbar-inverse-link-color: #0071c5;
 $icon-font-path: "../../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
 
 /**
@@ -13,6 +13,11 @@ $icon-font-path: "../../bower_components/bootstrap-sass-official/assets/fonts/bo
 
 // bower:scss
 // endbower
+body {
+    padding-top: 55px;
+    background-color: #fafafa
+}
+
 .browsehappy {
     margin: 0.2em 0;
     background: #333;
@@ -28,25 +33,20 @@ $icon-font-path: "../../bower_components/bootstrap-sass-official/assets/fonts/bo
 }
 
 .navbar-default .navbar-nav>.active>a {
-    background-color: #222;
-}
-
-body {
-    padding-top: 55px;
-    background-color: #fff
+    background-color: #eee;
+    color: rgb(59, 120, 231) !important;
 }
 
 .jumbotron {
-    background-color: #eee;
     padding-top: 5px;
     width: 100%;
 }
 
 .navbar-default {
-    background-color: #333;
-    border-color: #333;
-    color: black;
-    color: deep;
+    background-color: rgb(59, 120, 231);
+    box-shadow: 0 5px 2px -2px #555;
+    border: none;
+    margin: 0;
 }
 
 .row-centered {
@@ -79,6 +79,50 @@ body {
 
 .delete-menu:hover {
     background: #eee;
+}
+
+.box {
+    padding: 5px 2px 2px 5px;
+    background-color: white;
+    min-height: 200px;
+    min-width: 100px;
+    margin: 5px 5px 5px 5px;
+    box-shadow: 0 4px 4px -4px #555, 0 -2px 8px -4px #555;
+    transition: box-shadow .2s;
+    -webkit-transition: box-shadow .2s;
+    -o-transition: box-shadow .2s;
+}
+
+.box:hover {
+    box-shadow: 0 5px 4px -4px rgb(59, 120, 231), 0 -2px 8px -4px rgb(59, 120, 231);
+}
+
+.top-menu {
+    width: 100%;
+    height: 50px;
+    margin-bottom: 15px;
+}
+
+.top-title {
+    color: #555;
+    font-weight: normal;
+    float: left
+}
+
+.top-toolbar {
+    float: right;
+    margin-top: 20px;
+}
+
+.bottom-footer {
+    position: absolute;
+    bottom: 0px;
+    left: 5px;
+}
+
+hr.lblue {
+    height: 1px;
+    background-image: linear-gradient(to right, rgb(59, 120, 231), #aaa, rgb(59, 120, 231));
 }
 
 

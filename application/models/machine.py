@@ -61,6 +61,7 @@ class Truck(Machine):
         self.loadCapacity = loadCapacity
         self.weightCapacity = weightCapacity
 
+
     def makeOffer(self, task, mapGraph):
         if not isinstance(task, HaulageTask):
             return False, []

@@ -1,50 +1,36 @@
 <div class="container" style="width:95%">
-    <div class="jumbotron">
-        <div>
-            <div>
-                <h2>Main</h2>
-            </div>
-            <div style="padding-top:10px; padding-bottom:5px; bottom:5px;">
-                <button class="btn btn-default" ng-click="$ctrl.addLocation()">Edit Roads</button>
 
-                <button class="btn btn-default" ng-click="$ctrl.toggleEditRoads()">Edit Roads</button>
-                <button class="btn btn-default" ng-click="$ctrl.addRoad()" ng-disabled="!$ctrl.editRoads">Add Road</button>
-                <button class="btn btn-error" ng-click="$ctrl.addRoad()" ng-disabled="!$ctrl.editRoads">Delete Road</button>
-                <button class="btn btn-primary" ng-click="$ctrl.exportRoads()">Export Roads</button>
-            </div>
-        </div>
+    <div class="top-menu">
+        <h2 class="top-title"><span class="fa fa-desktop"></span> Monitor</h2>
+        <div class="top-toolbar">
+            <button class="btn btn-default" ng-click="$ctrl.addLocation()">Edit Roads</button>
 
-        <div ui-calendar="$ctrl.uiConfig.calendar" ng-model="$ctrl.eventSources">
-
-
-            <div class="row">
-                <div class="col-sm-3" style="margin-top:20px; background-color:white;border:solid; border-color: whitesmoke; ; border-width:4px;">
-                    <h4>Work Days</h4>
-
-                    <div uib-datepicker ng-model="dt" class="well well-sm" datepicker-options="options" style="width:300px"></div>
-
-                </div>
-            </div>
-
-            <div class="row">
-
-                <div class="col-md-3" style="margin-top:20px; background-color:white;border:solid; border-color: whitesmoke; ; border-width:4px;">
-                    <h4>Machines</h4>
-                    <nvd3 options="$ctrl.options" data="$ctrl.data"></nvd3>
-                </div>
-                <div class="col-sm-4" style="margin-top:20px; background-color:white;border:solid; border-color: whitesmoke; ; border-width:4px;">
-                    <h4>Material</h4>
-
-                    <nvd3 options="$ctrl.options2" data="$ctrl.data2"></nvd3>
-                </div>
-                <div class="col-sm-2" style="margin-top:20px; background-color:white;border:solid; border-color: whitesmoke; ; border-width:4px;">
-                    <h4>Fuel</h4>
-
-                    <nvd3 options="$ctrl.options3" data="$ctrl.data3"></nvd3>
-                </div>
-            </div>
-
-            <div style="position:relative; bottom:0px;"> Opmop<sup>Ⓒ</sup> Application <br> By: Ahdab Serhan & Bolous AbuJaber.</div>
-
+            <button class="btn btn-default" ng-click="$ctrl.toggleEditRoads()">Edit Roads</button>
+            <button class="btn btn-default" ng-click="$ctrl.addRoad()" ng-disabled="!$ctrl.editRoads">Add Road</button>
+            <button class="btn btn-error" ng-click="$ctrl.addRoad()" ng-disabled="!$ctrl.editRoads">Delete Road</button>
+            <button class="btn btn-primary" ng-click="$ctrl.exportRoads()">Export Roads</button>
         </div>
     </div>
+    <hr class="lblue">
+
+    <div class="row">
+
+        <div class="col-md-3 box" style="margin-top:20px;">
+            <h4>Machines</h4>
+            <nvd3 options="$ctrl.options" data="$ctrl.data"></nvd3>
+        </div>
+
+        <div class="col-md-3 box" style="margin-top:20px;">
+            <h4>Material</h4>
+
+            <nvd3 options="$ctrl.options2" data="$ctrl.data2"></nvd3>
+        </div>
+        <div class="col-md-3 box" style="margin-top:20px;">
+            <h4>Fuel</h4>
+
+            <nvd3 options="$ctrl.options3" data="$ctrl.data3"></nvd3>
+        </div>
+    </div>
+</div>
+
+<div class="bottom-footer"> Opmop<sup>Ⓒ</sup> Application <br> By: Ahdab Serhan & Bolous AbuJaber.</div>

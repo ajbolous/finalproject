@@ -58,4 +58,7 @@ class Application():
 Application.initialize()
 
 Application.negotiation()
+
+for machine in Application.database.getMachines():
+    print machine, machine.getTasks()
 Application.database.save()
