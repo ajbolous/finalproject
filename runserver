@@ -5,4 +5,5 @@ echo "Stopping running servers"
 pkill python
 pkill gulp
 echo "Starting Django Server..."
-python server/manage.py runserver 0.0.0.0:8000
+python server/manage.py runserver 0.0.0.0:8000 &
+python server/wsserver.py

@@ -4,7 +4,7 @@ import random
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
-socketio = SocketIO(app,engineio_logger=True)
+socketio = SocketIO(app,engineio_logger=True, host="0.0.0.0")
 
 
 @socketio.on('service_pipe', namespace='/')
@@ -20,4 +20,4 @@ def echo_handler(message):
 
 
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(app, host="0.0.0.0")

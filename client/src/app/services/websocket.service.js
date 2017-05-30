@@ -11,6 +11,7 @@
 
         function _connect(ip, port, namespace) {
             socket = io.connect("http://" + ip + ":" + port + namespace);
+		$log.debug("trying to connect to", ip );
             socket.on('connect', function() {
                 $log.debug("WebSocket connected");
             });
