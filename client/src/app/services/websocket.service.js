@@ -11,7 +11,7 @@
 
         function _connect(ip, port, namespace) {
             socket = io.connect("http://" + ip + ":" + port + namespace);
-		$log.debug("trying to connect to", ip );
+            $log.debug("trying to connect to", ip);
             socket.on('connect', function() {
                 $log.debug("WebSocket connected");
             });
@@ -35,9 +35,9 @@
             topics[topic].push(handler)
         }
 
-        return {
+        _connect(SERVERIP, 5000, '/');
 
-            connect: _connect,
+        return {
             send: _send,
             listen: _listen
         }

@@ -9,14 +9,14 @@
 
         $ctrl.eventSources = [];
 
-        WebSocket.connect(SERVERIP, 5000, '/');
         WebSocket.listen("service_response", function(response) {
             $log.debug(response);
-            $ctrl.data = [{ key: "Data", values: response.data }]
-        })
+            $ctrl.data = [{ key: "Data", values: response.data }];
+            $scope.$apply();
+        });
+
         $ctrl.refresh = function() {
             WebSocket.send("service_pipe", { data: "hello" });
-
         }
 
         $ctrl.uiConfig = {

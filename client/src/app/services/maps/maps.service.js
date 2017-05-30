@@ -54,12 +54,12 @@
                 strokeWeight: width
             });
             road.setMap(map);
-            $log.debug(path);
+
             var i = 0;
             road.getPath().forEach(function(v) {
                 v.id = path[i].id;
                 i++;
-                $log.debug(v);
+
             })
 
             google.maps.event.addListener(road, 'rightclick', function(e) {
@@ -67,8 +67,6 @@
                 if (e.vertex == undefined) {
                     return;
                 }
-                $log.debug(e.vertex);
-                $log.debug(road.getPath().getAt(e.vertex));
                 mapMenu.open(map, road.getPath(), e.vertex);
             });
             return road;
@@ -103,7 +101,7 @@
         methods.buildLocations = function() {
             return methods.getLocations().then(function(locations) {
                 locations.forEach(function(location) {
-                    $log.debug(location);
+
                     var marker = new google.maps.Marker({
                         position: { lat: location.lat, lng: location.lng },
                         map: map,
@@ -135,9 +133,8 @@
         methods.buildRoads = function() {
             return methods.getNodes().then(function(response) {
                 roads = [];
-                $log.error(response);
+
                 response.data.forEach(function(road) {
-                    $log.info(road.points)
                     roads.push(methods.addRoad(road.points, '#0000aa', 0.4, false, 4));
                 });
             });
