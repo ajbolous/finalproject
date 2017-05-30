@@ -14,7 +14,7 @@ $icon-font-path: "../../bower_components/bootstrap-sass-official/assets/fonts/bo
 // bower:scss
 // endbower
 body {
-    padding-top: 55px;
+    padding-top: 50px;
     background-color: #fafafa
 }
 
@@ -33,8 +33,9 @@ body {
 }
 
 .navbar-default .navbar-nav>.active>a {
-    background-color: #eee;
+    background-color: #fafafa;
     color: rgb(59, 120, 231) !important;
+    font-size: 16px;
 }
 
 .jumbotron {
@@ -44,9 +45,10 @@ body {
 
 .navbar-default {
     background-color: rgb(59, 120, 231);
-    box-shadow: 0 5px 2px -2px #555;
+    box-shadow: 0 5px 4px -4px rgb(59, 120, 231), 0 -4px 8px -4px rgb(59, 120, 231);
     border: none;
-    margin: 0;
+    height: 40px;
+    font-size: 16px;
 }
 
 .row-centered {
@@ -87,20 +89,20 @@ body {
     min-height: 200px;
     min-width: 100px;
     margin: 5px 5px 5px 5px;
-    box-shadow: 0 4px 4px -4px #555, 0 -2px 8px -4px #555;
+    box-shadow: 0 4px 4px -4px #333, 0 -2px 8px -4px #222;
     transition: box-shadow .2s;
     -webkit-transition: box-shadow .2s;
     -o-transition: box-shadow .2s;
 }
 
 .box:hover {
-    box-shadow: 0 5px 4px -4px rgb(59, 120, 231), 0 -2px 8px -4px rgb(59, 120, 231);
+    box-shadow: 0 5px 4px -4px rgb(59, 120, 231), 0 -4px 8px -4px rgb(59, 120, 231);
 }
 
 .top-menu {
     width: 100%;
     height: 50px;
-    margin-bottom: 15px;
+    margin-bottom: 0px;
 }
 
 .top-title {
@@ -115,14 +117,14 @@ body {
 }
 
 .bottom-footer {
-    position: absolute;
+    position: fixed;
     bottom: 0px;
     left: 5px;
 }
 
 hr.lblue {
-    height: 1px;
-    background-image: linear-gradient(to right, rgb(59, 120, 231), #aaa, rgb(59, 120, 231));
+    height: 2px;
+    background-image: linear-gradient(to right, rgb(59, 120, 231), #ccc, rgb(59, 120, 231));
 }
 
 
