@@ -1,4 +1,5 @@
 cd client
+sed -i '1s/.*/var SERVERIP = "35.187.116.168";/' src/app/index.config.js
 gulp build
 sudo cp -r dist/* /var/www/html
 cd ..

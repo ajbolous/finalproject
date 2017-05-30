@@ -1,4 +1,4 @@
-    var SERVERIP = "35.187.116.168"
+var SERVERIP="35.187.116.168"
     var DJANGOURL = "http://" + SERVERIP + ":8000";
 
     (function() {
