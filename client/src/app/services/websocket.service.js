@@ -5,33 +5,33 @@
         .module('opmopApp')
         .service('WebSocket', WebSocket);
 
-    function WebSocket($q, $http) {
+    function WebSocket($q, $http, $log) {
         var socket = undefined;
         var topics = {};
 
-        function connect(ip, port, namespace) {
-            socket = io.connect("http://" + ip + ":" + port + "/" + namespace);
-            socket.on('connect', function(message) {
-                $log.debug("WebSocket connected", message);
+        function _connect(ip, port, namespace) {
+            socket = io.connect("http://" + ip + ":" + port + namespace);
+            socket.on('connect', function() {
+                $log.debug("WebSocket connected");
             });
         }
 
         function _send(topic, message) {
-
+            socket.emit(topic, message);
         }
 
-        function _listen(topic) {
-            if (topic in topics == false) {
+        function _listen(topic, handler) {
+            if ((topic in topics) == false) {
                 topics[topic] = [];
                 var topicHandlers = topics[topic];
                 socket.on(topic, function(message) {
-                    for (var handler in topicHandlers) {
-                        handler(message);
-                        $log.debug(message, handler);
-                    }
+                    topicHandlers.forEach(function(h) {
+                        h(message);
+                    });
                 });
             }
-
+            $log.debug(handler);
+            topics[topic].push(handler)
         }
 
         return {

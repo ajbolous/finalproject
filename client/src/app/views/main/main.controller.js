@@ -4,11 +4,20 @@
     angular.module('opmopApp').controller('MainController', MainController);
 
     /** @ngInject */
-    function MainController(toastr, $scope, $log) {
+    function MainController(toastr, $scope, $log, WebSocket) {
         var $ctrl = this;
 
         $ctrl.eventSources = [];
 
+        WebSocket.connect(SERVERIP, 5000, '/');
+        WebSocket.listen("service_response", function(response) {
+            $log.debug(response);
+            $ctrl.data = [{ key: "Data", values: response.data }]
+        })
+        $ctrl.refresh = function() {
+            WebSocket.send("service_pipe", { data: "hello" });
+
+        }
 
         $ctrl.uiConfig = {
             calendar: {

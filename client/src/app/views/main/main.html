@@ -3,12 +3,7 @@
     <div class="top-menu">
         <h2 class="top-title"><span class="fa fa-desktop"></span> Monitor</h2>
         <div class="top-toolbar">
-            <button class="btn btn-default" ng-click="$ctrl.addLocation()">Edit Roads</button>
-
-            <button class="btn btn-default" ng-click="$ctrl.toggleEditRoads()">Edit Roads</button>
-            <button class="btn btn-default" ng-click="$ctrl.addRoad()" ng-disabled="!$ctrl.editRoads">Add Road</button>
-            <button class="btn btn-error" ng-click="$ctrl.addRoad()" ng-disabled="!$ctrl.editRoads">Delete Road</button>
-            <button class="btn btn-primary" ng-click="$ctrl.exportRoads()">Export Roads</button>
+            <button class="btn btn-success" ng-click="$ctrl.refresh()">Refresh</button>
         </div>
     </div>
     <hr class="lblue">
