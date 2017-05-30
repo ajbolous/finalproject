@@ -16,6 +16,5 @@ with open(dir_path + '/roads.json','r') as data:
             road.append({'nid':i, 'index': j, 'lat':point['lat'], 'lng':point['lng']})
         roadsIds.append(road)
 
-print roadsIds
 with open(dir_path + '/roads.json','w') as data:
     json.dump(roadsIds, data)

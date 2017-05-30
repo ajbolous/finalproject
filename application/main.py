@@ -56,9 +56,3 @@ class Application():
                     remaining-= stask.amount
 
 Application.initialize()
-
-Application.negotiation()
-
-for machine in Application.database.getMachines():
-    print machine, machine.getTasks()
-Application.database.save()

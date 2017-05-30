@@ -32,7 +32,6 @@ class Map():
                             continue
                         dist = utils.haversine(point['lat'], point['lng'], point2['lat'], point2['lng'])
                         if dist < threshold:
-                            print point,point2
                             point['lat'] = point2['lat']
                             point['lng'] = point2['lng']
 
@@ -96,7 +95,6 @@ class MapGraph():
             for k2 in dist:
                 if k2 not in dist[k1]:
                     continue
-                    print k1,k2
 
     def drawMap(self):
         pos = {}
@@ -113,7 +111,7 @@ class MapGraph():
         try:
             shortestPath = nx.dijkstra_path(self.graph, source, dest)
         except Exception as e:
-            print "Didnt pind a path", e
+            print "Didnt find a path", e
             return None, -1
 
         for i in range(len(shortestPath)-1):
