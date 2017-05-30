@@ -2,7 +2,7 @@
 
     <div class="container-fluid">
         <div class="navbar-header">
-            <img src="../../../assets/images/icon.png" style="height: 50px;width:60px;"><span style="font-weight:bolder;color:white;margin-right:10px;">OPMOP</span>
+            <img src="../../../assets/images/icon.png" style="height: 50px;width:60px;"><span style="margin-top:10px;font-weight:bolder;color:white;margin-right:10px; font-size: 12px;"></span>
 
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainnavbar" style="background-color: #fafafa; color:#fafafa">
                     <span class="icon-bar"></span>
@@ -15,8 +15,13 @@
         <div class="collapse navbar-collapse" id="mainnavbar">
 
             <ul class="nav navbar-nav">
-                <li ng-repeat="link in $ctrl.links" ng-class="{'active' : link.active}" ng-click="$ctrl.selectLink(link)">
-                    <a href style="color:aliceblue">{{link.label}}</a>
+                <li ng-repeat="link in $ctrl.leftLinks" ng-class="{'active' : link.active}" ng-click="$ctrl.selectLink(link)">
+                    <a href style="color:aliceblue"><span class="fa {{link.icon}}"></span> {{link.label}}</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-repeat="link in $ctrl.rightLinks" ng-class="{'active' : link.active}" ng-click="$ctrl.selectLink(link)">
+                    <a href style="color:aliceblue"><span class="fa {{link.icon}}"></span> {{link.label}}</a>
                 </li>
             </ul>
         </div>
