@@ -4,14 +4,14 @@ from models.task import HaulageTask, LoadTask, DigTask, SubTask
 
 
 class Machine():
-    def __init__(self, id, model, weight, speed, fuelCapacity,  fuelConsumption, staticFeulConsupmtion, location, isAvailable):
+    def __init__(self, id, model, weight, speed, fuelCapacity,  fuelConsumption, staticFuelConsupmtion, location, isAvailable):
         self.id = id
         self.model = model
         self.weight = weight
         self.speed = speed
         self.fuelCapacity = fuelCapacity
         self.fuelConsumption = fuelConsumption
-        self.staticFeulConsupmtion = staticFeulConsupmtion
+        self.staticFuelConsupmtion = staticFuelConsupmtion
         self.location = location
         self.isAvailable = isAvailable
         self.tasks = []
@@ -50,17 +50,33 @@ class Machine():
         return "{}({},{})".format(self.__class__, self.id, self.model)
 
     def toJSON(self):
-        return json.dumps(self, default=lambda o: o.__dict__)
+        return {
+            'id':self.id,
+            'model': self.model,
+            'weight': self.weight,
+            'speed':self.speed,
+            'fuelCapacity':self.fuelCapacity,
+            'fuelConsumption':self.fuelConsumption,
+            'staticFuelConsumption':self.staticFuelConsupmtion,
+            'location': self.location.toJSON(),
+            'tasks': len(self.tasks)
+        }
 
 
 class Truck(Machine):
 
-    def __init__(self, id, model, weight, speed, fuelCapacity, feulConsumption, staticFeulConsupmtion, location, isAvailable, weightCapacity,  loadCapacity):
+    def __init__(self, id, model, weight, speed, fuelCapacity, feulConsumption, staticFuelConsupmtion, location, isAvailable, weightCapacity,  loadCapacity):
         Machine.__init__(self, id, model, weight, speed,
-                         fuelCapacity, feulConsumption, staticFeulConsupmtion, location, isAvailable)
+                         fuelCapacity, feulConsumption, staticFuelConsupmtion, location, isAvailable)
         self.loadCapacity = loadCapacity
         self.weightCapacity = weightCapacity
 
+    def toJSON(self):
+        machine = Machine.toJSON(self)
+        machine['type'] = 'truck'
+        machine['loadCapacity'] = self.loadCapacity
+        machine['weightCapacity'] = self.weightCapacity
+        return machine
 
     def makeOffer(self, task, mapGraph):
         if not isinstance(task, HaulageTask):
@@ -94,7 +110,6 @@ class Truck(Machine):
 
         avgAmount = loadSize / numberOfTravels
 
-
         for window in windows:
             stask = SubTask(window[0], window[1],
                             task.location, self, avgAmount, tripCost)
@@ -111,12 +126,19 @@ class Truck(Machine):
 
 class Shovel(Machine):
 
-    def __init__(self, id, model, weight, speed, fuelCapacity, fuelConsumption, staticFeulConsupmtion, location, isAvailable,  digRate, power):
+    def __init__(self, id, model, weight, speed, fuelCapacity, fuelConsumption, staticFuelConsupmtion, location, isAvailable,  digRate, power):
         Machine.__init__(self, id, model, weight, speed, fuelCapacity,
-                         fuelConsumption, staticFeulConsupmtion, location, isAvailable)
+                         fuelConsumption, staticFuelConsupmtion, location, isAvailable)
 
         self.digRate = digRate
         self.power = power
+
+    def toJSON(self):
+        machine = Machine.toJSON(self)
+        machine['type'] = 'shovel'
+        machine['digRate'] = self.digRate
+        machine['power'] = self.power
+        return machine
 
     def makeOffer(self, task, mapGraph):
         if not isinstance(task, DigTask):
@@ -127,11 +149,13 @@ class Shovel(Machine):
 
         consumedFuel = distance * self.fuelConsumption
         travelTime = distance / self.speed
+
         digTime = task.amount / self.digRate
         digTime = min(digTime,8)
+        
         totalTime = travelTime + digTime
 
-        consumedFuel += (digTime * self.staticFeulConsupmtion)
+        consumedFuel += (digTime * self.staticFuelConsupmtion)
         tripCost = totalTime * 100 + consumedFuel * 10 + distance * 10
 
         windows = Machine.getTimeWindows(self, task.startTime,  totalTime)
@@ -143,11 +167,19 @@ class Shovel(Machine):
 
 
 class Loader(Machine):
-    def __init__(self, id, model, weight, speed, fuelCapacity, fulConsumption, staticFeulConsupmtion, location, isAvailable,  weightCapacity, loadCapacity):
+    def __init__(self, id, model, weight, speed, fuelCapacity, fulConsumption, staticFuelConsupmtion, location, isAvailable,  weightCapacity, loadCapacity):
         Machine.__init__(self, id, model, weight, speed,
-                         fuelCapacity, fulConsumption, staticFeulConsupmtion, location, isAvailable)
+                         fuelCapacity, fulConsumption, staticFuelConsupmtion, location, isAvailable)
         self.weightCapacity = weightCapacity
         self.loadCapacity = loadCapacity
+
+
+    def toJSON(self):
+        machine = Machine.toJSON(self)
+        machine['type'] = 'loader'
+        machine['weightCapacity'] = self.weightCapacity
+        machine['loadCapacity'] = self.loadCapacity
+        return machine
 
     def makeOffer(self, task, mapGraph):
         if not isinstance(task, LoadTask):
@@ -162,7 +194,7 @@ class Loader(Machine):
         loadTime = min(loadTime,8)
         totalTime = travelTime + loadTime
 
-        consumedFuel += (loadTime * self.staticFeulConsupmtion)
+        consumedFuel += (loadTime * self.staticFuelConsupmtion)
         tripCost = totalTime * 100 + consumedFuel * 10 + distance * 10
 
         windows = Machine.getTimeWindows(self, task.startTime,  totalTime)

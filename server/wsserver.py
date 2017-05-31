@@ -11,12 +11,6 @@ app.config['SECRET_KEY'] = 'opmop_secret_key'
 socketio = SocketIO(app,host="0.0.0.0", async_mode='threading')
 
 
-def updateMachines():
-    data = [];
-    for machine in Application.getMachines():
-        data.append({'label': machine.id , 'value':machine.fuelConsumption})
-    socketio.emit('service_response',{'data': data})
-
 @socketio.on('service_pipe', namespace='/')
 def service_handler(message):
     return updateMachines()
@@ -25,6 +19,11 @@ def service_handler(message):
 def echo_handler(message):
     emit('echo_response', {'data': message})
 
+def updateMachines():
+    data = [];
+    for machine in Application.getMachines():
+        data.append({'label': machine.id , 'value':machine.fuelCapacity})
+    socketio.emit('service_response',{'data': data})
 
 
 def periodicUpdate():
