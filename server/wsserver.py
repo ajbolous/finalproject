@@ -14,7 +14,7 @@ socketio = SocketIO(app,host="0.0.0.0", async_mode='threading')
 def updateMachines():
     data = [];
     for machine in Application.getMachines():
-        data.append({'label': machine.id , 'value':machine.fuelCapacity})
+        data.append({'label': machine.id , 'value':machine.fuelConsumption})
     socketio.emit('service_response',{'data': data})
 
 @socketio.on('service_pipe', namespace='/')
