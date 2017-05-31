@@ -37,16 +37,19 @@ class Application():
         for task in sched.getTasks():
             remaining = task.amount
             while remaining>0:
-                maxOffer = None
+                maxOffer, maxMachine = None, None
                 for machine in machines:
                     offer = machine.makeOffer(task, Application.graph)
                     if offer[0] == False:
                         continue
                     if maxOffer == None:
                         maxOffer = offer
+                        maxMachine = machine
                     elif maxOffer[2] > offer[2]:
                         maxOffer = offer
+                        maxMachine = machine
 
+                print ("Machine: {}\n Task:{}\n Offer : {}".format(maxMachine,task, maxOffer))
                 if maxOffer == None:
                     print "Didnt allocate all, remaining {}".format(remaining)
                     break
@@ -56,3 +59,4 @@ class Application():
                     remaining-= stask.amount
 
 Application.initialize()
+Application.negotiation()

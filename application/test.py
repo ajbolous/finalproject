@@ -14,6 +14,7 @@ map.loadFromJson()
 g = MapGraph()
 g.buildGraph(map)
 
+g.drawMap()
 
 machines = []
 

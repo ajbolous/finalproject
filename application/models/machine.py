@@ -76,16 +76,17 @@ class Truck(Machine):
         loadWeight = task.amount
         averageFillTime = 1
 
-        windows = Machine.getTimeWindows(
-            self, task.startTime, travelTime + averageFillTime)
-
+   
         numberOfTravels = loadWeight / self.weightCapacity
         numberOfTravels = max(numberOfTravels,1)
-        numberOfTravels = max(numberOfTravels, loadSize / self.loadCapacity)
         numberOfRefeuls = (consumedFuel * numberOfTravels) / self.fuelCapacity
 
         tripTime = travelTime + averageFillTime + \
             (numberOfRefeuls * 1) / numberOfTravels
+
+        windows = Machine.getTimeWindows(
+            self, task.startTime, tripTime)
+
 
         tripCost = tripTime * 100 + consumedFuel * 10 + distance * 10
 

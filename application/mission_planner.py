@@ -45,7 +45,7 @@ l2 = map.getRoads()[random.randint(1, 20)].getPoints()[random.randint(1, 3)]
 
 
 mission = createMission("New mission", "dig", l1, l2, datetime(
-    2017, 5, 1, hour=0, minute=0, second=0), datetime(2017, 5, 10, hour=0, minute=0, second=0), 10000)
+    2017, 5, 1, hour=0, minute=0, second=0), datetime(2017, 5, 2, hour=0, minute=0, second=0), 10000)
 
 db.missions = [mission]
 

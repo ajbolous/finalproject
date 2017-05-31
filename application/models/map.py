@@ -79,7 +79,7 @@ class MapGraph():
         self.connectGraph()
 
     def connectGraph(self):
-        threshold = 0.02
+        threshold = 0.01
         for p1 in self.graph.nodes():
             for p2 in self.graph.nodes():
                 if p1 != p2:
@@ -101,7 +101,7 @@ class MapGraph():
         for node in self.graph.nodes():
             pos[node] = (self.graph.node[node]['point'].lat,
                          self.graph.node[node]['point'].lng)
-        nx.draw(self.graph, pos, node_size=20)
+        nx.draw(self.graph, pos, node_size=20, with_labels=True)
         import matplotlib.pyplot as plt
         plt.show()
 
