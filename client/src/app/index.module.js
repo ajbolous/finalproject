@@ -3,8 +3,6 @@
 
     angular
         .module('opmopApp', [
-            'frapontillo.gage',
-            'jsonFormatter',
             'ngAnimate',
             'ngCookies',
             'ngTouch',
@@ -14,7 +12,6 @@
             'ui.bootstrap',
             'ui.toggle',
             'ui.grid',
-            'vAccordion',
             'ui.grid.selection',
             'nvd3',
             'ui.calendar'

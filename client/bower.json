@@ -17,16 +17,14 @@
     "angular": "^1.6.4",
     "fontawesome": "~4.3.0",
     "angular-markdown-filter": "~1.2.0",
-    "roslib": "^0.18.0",
     "angular-gage": "^0.1.0",
     "angular-route": "^1.6.1",
     "ui-bootstrap": "^2.4.0",
-    "json-formatter": "^0.6.0",
-    "v-accordion": "^1.6.0",
     "angular-bootstrap-toggle": "^0.1.2",
     "angular-ui-grid": "^4.0.4",
     "angular-nvd3": "^1.0.9",
-    "angular-ui-calendar": "^1.0.2"
+    "angular-ui-calendar": "^1.0.2",
+    "bootstrap": "^3.3.7"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.0"
