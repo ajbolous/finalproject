@@ -4,9 +4,15 @@
     angular.module('opmopApp').controller('MachinesController', MachinesController);
 
     /** @ngInject */
-    function MachinesController(toastr, $scope, $log, $uibModal, MachinesService) {
+    function MachinesController(toastr, $scope, $log, $uibModal, MachinesService, ngProgressFactory) {
         var $ctrl = this;
         $ctrl.selectedMachine;
+        $ctrl.machines = []
+
+        $ctrl.progressbar = ngProgressFactory.createInstance();
+        $ctrl.progressbar.start();
+
+
         $ctrl.gridOptions = {
             enableFiltering: true,
             enableRowSelection: true,
@@ -26,7 +32,9 @@
 
         $ctrl.refreshMachines = function() {
             MachinesService.getAll().then(function(response) {
-                $ctrl.gridOptions.data = response.data;
+                $ctrl.machines = response.data;
+                $ctrl.gridOptions.data = $ctrl.machines;
+                $ctrl.progressbar.complete();
             });
         }
 

@@ -85,8 +85,6 @@ body {
 .box {
     padding: 5px 2px 2px 5px;
     background-color: white;
-    min-height: 200px;
-    min-width: 100px;
     margin: 5px 5px 5px 5px;
     box-shadow: 0 4px 4px -4px #333, 0 -2px 8px -4px #222;
     transition: box-shadow .2s;
@@ -124,6 +122,29 @@ body {
 hr.lblue {
     height: 2px;
     background-image: linear-gradient(to right, rgb(59, 120, 231), #ccc, rgb(59, 120, 231));
+    -webkit-transition: width 1s ease-out;
+    /* For Safari 3.1 to 6.0 */
+    transition: width 1s ease-out;
+}
+
+#ngProgress-container {
+    top: 51px;
+    opacity: 0.95;
+    z-index: 1000;
+}
+
+.expanding-machine {
+    margin: 4px 4px 4px 4px;
+    margin-top: 0px;
+    width: 280px;
+    height: 80px;
+    transition: height 0.4s ease-out;
+    overflow: hidden;
+}
+
+.expanding-machine:hover {
+    height: 200px;
+    overflow: auto;
 }
 
 

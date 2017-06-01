@@ -4,13 +4,19 @@
     angular.module('opmopApp').controller('MapsController', MapsController);
 
     /** @ngInject */
-    function MapsController(toastr, $scope, $log, $uibModal, MapsService) {
+    function MapsController(toastr, $scope, $log, $uibModal, MapsService, ngProgressFactory) {
         var $ctrl = this;
+
+        $ctrl.progressbar = ngProgressFactory.createInstance();
+        $ctrl.progressbar.start();
+
 
         $ctrl.editRoads = false;
 
         MapsService.initMap();
-        MapsService.buildRoads();
+        MapsService.buildRoads().then(function() {
+            $ctrl.progressbar.complete()
+        });
         MapsService.setEditRoads($ctrl.editRoads);
 
         $ctrl.toggleEditRoads = function() {

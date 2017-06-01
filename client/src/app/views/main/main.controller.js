@@ -4,20 +4,23 @@
     angular.module('opmopApp').controller('MainController', MainController);
 
     /** @ngInject */
-    function MainController(toastr, $scope, $log, WebSocket) {
+    function MainController(toastr, $scope, $log, WebSocket, ngProgressFactory) {
         var $ctrl = this;
 
         $ctrl.eventSources = [];
 
+        $ctrl.progressbar = ngProgressFactory.createInstance();
+        $ctrl.progressbar.start();
+
         WebSocket.listen("service_response", function(response) {
-            $log.debug(response);
             $ctrl.data = [{ key: "Data", values: response.data }];
-            $scope.$apply();
+            $ctrl.progressbar.complete();
         });
 
         $ctrl.refresh = function() {
             WebSocket.send("service_pipe", { data: "hello" });
         }
+
 
         $ctrl.uiConfig = {
             calendar: {
@@ -178,9 +181,7 @@
             return data;
         }
 
-
         $ctrl.data2 = generateData(4, 40);
-
     }
 
 })();

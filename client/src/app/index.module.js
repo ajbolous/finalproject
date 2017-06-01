@@ -14,7 +14,8 @@
             'ui.grid',
             'ui.grid.selection',
             'nvd3',
-            'ui.calendar'
+            'ui.calendar',
+            'ngProgress'
         ]);
 
 })();
