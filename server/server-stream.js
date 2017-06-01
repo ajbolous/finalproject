@@ -40,7 +40,6 @@ socketServer.on('connection', function(socket) {
 });
 
 socketServer.broadcast = function(data, opts) {
-    console.log(data, clients);
     for (var i in clients) {
         if (clients[i].readyState == 1) {
             if ('base64' == STREAM_FORMAT) {
@@ -71,7 +70,6 @@ var streamServer = require('http').createServer(function(request, response) {
             request.on('data', function(chunk) {
                 data.push(chunk);
                 dataLen += chunk.length;
-                console.log(dataLen);
             });
 
             request.on('end', function(chunk) {
@@ -88,15 +86,8 @@ var streamServer = require('http').createServer(function(request, response) {
             // broadcast data in binary format
         } else {
 
-            console.log(
-                'Stream Connected: ' + request.socket.remoteAddress +
-                ':' + request.socket.remotePort + ' size: ' + width + 'x' + height
-            );
-
-            request.on('data', function(date) {
-
-                socketServer.broadcast(date, { binary: true });
-
+            request.on('data', function(data) {
+                socketServer.broadcast(data, { binary: true });
             });
 
         }

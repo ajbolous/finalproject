@@ -8,7 +8,7 @@ pkill node
 echo "Starting Django Server..."
 python server/manage.py runserver 0.0.0.0:8000 &
 python server/wsserver.py &
-node server/server-stream.js 311988 8082 8084 base64&
+node server/server-stream.js 311988 8082 8084 &
 cd client
 echo "Starting HTTP server gulp"
 gulp serve&

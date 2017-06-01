@@ -13,17 +13,19 @@
         $ctrl.progressbar.start();
 
         var client = new WebSocket('ws://' + SERVERIP + ':8084/');
-        client.onmessage = function onmessage(event) {
-            if (event.data.size === undefined) {
-                var canvas = document.getElementById('videoCanvas');
-                var context = canvas.getContext('2d');
-                var imageObj = new Image();
-                imageObj.onload = function() {
-                    context.drawImage(imageObj, 0, 0, 640, 480);
-                };
-                imageObj.src = event.data;
-            }
-        }
+        var canvas = document.getElementById('videoCanvas');
+        var player = new jsmpeg(client, { canvas: canvas });
+        // client.onmessage = function onmessage(event) {
+        //     if (event.data.size === undefined) {
+        //         var canvas = document.getElementById('videoCanvas');
+        //         var context = canvas.getContext('2d');
+        //         var imageObj = new Image();
+        //         imageObj.onload = function() {
+        //             context.drawImage(imageObj, 0, 0, 640, 480);
+        //         };
+        //         imageObj.src = event.data;
+        //     }
+        // }
 
 
         $ctrl.uiConfig = {
