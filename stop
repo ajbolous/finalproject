@@ -2,3 +2,4 @@ pkill python
 echo "Stopping Django Server"
 pkill gulp
 echo "Stopping gulp, Http Server"
+pkill node

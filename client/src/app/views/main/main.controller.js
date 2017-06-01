@@ -4,7 +4,7 @@
     angular.module('opmopApp').controller('MainController', MainController);
 
     /** @ngInject */
-    function MainController(toastr, $scope, $log, WebSocket, ngProgressFactory) {
+    function MainController(toastr, $scope, $log, ngProgressFactory) {
         var $ctrl = this;
 
         $ctrl.eventSources = [];
@@ -12,13 +12,17 @@
         $ctrl.progressbar = ngProgressFactory.createInstance();
         $ctrl.progressbar.start();
 
-        WebSocket.listen("service_response", function(response) {
-            $ctrl.data = [{ key: "Data", values: response.data }];
-            $ctrl.progressbar.complete();
-        });
-
-        $ctrl.refresh = function() {
-            WebSocket.send("service_pipe", { data: "hello" });
+        var client = new WebSocket('ws://' + SERVERIP + ':8084/');
+        client.onmessage = function onmessage(event) {
+            if (event.data.size === undefined) {
+                var canvas = document.getElementById('videoCanvas');
+                var context = canvas.getContext('2d');
+                var imageObj = new Image();
+                imageObj.onload = function() {
+                    context.drawImage(imageObj, 0, 0, 640, 480);
+                };
+                imageObj.src = event.data;
+            }
         }
 
 
