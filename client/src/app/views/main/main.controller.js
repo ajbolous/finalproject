@@ -4,7 +4,7 @@
     angular.module('opmopApp').controller('MainController', MainController);
 
     /** @ngInject */
-    function MainController(toastr, $scope, $log, ngProgressFactory) {
+    function MainController(toastr, $scope, $log, ngProgressFactory, TasksService) {
         var $ctrl = this;
 
         $ctrl.eventSources = [];
@@ -13,8 +13,26 @@
         $ctrl.progressbar.start();
 
         $ctrl.player = new jsmpeg(new WebSocket('ws://' + SERVERIP + ':8084/'), { canvas: document.getElementById('videoCanvas') });
+        $ctrl.events = [{ title: 'All Day Event', startsAt: new Date(2017, 5, 1) }];
 
+        $ctrl.calendarView = "month";
+        $ctrl.viewDate = new Date(2017, 5, 1, 9);
 
+        $ctrl.taskTypes = {
+            'dig': true,
+            'haulage': true,
+            'load': true
+        }
+
+        $ctrl.refresh = function() {
+            TasksService.getMissionEvents($ctrl.taskTypes).then(function(data) {
+                $log.debug(data)
+                $ctrl.events = data.events;
+                $ctrl.mission = data.mission;
+                $ctrl.progressbar.complete();
+            });
+        }
+        $ctrl.refresh();
 
         $ctrl.options = {
             chart: {
@@ -160,6 +178,8 @@
         }
 
         $ctrl.data2 = generateData(4, 40);
+
+        $ctrl.progressbar.complete();
     }
 
 })();

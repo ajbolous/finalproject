@@ -4,7 +4,7 @@
     angular.module('opmopApp').controller('MapsController', MapsController);
 
     /** @ngInject */
-    function MapsController(toastr, $scope, $log, $uibModal, MapsService, ngProgressFactory) {
+    function MapsController(toastr, $scope, $log, $uibModal, MapsService, MachinesService, ngProgressFactory) {
         var $ctrl = this;
 
         $ctrl.progressbar = ngProgressFactory.createInstance();
@@ -57,6 +57,15 @@
         }
 
 
+        MachinesService.getAll().then(function(response) {
+            var machines = response.data;
+            var locations = []
+            machines.forEach(function(machine) {
+
+                locations.push({ location: machine.location, machine: machine })
+            });
+            MapsService.addLocationsToMap(locations);
+        })
 
         MapsService.addMapMenuOption('Set Location', $ctrl.addLocation);
 

@@ -92,39 +92,52 @@
         }
 
         methods.getLocations = function() {
-
             return $http.get(DJANGOURL + '/maps/get-locations').then(function(response) {
                 return response.data;
             });
         }
 
-        methods.buildLocations = function() {
-            return methods.getLocations().then(function(locations) {
-                locations.forEach(function(location) {
+        methods.addLocationsToMap = function(locations) {
+            locations.forEach(function(location) {
+                var icon = undefined;
+                switch (location.machine.type) {
+                    case 'shovel':
+                        icon = 'http://icons.iconarchive.com/icons/bartkowalski/1960-matchbox-cars/48/Hatra-Tractor-Shovel-icon.png';
+                        break;
+                    case 'truck':
+                        icon = "http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/48/truck-icon.png";
+                        break;
+                    case 'loader':
+                        icon = "https://cdn4.iconfinder.com/data/icons/BRILLIANT/construction/png/48/front_loader.png";
+                        break;
+                    default:
+                        icon = undefined
+                }
 
-                    var marker = new google.maps.Marker({
-                        position: { lat: location.lat, lng: location.lng },
-                        map: map,
-                        label: location.site,
-                        title: location.name + " - " + location.site
-                    });
-
-                    var contentString = '<div id="content">' +
-                        '<div id="bodyContent">' +
-                        '<p><b>' + location.site + '</b>' +
-                        '</div>' +
-                        '</div>';
-
-                    var infowindow = new google.maps.InfoWindow({
-                        content: contentString
-                    });
-
-                    marker.addListener('click', function() {
-                        infowindow.open(map, marker);
-                    });
+                var marker = new google.maps.Marker({
+                    position: { lat: location.location.lat, lng: location.location.lng },
+                    map: map,
+                    animation: google.maps.Animation.DROP,
+                    icon: icon,
+                    label: location.machine.id.toString(),
+                    title: location.machine.id + " - " + location.machine.model
                 });
-                return true;
+
+                var contentString = '<div id="content">' +
+                    '<div id="bodyContent">' +
+                    '<br><b style="text-transform:capitalize">' + location.machine.type + "</b><br>" + location.machine.id + " - " + location.machine.model + '<br> ( ' + location.location.lat + " , " + location.location.lng + ' )</b>' +
+                    '</div>' +
+                    '</div>';
+
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString
+                });
+
+                marker.addListener('click', function() {
+                    infowindow.open(map, marker);
+                });
             });
+            return true;
         }
 
         methods.getNodes = function() {
