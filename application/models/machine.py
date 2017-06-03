@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 import json
-from models.task import HaulageTask, LoadTask, DigTask, SubTask
+from models.task import HaulageTask, LoadTask, DigTask
 
 
 class Machine():
@@ -23,23 +23,40 @@ class Machine():
         return self.tasks
 
     def getTimeWindows(self, date, size):
+        if size <= 0:
+            return []
+
         ws = datetime(year=date.year, month=date.month, day=date.day, hour=9)
-        we = ws + timedelta(hours=size)
+        we = ws + timedelta(hours=9)
         windows = []
 
         if len(self.tasks) == 0:
-            for i in range( int(9/size)):
-                windows.append((ws, ws + timedelta(hours=size) , size, self.location))
+            for i in range(int(9 / size)):
+                windows.append(
+                    (ws, ws + timedelta(hours=size), size, self.location))
                 ws += timedelta(hours=size)
 
-        for task in self.tasks:
+        tasks = sorted(self.tasks, key=lambda o: o.startTime)
+
+        for task in tasks:
             while True:
-                winSize = ((task.startTime - ws).seconds // 3600)
-                if winSize >= size:
-                    windows.append((ws, ws + timedelta(hours=size), size, task.location))
+                winSize = ((task.startTime - ws).seconds / 3600.0)
+                if winSize > size:
+                    windows.append(
+                        (ws, ws + timedelta(hours=size), size, task.location))
                     ws = ws + timedelta(hours=size)
                 else:
+                    ws = max(ws, task.endTime)
                     break
+
+        while True:
+            winSize = ((we - ws).seconds / 3600.0)
+            if winSize > size:
+                windows.append(
+                    (ws, ws + timedelta(hours=size), size, task.location))
+                ws = ws + timedelta(hours=size)
+            else:
+                break
 
         return windows
 
@@ -51,13 +68,13 @@ class Machine():
 
     def toJSON(self):
         return {
-            'id':self.id,
+            'id': self.id,
             'model': self.model,
             'weight': self.weight,
-            'speed':self.speed,
-            'fuelCapacity':self.fuelCapacity,
-            'fuelConsumption':self.fuelConsumption,
-            'staticFuelConsumption':self.staticFuelConsupmtion,
+            'speed': self.speed,
+            'fuelCapacity': self.fuelCapacity,
+            'fuelConsumption': self.fuelConsumption,
+            'staticFuelConsumption': self.staticFuelConsupmtion,
             'location': self.location.toJSON(),
             'tasks': len(self.tasks)
         }
@@ -65,141 +82,162 @@ class Machine():
 
 class Truck(Machine):
 
-    def __init__(self, id, model, weight, speed, fuelCapacity, feulConsumption, staticFuelConsupmtion, location, isAvailable, weightCapacity,  loadCapacity):
+    def __init__(self, id, model, weight, speed, fuelCapacity, feulConsumption, staticFuelConsupmtion, location, isAvailable, weightCapacity):
         Machine.__init__(self, id, model, weight, speed,
                          fuelCapacity, feulConsumption, staticFuelConsupmtion, location, isAvailable)
-        self.loadCapacity = loadCapacity
+
         self.weightCapacity = weightCapacity
 
     def toJSON(self):
         machine = Machine.toJSON(self)
         machine['type'] = 'truck'
-        machine['loadCapacity'] = self.loadCapacity
         machine['weightCapacity'] = self.weightCapacity
         return machine
 
-    def makeOffer(self, task, mapGraph):
-        if not isinstance(task, HaulageTask):
+    def makeOffer(self, schedule, mapGraph):
+
+        bestDump = None
+        minDistance = 1000
+
+        for dumpLocation in schedule.dumpLocations:
+            path, distance = mapGraph.calcShortestPath(
+                dumpLocation, schedule.digLocation)
+            if (distance < minDistance):
+                bestDump = dumpLocation
+                minDistance = distance
+
+        if bestDump == None:
             return False, []
 
-        path, distance = mapGraph.calcShortestPath(
-            task.dumpLocation, task.location)
-
-        consumedFuel = distance * self.fuelConsumption
-        travelTime = distance / self.speed
-
-        loadSize = task.amount
-        loadWeight = task.amount
+        consumedFuel = minDistance * self.fuelConsumption
+        travelTime = minDistance / self.speed
         averageFillTime = 1
-
-   
-        numberOfTravels = loadWeight / self.weightCapacity
-        numberOfTravels = max(numberOfTravels,1)
+        numberOfTravels = schedule.remainingHaulage / self.weightCapacity
+        numberOfTravels = min(numberOfTravels, 1)
         numberOfRefeuls = (consumedFuel * numberOfTravels) / self.fuelCapacity
 
         tripTime = travelTime + averageFillTime + \
             (numberOfRefeuls * 1) / numberOfTravels
 
         windows = Machine.getTimeWindows(
-            self, task.startTime, tripTime)
+            self, schedule.startTime, tripTime)
 
+        if len(windows) <= 0:
+            return False, []
 
         tripCost = tripTime * 100 + consumedFuel * 10 + distance * 10
 
         subtasks = []
 
-        avgAmount = loadSize / numberOfTravels
+        avgTarget = schedule.target / numberOfTravels
+
+        totalTarget = 0
 
         for window in windows:
-            stask = SubTask(window[0], window[1],
-                            task.location, self, avgAmount, tripCost)
+
+            stask = HaulageTask(schedule.digLocation, bestDump,
+                                window[0], window[1], self.weightCapacity, "None")
+
             subtasks.append(stask)
+
             numberOfTravels -= 1
             if numberOfTravels == 0:
                 break
 
+            totalTarget += avgTarget
+            if totalTarget > schedule.remainingHaulage:
+                break
+
         if len(subtasks) > 0:
-            return True, subtasks, tripCost*len(subtasks)
+            return True, subtasks, tripCost * len(subtasks) + 5 * len(self.tasks)
 
         return False, []
 
 
 class Shovel(Machine):
 
-    def __init__(self, id, model, weight, speed, fuelCapacity, fuelConsumption, staticFuelConsupmtion, location, isAvailable,  digRate, power):
+    def __init__(self, id, model, weight, speed, fuelCapacity, fuelConsumption, staticFuelConsupmtion, location, isAvailable,  weightCapacity):
         Machine.__init__(self, id, model, weight, speed, fuelCapacity,
                          fuelConsumption, staticFuelConsupmtion, location, isAvailable)
 
-        self.digRate = digRate
-        self.power = power
+        self.weightCapacity = weightCapacity
 
     def toJSON(self):
         machine = Machine.toJSON(self)
         machine['type'] = 'shovel'
-        machine['digRate'] = self.digRate
-        machine['power'] = self.power
+        machine['weightCapacity'] = self.weightCapacity
         return machine
 
-    def makeOffer(self, task, mapGraph):
-        if not isinstance(task, DigTask):
-            return False, []
+    def makeOffer(self, schedule, mapGraph):
 
         path, distance = mapGraph.calcShortestPath(
-            self.location, task.location)
+            self.location, schedule.digLocation)
 
         consumedFuel = distance * self.fuelConsumption
         travelTime = distance / self.speed
 
-        digTime = task.amount / self.digRate
-        digTime = min(digTime,8)
-        
+        if schedule.remainingDig <= 0:
+            return False, []
+        digs = schedule.remainingDig / float(self.weightCapacity)
+    
+        digs = max(digs, 1)
+        digTime = digs * 0.2
+        digTime = min(digTime, 8)
+        digs = (digTime/0.2)
+
         totalTime = travelTime + digTime
 
         consumedFuel += (digTime * self.staticFuelConsupmtion)
         tripCost = totalTime * 100 + consumedFuel * 10 + distance * 10
 
-        windows = Machine.getTimeWindows(self, task.startTime,  totalTime)
+        windows = Machine.getTimeWindows(self, schedule.startTime,  totalTime)
 
         if len(windows) <= 0:
             return False, []
 
-        return True,  [SubTask(windows[0][0], windows[0][1], task.location, self, digTime*self.digRate, tripCost)], tripCost
+        task = DigTask(schedule.digLocation,
+                       windows[0][0], windows[0][1], digs * self.weightCapacity, 100)
+        task.machine = self
+        task.actualTarget = None
+        return True,  [task], tripCost + 50 * len(self.tasks)
 
 
 class Loader(Machine):
-    def __init__(self, id, model, weight, speed, fuelCapacity, fulConsumption, staticFuelConsupmtion, location, isAvailable,  weightCapacity, loadCapacity):
+    def __init__(self, id, model, weight, speed, fuelCapacity, fulConsumption, staticFuelConsupmtion, location, isAvailable,  weightCapacity):
         Machine.__init__(self, id, model, weight, speed,
                          fuelCapacity, fulConsumption, staticFuelConsupmtion, location, isAvailable)
         self.weightCapacity = weightCapacity
-        self.loadCapacity = loadCapacity
-
 
     def toJSON(self):
         machine = Machine.toJSON(self)
         machine['type'] = 'loader'
         machine['weightCapacity'] = self.weightCapacity
-        machine['loadCapacity'] = self.loadCapacity
         return machine
 
-    def makeOffer(self, task, mapGraph):
-        if not isinstance(task, LoadTask):
-            return False, []
-
+    def makeOffer(self, schedule, mapGraph):
         path, distance = mapGraph.calcShortestPath(
-            self.location, task.location)
+            self.location, schedule.digLocation)
 
         consumedFuel = distance * self.fuelConsumption
         travelTime = distance / self.speed
-        loadTime = (task.amount / self.loadCapacity) * 0.2
-        loadTime = min(loadTime,8)
-        totalTime = travelTime + loadTime
 
-        consumedFuel += (loadTime * self.staticFuelConsupmtion)
+        loads = schedule.remainingLoad / self.weightCapacity
+        loadingTime = loads * 0.2 + 1
+        loadingTime = min(loadingTime, 1)
+        loads = loadingTime / 0.2
+
+        totalTime = travelTime + loadingTime
+
+        consumedFuel += (loadingTime * self.staticFuelConsupmtion)
         tripCost = totalTime * 100 + consumedFuel * 10 + distance * 10
 
-        windows = Machine.getTimeWindows(self, task.startTime,  totalTime)
+        windows = Machine.getTimeWindows(self, schedule.startTime,  totalTime)
 
         if len(windows) <= 0:
             return False, []
 
-        return True,  [SubTask(windows[0][0], windows[0][1], task.location, self, ( loadTime/ 0.2 ) * self.loadCapacity, tripCost)], tripCost
+        task = LoadTask(schedule.digLocation,
+                        windows[0][0], windows[0][1], loads * self.weightCapacity, 100)
+        task.machine = self
+        task.actualTarget = None
+        return True,  [task], tripCost - 50 * len(self.tasks)

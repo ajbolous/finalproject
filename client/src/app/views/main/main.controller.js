@@ -12,36 +12,8 @@
         $ctrl.progressbar = ngProgressFactory.createInstance();
         $ctrl.progressbar.start();
 
-        var client = new WebSocket('ws://' + SERVERIP + ':8084/');
-        var canvas = document.getElementById('videoCanvas');
-        var player = new jsmpeg(client, { canvas: canvas });
-        // client.onmessage = function onmessage(event) {
-        //     if (event.data.size === undefined) {
-        //         var canvas = document.getElementById('videoCanvas');
-        //         var context = canvas.getContext('2d');
-        //         var imageObj = new Image();
-        //         imageObj.onload = function() {
-        //             context.drawImage(imageObj, 0, 0, 640, 480);
-        //         };
-        //         imageObj.src = event.data;
-        //     }
-        // }
+        $ctrl.player = new jsmpeg(new WebSocket('ws://' + SERVERIP + ':8084/'), { canvas: document.getElementById('videoCanvas') });
 
-
-        $ctrl.uiConfig = {
-            calendar: {
-                height: 450,
-                editable: true,
-                header: {
-                    left: 'month basicWeek basicDay agendaWeek agendaDay',
-                    center: 'title',
-                    right: 'today prev,next'
-                },
-                eventClick: $scope.alertEventOnClick,
-                eventDrop: $scope.alertOnDrop,
-                eventResize: $scope.alertOnResize
-            }
-        };
 
 
         $ctrl.options = {

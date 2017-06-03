@@ -10,7 +10,7 @@
 
 
         function getAll() {
-            return $http.get(DJANGOURL + '/tasks/getAll');
+            return $http.get(DJANGOURL + '/tasks/get-all');
         }
 
         return {

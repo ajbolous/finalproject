@@ -1,6 +1,7 @@
 from database.database import Database
 from models.map import Map, MapGraph
-
+from models.mission import Mission,Schedule
+from datetime import datetime
 
 class Application():
     # static properties
@@ -22,41 +23,82 @@ class Application():
     def getRoads():
         return Application.map.getRoads()
 
+
+    @staticmethod
+    def getMission():
+        return Application.database.getMissions()[0]
+
     @staticmethod
     def calc():
         return Application.graph._calcShortestPath(1, 57)
 
+
+    @staticmethod
+    def getMaxOffer(machines, schedule):
+        maxOffer, maxMachine = None, None
+        for machine in machines:
+            offer = machine.makeOffer(schedule, Application.graph)
+            if offer[0] == False:
+                continue
+            if maxOffer == None:
+                maxOffer = offer
+                maxMachine = machine
+            elif maxOffer[2] >= offer[2]:
+                maxOffer = offer
+                maxMachine = machine
+
+        return maxOffer, maxMachine
+
     @staticmethod
     def negotiation():
-        machines = Application.database.getMachines()
-
+        shovels, loaders, trucks = Application.database.getMachinesSorted()
         mission = Application.database.getMissions()[0]
 
-        sched = mission.getSchedules()[0]
-        offers = []
-        for task in sched.getTasks():
-            remaining = task.amount
-            while remaining>0:
-                maxOffer, maxMachine = None, None
-                for machine in machines:
-                    offer = machine.makeOffer(task, Application.graph)
-                    if offer[0] == False:
-                        continue
-                    if maxOffer == None:
-                        maxOffer = offer
-                        maxMachine = machine
-                    elif maxOffer[2] > offer[2]:
-                        maxOffer = offer
-                        maxMachine = machine
+        schedule  = mission.createNextSchedule()
+        schedule.updateRemaining()
 
-                print ("Machine: {}\n Task:{}\n Offer : {}".format(maxMachine,task, maxOffer))
-                if maxOffer == None:
-                    print "Didnt allocate all, remaining {}".format(remaining)
-                    break
+        print schedule.remainingDig, schedule.remainingLoad, schedule.remainingHaulage
 
-                for stask in maxOffer[1]:
-                    stask.machine.tasks.append(stask)
-                    remaining-= stask.amount
+        while schedule.remainingDig > 0:
+            schedule.updateRemaining()
+            maxOffer, maxMachine = Application.getMaxOffer(shovels, schedule)
+            if maxOffer is None:
+                break
+            for task in maxOffer[1]:
+                schedule.addTask(task)
+                maxMachine.tasks.append(task)
+            print maxOffer, maxMachine
+
+        print schedule.remainingDig, schedule.remainingLoad, schedule.remainingHaulage
+
+        while schedule.remainingLoad > 0:
+            schedule.updateRemaining()
+            maxOffer, maxMachine = Application.getMaxOffer(loaders, schedule)
+            if maxOffer is None:
+                break
+            for task in maxOffer[1]:
+                schedule.addTask(task)
+                maxMachine.tasks.append(task)
+            print maxOffer, maxMachine
+
+        print schedule.remainingDig, schedule.remainingLoad, schedule.remainingHaulage
+
+        while schedule.remainingHaulage >= 0:
+            maxOffer, maxMachine = Application.getMaxOffer(trucks, schedule)
+
+            if maxOffer is None:
+                break
+            for task in maxOffer[1]:
+                schedule.addTask(task)
+                maxMachine.tasks.append(task)
+                task.machine = maxMachine
+            schedule.updateRemaining()
+
+        schedule.updateRemaining()
+        print schedule.remainingDig, schedule.remainingLoad, schedule.remainingHaulage
+
+        for machine in trucks:
+            print machine.id , len(machine.tasks)
 
 Application.initialize()
 Application.negotiation()
