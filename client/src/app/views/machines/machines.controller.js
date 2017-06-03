@@ -8,7 +8,7 @@
         var $ctrl = this;
         $ctrl.selectedMachine;
         $ctrl.machines = []
-
+        $ctrl.machinesGroup = [];
         $ctrl.progressbar = ngProgressFactory.createInstance();
         $ctrl.progressbar.start();
 
@@ -30,11 +30,24 @@
             }
         };
 
+
+
         $ctrl.refreshMachines = function() {
             MachinesService.getAll().then(function(response) {
                 $ctrl.machines = response.data;
-                $ctrl.gridOptions.data = $ctrl.machines;
                 $ctrl.progressbar.complete();
+
+                var i = 0;
+                $ctrl.machines.forEach(function(machine) {
+                    var j = Math.floor(i / 6)
+
+                    if (i % 6 == 0)
+                        $ctrl.machinesGroup[j] = []
+                    console.log($ctrl.machinesGroup, i, j)
+                    $ctrl.machinesGroup[j].push(machine)
+                    i++;
+                    console.log($ctrl.machinesGroup, i)
+                });
             });
         }
 

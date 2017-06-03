@@ -12,23 +12,29 @@
     <hr class="lblue">
 
     <div class="col-lg-12 box">
-        <h2 style="color:#333; margin-top:2px">Mission</h2>
+        <h2 style="color:#444; margin-top:2px">Mission</h2>
 
-        <ul class="list-group striped">
-            <li class="list-group-item">
-                Target: {{$ctrl.mission.target}} Ton
-            </li>
-            <li class="list-group-item">
-                Start: {{ $ctrl.mission.startTime}}
-            </li>
-            <li class="list-group-item">
-                End : {{ $ctrl.mission.endTime }}
-            </li>
-            <li class="list-group-item">
-                Location: Lat: {{$ctrl.mission.digLocation.lat }} Lng: {{$ctrl.mission.digLocation.lng }}
-            </li>
-
-        </ul>
+        <table class="table table-hover">
+            <tbody>
+                <tr>
+                    <td>Target</td>
+                    <td>{{$ctrl.mission.target}} Ton</td>
+                </tr>
+                <tr>
+                    <td>Start</td>
+                    <td>{{ $ctrl.mission.startTime}}</td>
+                </tr>
+                <tr>
+                    <td>End</td>
+                    <td>{{ $ctrl.mission.endTime }}</td>
+                </tr>
+                <tr>
+                    <td>Location</td>
+                    <td>Lat: {{$ctrl.mission.digLocation.lat }} Lng: {{$ctrl.mission.digLocation.lng }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <hr class="lblue-small">
 
         <div class="btn-group" style="margin-bottom:20px;">
             <label class="btn btn-primary" ng-model="$ctrl.taskTypes.dig" ng-click="$ctrl.refresh()" uib-btn-checkbox>Diging</label>

@@ -122,9 +122,11 @@ body {
 hr.lblue {
     height: 2px;
     background-image: linear-gradient(to right, rgb(59, 120, 231), #ccc, rgb(59, 120, 231));
-    -webkit-transition: width 1s ease-out;
-    /* For Safari 3.1 to 6.0 */
-    transition: width 1s ease-out;
+}
+
+hr.lblue-small {
+    height: 1px;
+    background-image: linear-gradient(to right, white, rgb(59, 120, 231), white);
 }
 
 #ngProgress-container {
@@ -138,7 +140,7 @@ hr.lblue {
     margin-top: 0px;
     width: 280px;
     height: 80px;
-    transition: height 0.4s ease-out;
+    transition: height 0.8s ease-out;
     overflow: hidden;
 }
 
