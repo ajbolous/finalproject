@@ -39,9 +39,9 @@
 
                 var i = 0;
                 $ctrl.machines.forEach(function(machine) {
-                    var j = Math.floor(i / 6)
+                    var j = Math.floor(i / 5)
 
-                    if (i % 6 == 0)
+                    if (i % 5 == 0)
                         $ctrl.machinesGroup[j] = []
                     console.log($ctrl.machinesGroup, i, j)
                     $ctrl.machinesGroup[j].push(machine)
