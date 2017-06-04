@@ -61,11 +61,31 @@
             var machines = response.data;
             var locations = []
             machines.forEach(function(machine) {
-
-                locations.push({ location: machine.location, machine: machine })
+                locations.push({
+                    'lat': machine.location.lat,
+                    'lng': machine.location.lng,
+                    'label': machine.model,
+                    'title': machine.id + " - " + machine.model,
+                    'type': machine.type
+                })
             });
             MapsService.addLocationsToMap(locations);
-        })
+        });
+
+        MapsService.getLocations().then(function(locations) {
+            var maplocations = []
+            locations.forEach(function(location) {
+                maplocations.push({
+                    'lat': location.point.lat,
+                    'lng': location.point.lng,
+                    'label': location.name,
+                    'title': location.id + " - " + location.name,
+                    'type': location.type
+                });
+            });
+            MapsService.addLocationsToMap(maplocations);
+
+        });
 
         MapsService.addMapMenuOption('Set Location', $ctrl.addLocation);
 

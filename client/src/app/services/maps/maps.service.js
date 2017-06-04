@@ -100,7 +100,7 @@
         methods.addLocationsToMap = function(locations) {
             locations.forEach(function(location) {
                 var icon = undefined;
-                switch (location.machine.type) {
+                switch (location.type) {
                     case 'shovel':
                         icon = 'http://icons.iconarchive.com/icons/bartkowalski/1960-matchbox-cars/48/Hatra-Tractor-Shovel-icon.png';
                         break;
@@ -115,17 +115,18 @@
                 }
 
                 var marker = new google.maps.Marker({
-                    position: { lat: location.location.lat, lng: location.location.lng },
+                    position: { lat: location.lat, lng: location.lng },
                     map: map,
                     animation: google.maps.Animation.DROP,
                     icon: icon,
-                    label: location.machine.id.toString(),
-                    title: location.machine.id + " - " + location.machine.model
+                    label: location.label,
+                    title: location.title
                 });
+                $log.debug(location);
 
                 var contentString = '<div id="content">' +
                     '<div id="bodyContent">' +
-                    '<br><b style="text-transform:capitalize">' + location.machine.type + "</b><br>" + location.machine.id + " - " + location.machine.model + '<br> ( ' + location.location.lat + " , " + location.location.lng + ' )</b>' +
+                    '<br><b style="text-transform:capitalize">' + location.type + "</b><br>" + location.title + '<br> ( ' + location.lat + " , " + location.lng + ' )</b>' +
                     '</div>' +
                     '</div>';
 

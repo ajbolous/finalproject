@@ -27,6 +27,7 @@ class Database():
         data = load('data.pkl')
 
         self.machines = data['machines']
+        self.locations = data['locations']
         if 'missions' in data:
             self.missions = data['missions']
         else:
@@ -35,7 +36,8 @@ class Database():
     def save(self):
         data = {
             'machines': self.machines,
-            'missions': self.missions
+            'missions': self.missions,
+            'locations': self.locations
         }
         save(data, 'data.pkl')
         with open(os.path.join(PATH, 'data.json'), 'w') as f:
@@ -59,3 +61,6 @@ class Database():
 
     def getMissions(self):
         return self.missions
+
+    def getLocations(self):
+        return self.locations

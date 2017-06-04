@@ -30,4 +30,5 @@ urlpatterns = [
     url(r'^machines/delete', machineViews.deleteMachine),
     url(r'^maps/get-roads', mapViews.getRoads),
     url(r'^maps/add-location', mapViews.addLocation),
+    url(r'^maps/get-locations', mapViews.getLocations)
 ]

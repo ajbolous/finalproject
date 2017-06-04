@@ -29,6 +29,10 @@ class Application():
         return Application.database.getMissions()[0]
 
     @staticmethod
+    def getLocations():
+        return Application.database.getLocations()
+        
+    @staticmethod
     def calc():
         return Application.graph._calcShortestPath(1, 57)
 

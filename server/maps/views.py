@@ -5,8 +5,14 @@ from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from application.main import Application
 
+
 def getRoads(request):
     return JsonResponse([road.toJSON() for road in Application.map.getRoads()], safe=False)
+
+
+def getLocations(request):
+    return JsonResponse([location.toJSON() for location in Application.getLocations()], safe=False)
+
 
 def addLocation(request):
     location = {}
