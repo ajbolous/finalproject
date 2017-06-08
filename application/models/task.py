@@ -60,3 +60,4 @@ class HaulageTask(Task):
         t['type'] = 'haulage'
         t['dumpLocation'] = self.dumpLocation.toJSON()
         return t
+

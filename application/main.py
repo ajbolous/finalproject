@@ -1,7 +1,9 @@
 from database.database import Database
 from models.map import Map, MapGraph
-from models.mission import Mission,Schedule
+from models.mission import Mission, Schedule
 from datetime import datetime
+from algorithms.routes import getTasksRoutes
+
 
 class Application():
     # static properties
@@ -23,7 +25,6 @@ class Application():
     def getRoads():
         return Application.map.getRoads()
 
-
     @staticmethod
     def getMission():
         return Application.database.getMissions()[0]
@@ -31,11 +32,10 @@ class Application():
     @staticmethod
     def getLocations():
         return Application.database.getLocations()
-        
+
     @staticmethod
     def calc():
         return Application.graph._calcShortestPath(1, 57)
-
 
     @staticmethod
     def getMaxOffer(machines, schedule):
@@ -54,11 +54,16 @@ class Application():
         return maxOffer, maxMachine
 
     @staticmethod
+    def getRoutes():
+        machine = Application.getMachines()[13]
+        return getTasksRoutes(machine.tasks, machine.location, Application.graph)
+
+    @staticmethod
     def negotiation():
         shovels, loaders, trucks = Application.database.getMachinesSorted()
         mission = Application.database.getMissions()[0]
 
-        schedule  = mission.createNextSchedule()
+        schedule = mission.createNextSchedule()
         schedule.updateRemaining()
 
         print schedule.remainingDig, schedule.remainingLoad, schedule.remainingHaulage
@@ -102,7 +107,8 @@ class Application():
         print schedule.remainingDig, schedule.remainingLoad, schedule.remainingHaulage
 
         for machine in trucks:
-            print machine.id , len(machine.tasks)
+            print machine.id, len(machine.tasks)
+
 
 Application.initialize()
 Application.negotiation()
