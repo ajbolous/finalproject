@@ -111,4 +111,9 @@ class Application():
 
 
 Application.initialize()
-Application.negotiation()
+#Application.negotiation()
+
+shovels, loaders, trucks = Application.database.getMachinesSorted()
+from algorithms.generic import serialAllocation
+
+serialAllocation(Application.database.getMissions()[0].createNextSchedule(), shovels,loaders,trucks, Application.graph)

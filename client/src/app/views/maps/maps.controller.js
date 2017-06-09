@@ -72,6 +72,7 @@
             MapsService.addLocationsToMap(locations);
         });
 
+
         MapsService.getLocations().then(function(locations) {
             var maplocations = []
             locations.forEach(function(location) {

@@ -22,6 +22,7 @@ class Machine():
     def getTasks(self):
         return self.tasks
 
+
     def getTimeWindows(self, date, size):
         if size <= 0:
             return []

@@ -48,6 +48,7 @@
                     events.push(t);
                 });
             });
+            console.log(events);
             return events
         }
 
