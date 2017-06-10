@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^machines/edit', machineViews.editMachine),
     url(r'^machines/get-all', machineViews.getMachines),
     url(r'^machines/delete', machineViews.deleteMachine),
+    url(r'^machines/get-route', machineViews.getMachineRoute),
     url(r'^maps/get-roads', mapViews.getRoads),
     url(r'^maps/add-location', mapViews.addLocation),
     url(r'^maps/get-locations', mapViews.getLocations)

@@ -2,7 +2,6 @@ from datetime import datetime, timedelta
 import json
 from models.task import HaulageTask, LoadTask, DigTask
 
-
 class Machine():
     def __init__(self, id, model, weight, speed, fuelCapacity,  fuelConsumption, staticFuelConsupmtion, location, isAvailable):
         self.id = id
@@ -102,7 +101,7 @@ class Truck(Machine):
 
         for dumpLocation in schedule.dumpLocations:
             path, distance = mapGraph.calcShortestPath(
-                dumpLocation, schedule.digLocation)
+                dumpLocation.location, schedule.digLocation.location)
             if (distance < minDistance):
                 bestDump = dumpLocation
                 minDistance = distance
@@ -172,7 +171,7 @@ class Shovel(Machine):
     def makeOffer(self, schedule, mapGraph):
 
         path, distance = mapGraph.calcShortestPath(
-            self.location, schedule.digLocation)
+            self.location, schedule.digLocation.location)
 
         consumedFuel = distance * self.fuelConsumption
         travelTime = distance / self.speed
@@ -217,7 +216,7 @@ class Loader(Machine):
 
     def makeOffer(self, schedule, mapGraph):
         path, distance = mapGraph.calcShortestPath(
-            self.location, schedule.digLocation)
+            self.location, schedule.digLocation.location)
 
         consumedFuel = distance * self.fuelConsumption
         travelTime = distance / self.speed

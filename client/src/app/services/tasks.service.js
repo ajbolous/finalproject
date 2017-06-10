@@ -91,10 +91,19 @@
                 });
             return d.promise;
         }
+
+
+        function _getRoute(machineId) {
+            return $http.get(DJANGOURL + '/tasks/get-route', { params: { machineId: machineId } }).then(function(response) {
+                return response.data;
+            });
+        }
+
         return {
             getMissionEvents: _getMissionsEvents,
             getEvents: _getEvents,
-            getAll: getAll
+            getAll: getAll,
+            getRoute: _getRoute
         }
     }
 })();

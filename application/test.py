@@ -45,27 +45,29 @@ def createMission(title, description, location, dumpLocations, startDate, endDat
     mission.schedules = []
     return mission
 
+
 def createLocations():
     locations = []
-    for i in range(0,5):
-        l = Location(i,'Site{}'.format(i),'dig',randomPoint())
+    for i in range(0, 5):
+        l = Location(i, 'Site{}'.format(i), 'dig', randomPoint())
         locations.append(l)
 
-    for i in range(5,10):
-        l = Location(i,'Dump{}'.format(i),'dump',randomPoint())
+    for i in range(5, 10):
+        l = Location(i, 'Dump{}'.format(i), 'dump', randomPoint())
         locations.append(l)
 
-    for i in range(10,12):
-        l = Location(i,'Fuel{}'.format(i),'fuel',randomPoint())
+    for i in range(10, 12):
+        l = Location(i, 'Fuel{}'.format(i), 'fuel', randomPoint())
         locations.append(l)
 
     return locations
+
 
 db.map = map
 db.machines = createMachines()
 db.locations = createLocations()
 
-mission = createMission("New mission", "dig", randomPoint(), [randomPoint(), randomPoint()], datetime(
+mission = createMission("New mission", "dig", db.locations[2], db.locations[5:10], datetime(
     2017, 5, 1, hour=0, minute=0, second=0), datetime(2017, 5, 11, hour=0, minute=0, second=0), 500000)
 
 db.missions = [mission]

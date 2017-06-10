@@ -15,7 +15,8 @@
             'ui.grid.selection',
             'nvd3',
             'mwl.calendar',
-            'ngProgress'
+            'ngProgress',
+            'pageslide-directive'
         ]);
 
 })();

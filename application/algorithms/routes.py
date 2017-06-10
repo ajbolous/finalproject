@@ -1,13 +1,17 @@
 from models.task import Task, HaulageTask, LoadTask, DigTask
 
 
-def getRoute(l1, l2, map):
-
+def getRoute(l1, l2, map, ltype):
+    points = []
     path, length = map.calcShortestPath(l1, l2)
+
+    for p in path:
+        points.append(p.toJSON())
     return {
         'from': l1.toJSON(),
         'to': l2.toJSON(),
-        'path': path
+        'path': points,
+        'type': ltype
     }
 
 
@@ -22,10 +26,12 @@ def getTasksRoutes(tasks, origin, map):
 
     lastLocation = origin
     for i in range(0, len(tasks)):
-        routes.append(getRoute(lastLocation, tasks[i].location, map))
-        lastLocation= tasks[i].location
+        routes.append(getRoute(
+            lastLocation, tasks[i].location.location, map, tasks[i].location.type))
+        lastLocation = tasks[i].location.location
         if isinstance(tasks[i], HaulageTask):
-            routes.append(getRoute(lastLocation, tasks[i].dumpLocation,map))
-            lastLocation = tasks[i].dumpLocation
+            routes.append(getRoute(
+                lastLocation, tasks[i].dumpLocation.location, map, tasks[i].dumpLocation.type))
+            lastLocation = tasks[i].dumpLocation.location
 
-    print routes
+    return routes

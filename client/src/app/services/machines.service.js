@@ -6,30 +6,36 @@
         .service('MachinesService', MachinesService);
 
     function MachinesService($q, $http) {
-        function getAll() {
-            return $http.get(DJANGOURL + '/machines/get-all');
+        function _getAll() {
+            return $http.get(DJANGOURL + '/machines/get-all').then(function(response) {
+                return response.data
+            });
         }
 
-        function addMachine(machine) {
+        function _addMachine(machine) {
             return $http.get(DJANGOURL + '/machines/add', { params: machine })
-
         }
 
-        function editMachine(machine) {
+        function _editMachine(machine) {
             return $http.get(DJANGOURL + '/machines/edit', { params: machine })
 
         }
 
-        function deleteMachine(machine) {
+        function _deleteMachine(machine) {
             return $http.get(DJANGOURL + '/machines/delete', { params: machine })
         }
 
+        function _getMachineRoute(machine) {
+            return $http.get(DJANGOURL + '/machines/get-route', { params: machine }).then(function(response) {
+                return response.data;
+            });
+        }
         return {
-            getAll: getAll,
-            addMachine: addMachine,
-            editMachine: editMachine,
-            deleteMachine: deleteMachine
-
+            getAll: _getAll,
+            addMachine: _addMachine,
+            editMachine: _editMachine,
+            deleteMachine: _deleteMachine,
+            getMachineRoute: _getMachineRoute
         }
     }
 })();

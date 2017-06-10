@@ -50,12 +50,13 @@ class Application():
             elif maxOffer[2] >= offer[2]:
                 maxOffer = offer
                 maxMachine = machine
-
+        
         return maxOffer, maxMachine
 
     @staticmethod
-    def getRoutes():
-        machine = Application.getMachines()[13]
+    def getRoutes(machineId):
+        machine = Application.getMachines()[machineId]
+        print (machineId, machine.tasks)
         return getTasksRoutes(machine.tasks, machine.location, Application.graph)
 
     @staticmethod
@@ -66,8 +67,6 @@ class Application():
         schedule = mission.createNextSchedule()
         schedule.updateRemaining()
 
-        print schedule.remainingDig, schedule.remainingLoad, schedule.remainingHaulage
-
         while schedule.remainingDig > 0:
             schedule.updateRemaining()
             maxOffer, maxMachine = Application.getMaxOffer(shovels, schedule)
@@ -76,9 +75,6 @@ class Application():
             for task in maxOffer[1]:
                 schedule.addTask(task)
                 maxMachine.tasks.append(task)
-            print maxOffer, maxMachine
-
-        print schedule.remainingDig, schedule.remainingLoad, schedule.remainingHaulage
 
         while schedule.remainingLoad > 0:
             schedule.updateRemaining()
@@ -88,9 +84,6 @@ class Application():
             for task in maxOffer[1]:
                 schedule.addTask(task)
                 maxMachine.tasks.append(task)
-            print maxOffer, maxMachine
-
-        print schedule.remainingDig, schedule.remainingLoad, schedule.remainingHaulage
 
         while schedule.remainingHaulage >= 0:
             maxOffer, maxMachine = Application.getMaxOffer(trucks, schedule)
@@ -101,19 +94,16 @@ class Application():
                 schedule.addTask(task)
                 maxMachine.tasks.append(task)
                 task.machine = maxMachine
+                print maxMachine
             schedule.updateRemaining()
 
         schedule.updateRemaining()
-        print schedule.remainingDig, schedule.remainingLoad, schedule.remainingHaulage
-
-        for machine in trucks:
-            print machine.id, len(machine.tasks)
 
 
 Application.initialize()
-#Application.negotiation()
+Application.negotiation()
 
-shovels, loaders, trucks = Application.database.getMachinesSorted()
-from algorithms.generic import serialAllocation
+# shovels, loaders, trucks = Application.database.getMachinesSorted()
+# from algorithms.generic import serialAllocation
 
-serialAllocation(Application.database.getMissions()[0].createNextSchedule(), shovels,loaders,trucks, Application.graph)
+# serialAllocation(Application.database.getMissions()[0].createNextSchedule(), shovels,loaders,trucks, Application.graph)

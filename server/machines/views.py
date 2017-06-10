@@ -11,6 +11,12 @@ def getMachines(request):
     return JsonResponse(machinesJson, safe=False)
 
 
+def getMachineRoute(request):
+    machineId = request.GET.get('id')
+    route = Application.getRoutes(int(machineId))
+    print(route);
+    return JsonResponse(route,safe = False)
+
 def addMachine(request):
     m = Machine()
     m.type = request.GET.get('type')

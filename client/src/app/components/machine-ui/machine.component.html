@@ -1,28 +1,20 @@
 <div style="overflow:hidden">
 
     <h4>{{$ctrl.machine.type}} - {{$ctrl.machine.id}} - {{$ctrl.machine.model}}</h4>
-    <uib-tabset active="active">
-        <uib-tab index="0" heading="Status">
-        </uib-tab>
-        <uib-tab index="1" heading="Details">
-            <h5>Parameters</h5>
-            <ul class="list-group">
-                <li class="list-group-item list-group-item-default">Fuel Capacity : {{$ctrl.machine.fuelCapacity}}</li>
-                <li class="list-group-item list-group-item-default">Fuel Consumption: {{$ctrl.machine.fuelCapacity}}</li>
-                <li class="list-group-item list-group-item-default">Speed : {{$ctrl.machine.fuelCapacity}}</li>
-                <li class="list-group-item list-group-item-default">Weight : {{$ctrl.machine.fuelCapacity}}</li>
-            </ul>
-            <h5>Location</h5>
-            <ul class="list-group">
-                <li class="list-group-item list-group-item-info">Node: {{$ctrl.machine.location.nid}}</li>
-                <li class="list-group-item list-group-item-default">Lat : {{$ctrl.machine.location.lat}} </li>
-                <li class="list-group-item list-group-item-default">Lng : {{$ctrl.machine.location.lng}}</li>
-            </ul>
-        </uib-tab>
 
-        <uib-tab index="2" heading="Schedule">
-        </uib-tab>
+    <h5>Parameters</h5>
+    <ul class="list-group">
+        <li class="list-group-item list-group-item-default">Fuel Capacity : {{$ctrl.machine.fuelCapacity}}</li>
+        <li class="list-group-item list-group-item-default">Fuel Consumption: {{$ctrl.machine.fuelConsumption}}</li>
+        <li class="list-group-item list-group-item-default">Speed : {{$ctrl.machine.speed}}</li>
+        <li class="list-group-item list-group-item-default">Weight : {{$ctrl.machine.weight}}</li>
+        <li class="list-group-item list-group-item-default">Capacity : {{$ctrl.machine.weightCapacity}}</li>
 
-    </uib-tabset>
-
+    </ul>
+    <h5>Location</h5>
+    <ul class="list-group">
+        <li class="list-group-item list-group-item-info">Node: {{$ctrl.machine.location.nid}}</li>
+        <li class="list-group-item list-group-item-default">Lat : {{$ctrl.machine.location.lat}} </li>
+        <li class="list-group-item list-group-item-default">Lng : {{$ctrl.machine.location.lng}}</li>
+    </ul>
 </div>

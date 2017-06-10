@@ -33,21 +33,17 @@
 
 
         $ctrl.refreshMachines = function() {
-            MachinesService.getAll().then(function(response) {
-                $ctrl.machines = response.data;
-                $ctrl.progressbar.complete();
-
+            MachinesService.getAll().then(function(machines) {
+                $ctrl.machines = machines;
                 var i = 0;
                 $ctrl.machines.forEach(function(machine) {
-                    var j = Math.floor(i / 5)
-
-                    if (i % 5 == 0)
+                    var j = Math.floor(i / 4)
+                    if (i % 4 == 0)
                         $ctrl.machinesGroup[j] = []
-                    console.log($ctrl.machinesGroup, i, j)
                     $ctrl.machinesGroup[j].push(machine)
                     i++;
-                    console.log($ctrl.machinesGroup, i)
                 });
+                $ctrl.progressbar.complete();
             });
         }
 

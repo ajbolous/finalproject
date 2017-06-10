@@ -9,16 +9,30 @@
 
         $ctrl.progressbar = ngProgressFactory.createInstance();
         $ctrl.progressbar.start();
-
-
+        $ctrl.sidePanels = {
+            markers: false,
+            machines: false
+        }
         $ctrl.editRoads = false;
 
+        $ctrl.mapMarkers = {
+            shovels: true,
+            trucks: true,
+            loaders: true,
+            locations: true,
+            roads: true
+        }
+
         MapsService.initMap();
+
         MapsService.buildRoads().then(function() {
             $ctrl.progressbar.complete()
         });
-        MapsService.setEditRoads($ctrl.editRoads);
 
+        $ctrl.refresh = function() {
+            for (var key in $ctrl.mapMarkers)
+                MapsService.showGroup(key, $ctrl.mapMarkers[key]);
+        }
         $ctrl.toggleEditRoads = function() {
             $ctrl.editRoads = !$ctrl.editRoads;
             MapsService.setEditRoads($ctrl.editRoads);
@@ -30,8 +44,20 @@
 
         $ctrl.exportRoads = function() {
             MapsService.exportRoads();
+        }
+
+        $ctrl.openSidePanel = function(panel) {
+
+            for (var key in $ctrl.sidePanels)
+                $ctrl.sidePanels[key] = false;
+
+            setTimeout(function() {
+                $ctrl.sidePanels[panel] = true;
+                $scope.$apply();
+            }, 5);
 
         }
+
 
         $ctrl.addLocation = function(path, vertex) {
 
@@ -56,39 +82,27 @@
             });
         }
 
-
-        MachinesService.getAll().then(function(response) {
-            var machines = response.data;
-            var locations = []
-            machines.forEach(function(machine) {
-                locations.push({
-                    'lat': machine.location.lat,
-                    'lng': machine.location.lng,
-                    'label': machine.model,
-                    'title': machine.id + " - " + machine.model,
-                    'type': machine.type
-                })
+        $ctrl.showRoute = function(machine) {
+            MapsService.clearRoutes();
+            MachinesService.getMachineRoute(machine).then(function(route) {
+                MapsService.addRoute(machine, route);
             });
-            MapsService.addLocationsToMap(locations);
+        }
+
+        MachinesService.getAll().then(function(machines) {
+            $ctrl.machines = machines;
+            machines.forEach(function(machine) {
+                MapsService.addMachineMarker(machine);
+            });
         });
 
 
         MapsService.getLocations().then(function(locations) {
-            var maplocations = []
-            locations.forEach(function(location) {
-                maplocations.push({
-                    'lat': location.point.lat,
-                    'lng': location.point.lng,
-                    'label': location.name,
-                    'title': location.id + " - " + location.name,
-                    'type': location.type
-                });
+            locations.forEach(function(mapLocation) {
+                MapsService.addLocationMarker(mapLocation);
             });
-            MapsService.addLocationsToMap(maplocations);
 
         });
-
-        MapsService.addMapMenuOption('Set Location', $ctrl.addLocation);
 
     }
 
