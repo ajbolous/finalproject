@@ -121,7 +121,6 @@
                 }
             }
         };
-
         $ctrl.data = [{
             key: "Cumulative Return",
             values: [
@@ -135,6 +134,14 @@
                 { "label": "H", "value": -5.1387322875705 }
             ]
         }]
+
+        TasksService.getMissionCosts().then(function(mission) {
+            $log.debug(mission);
+            $ctrl.data = [{
+                key: "COsts",
+                values: mission
+            }]
+        });
 
 
         $ctrl.data3 = [{

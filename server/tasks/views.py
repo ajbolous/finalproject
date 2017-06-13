@@ -9,9 +9,6 @@ def getTasks(request):
     missions = [Application.getMission().toJSON()]
     return JsonResponse(missions, safe=False)
 
-
-def getTasksRoute(request):
+def getMissionCosts(request):
+    return JsonResponse(Application.getMissionCosts(), safe=False)
     
-    machineId = request.GET.get('machineId')
-    route = Application.getRoutes(int(machineId))
-    return JsonResponse(route,safe = False)

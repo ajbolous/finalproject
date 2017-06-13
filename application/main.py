@@ -3,7 +3,7 @@ from models.map import Map, MapGraph
 from models.mission import Mission, Schedule
 from datetime import datetime
 from algorithms.routes import getTasksRoutes
-
+from algorithms.generic import getMissionCosts
 
 class Application():
     # static properties
@@ -54,6 +54,12 @@ class Application():
         return maxOffer, maxMachine
 
     @staticmethod
+    def getMissionCosts():
+        machines =  getMissionCosts(Application.getMission().getSchedules()[0], Application.graph)
+        print machines
+        return machines
+
+    @staticmethod
     def getRoutes(machineId):
         machine = Application.getMachines()[machineId]
         print (machineId, machine.tasks)
@@ -101,9 +107,8 @@ class Application():
 
 
 Application.initialize()
-Application.negotiation()
+#Application.negotiation()
 
-# shovels, loaders, trucks = Application.database.getMachinesSorted()
-# from algorithms.generic import serialAllocation
-
-# serialAllocation(Application.database.getMissions()[0].createNextSchedule(), shovels,loaders,trucks, Application.graph)
+shovels, loaders, trucks = Application.database.getMachinesSorted()
+from algorithms.generic import serialAllocation
+serialAllocation(Application.database.getMissions()[0].createNextSchedule(), shovels,loaders,trucks, Application.graph)

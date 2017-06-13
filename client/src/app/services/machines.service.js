@@ -30,6 +30,7 @@
                 return response.data;
             });
         }
+
         return {
             getAll: _getAll,
             addMachine: _addMachine,

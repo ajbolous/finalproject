@@ -13,9 +13,14 @@ $icon-font-path: "../../bower_components/bootstrap-sass-official/assets/fonts/bo
 
 // bower:scss
 // endbower
+html {
+    height: 100%;
+}
+
 body {
     padding-top: 50px;
-    background-color: #fafafa
+    background-color: #fafafa;
+    height: 100%
 }
 
 .browsehappy {

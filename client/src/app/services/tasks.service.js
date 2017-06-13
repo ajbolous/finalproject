@@ -5,7 +5,7 @@
         .module('opmopApp')
         .service('TasksService', TasksService);
 
-    function TasksService($q, $http) {
+    function TasksService($q, $http, toastr) {
 
         var _mission = undefined;
 
@@ -48,9 +48,23 @@
                     events.push(t);
                 });
             });
-            console.log(events);
+
             return events
         }
+
+        function _getEvents(filter) {
+            var d = $q.defer();
+            if (angular.isDefined(_mission))
+                d.resolve({ mission: _mission, events: _buildTaskEvents(_mission, filter) })
+            else
+                getAll().then(function(response) {
+                    _mission = response.data[0]
+                    d.resolve({ mission: _mission, events: _buildTaskEvents(_mission, filter) })
+                });
+            return d.promise;
+        }
+
+
 
         function _buildMissionEvents(mission) {
             return [{
@@ -66,20 +80,6 @@
             }];
         }
 
-
-
-        function _getEvents(filter) {
-            var d = $q.defer();
-            if (angular.isDefined(_mission))
-                d.resolve({ mission: _mission, events: _buildTaskEvents(_mission, filter) })
-            else
-                getAll().then(function(response) {
-                    _mission = response.data[0]
-                    d.resolve({ mission: _mission, events: _buildTaskEvents(_mission, filter) })
-                });
-            return d.promise;
-        }
-
         function _getMissionsEvents(filter) {
             var d = $q.defer();
             if (angular.isDefined(_mission))
@@ -92,18 +92,27 @@
             return d.promise;
         }
 
-
-        function _getRoute(machineId) {
-            return $http.get(DJANGOURL + '/tasks/get-route', { params: { machineId: machineId } }).then(function(response) {
-                return response.data;
+        function _getMissionCosts() {
+            var machines = [];
+            var totalCost = 0;
+            return $http.get(DJANGOURL + '/tasks/get-costs').then(function(response) {
+                for (var key in response.data) {
+                    totalCost += response.data[key]['total'];
+                    machines.push({
+                        "label": key,
+                        "value": response.data[key]['total']
+                    });
+                }
+                toastr.success("Total cost is ", totalCost)
+                return machines;
             });
         }
 
         return {
             getMissionEvents: _getMissionsEvents,
             getEvents: _getEvents,
+            getMissionCosts: _getMissionCosts,
             getAll: getAll,
-            getRoute: _getRoute
         }
     }
 })();

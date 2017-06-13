@@ -1,5 +1,5 @@
-<div class="container" style="width:95%;">
-    <div class="btn-group-vertical" style="position:absolute; top:60px; left:2px;">
+<div style="width:100%; height:100%">
+    <div class="btn-group-vertical" style="position:absolute; top:40%; left:2px; z-index:1000">
         <button class="btn  btn-default" ng-click="$ctrl.openSidePanel('markers')">
         <span class="fa fa-map-marker"></span>
             </button>
@@ -8,29 +8,26 @@
             </button>
 
     </div>
-    <div class="top-menu">
-        <h2 class="top-title"><span class="fa fa-map-marker"></span> Map Editor</h2>
+    <div class="top-menu" style="position:absolute; top:55px;z-index:1000;height:50px;width:400px;">
         <div class="top-toolbar">
-            <button class="btn btn-default" ng-click="$ctrl.addLocation()">Add Location</button>
-            <button class="btn btn-default" ng-click="$ctrl.toggleEditRoads()">Edit Roads</button>
-            <button class="btn btn-default" ng-disabled="!$ctrl.editRoads">Add Road</button>
-            <button class="btn btn-primary" ng-click="$ctrl.exportMachines()">Export Roads</button>
+            <button class="btn btn-sm btn-default" ng-click="$ctrl.addLocation()">Add Location</button>
+            <button class="btn btn-sm btn-default" ng-click="$ctrl.toggleEditRoads()">Edit Roads</button>
+            <button class="btn btn-sm btn-default" ng-disabled="!$ctrl.editRoads">Add Road</button>
+            <button class="btn btn-sm btn-primary" ng-click="$ctrl.exportMachines()">Export Roads</button>
         </div>
     </div>
 
-    <hr class="lblue">
 
-    <div pageslide ps-side="left" ps-push="true" ps-open="$ctrl.sidePanels.markers">
+    <div pageslide ps-side="left" ps-push="true" ps-click-outside="false" ps-open="$ctrl.sidePanels.markers">
         <div style="text-align:center;margin-top:50px;height:100%;background-color:white;">
             <br>
             <h3>Markers</h3>
             <div class="btn-group top-toolbar">
                 <label class="btn btn-xs btn-default" ng-model="$ctrl.mapMarkers.trucks" ng-click="$ctrl.refresh()" uib-btn-checkbox>Trucks</label>
-                <label class="btn btn-xs btn-default" ng-model="$ctrl.mapMarkers.loaders" ng-click="$ctrl.refresh()" uib-btn-checkbox>Shovels</label>
-                <label class="btn btn-xs btn-default" ng-model="$ctrl.mapMarkers.shovels" ng-click="$ctrl.refresh()" uib-btn-checkbox>Loaders</label>
-                <label class="btn btn-xs btn-default" ng-model="$ctrl.mapMarkers.locations" ng-click="$ctrl.refresh()" uib-btn-checkbox>Locations</label>
-                <label class="btn btn-xs btn-default" ng-model="$ctrl.mapMarkers.roads" ng-click="$ctrl.refresh()" uib-btn-checkbox>Roads</label>
-
+                <label class="btn btn-xs btn-default" ng-model="$ctrl.mapMarkers.shovels" ng-click="$ctrl.refresh()" uib-btn-checkbox>Shovels</label>
+                <label class="btn btn-xs btn-default" ng-model="$ctrl.mapMarkers.loaders" ng-click="$ctrl.refresh()" uib-btn-checkbox>Loaders</label>
+                <label class="btn btn-xs btn-primary" ng-model="$ctrl.mapMarkers.locations" ng-click="$ctrl.refresh()" uib-btn-checkbox>Locations</label>
+                <label class="btn btn-xs btn-primary" ng-model="$ctrl.mapMarkers.roads" ng-click="$ctrl.refresh()" uib-btn-checkbox>Roads</label>
             </div>
 
             <hr class="lblue" style="height:1px;">
@@ -72,7 +69,7 @@
     </div>
 
 
-    <div id="map" class="box" style="height:750px;width:100%">
+    <div id="map" style="margin:0;height:100%;width:100%">
 
     </div>
 

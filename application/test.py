@@ -33,7 +33,7 @@ def createMachines():
 
     for i in range(10, 20):
         p = map.getRoads()[0].getPoints()[0]
-        machines.append(Truck(i, 'TRK' + str(i), random.randint(250, 400), random.randint(40, 50), random.randint(
+        machines.append(Truck(i,  'TRK' + str(i), random.randint(250, 400), random.randint(40, 50), random.randint(
             8000, 12000), random.randint(150, 200), random.randint(80, 120), randomPoint(), True, random.randint(300, 400)))
     return machines
 

@@ -7,15 +7,14 @@
 
     function MapsService($q, $http, $log, MapMenuService, TasksService, MachinesService) {
         var methods = {}
-        var roads = [];
         var map = undefined;
         var mapCoords = { lat: 40.519897, lng: -112.148473 }
         var mapMenu = undefined;
         var alreadyHooked = false;
-        var routes = [];
 
+        var routes = [];
+        var roads = [];
         var markers = {
-            routes: [],
             trucks: [],
             shovels: [],
             loaders: [],
