@@ -9,6 +9,8 @@
         $ctrl.selectedMachine;
         $ctrl.machines = []
 
+        $ctrl.filteredMachines = undefined;
+
         $ctrl.progressbar = ngProgressFactory.createInstance();
         $ctrl.progressbar.start();
 
@@ -30,9 +32,28 @@
             }
         };
 
+        $ctrl.searchCallBack = function(searchObj) {
+            var filteredMachines = [];
+
+            if (searchObj == undefined) {
+                $ctrl.filteredMachines = undefined;
+                return;
+            }
+            $ctrl.machines.forEach(function(machine) {
+                for (var field in searchObj) {
+                    if (searchObj[field] != "" && machine[field] != searchObj[field]) {
+                        return;
+                    }
+                }
+                filteredMachines.push(machine);
+            });
+            $ctrl.filteredMachines = filteredMachines;
+        }
+
         $ctrl.refreshMachines = function() {
             MachinesService.getAll().then(function(response) {
                 $ctrl.machines = response.data;
+                $ctrl.filteredMachines = undefined;
                 $ctrl.gridOptions.data = $ctrl.machines;
                 $ctrl.progressbar.complete();
             });

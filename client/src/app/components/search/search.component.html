@@ -1,0 +1,47 @@
+<div class="clearfix">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search for..." ng-keypress="$ctrl.doSearch($event)" ng-model="$ctrl.searchString">
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Advanced</button>
+
+            </span>
+    </div>
+
+    <!-- Trigger the modal with a button -->
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Advance Search</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control" placeholder="id.." ng-keypress="$ctrl.doSearch($event)" ng-model="$ctrl.searchObj.id">
+                    <input type="text" class="form-control" placeholder="Model.." ng-keypress="$ctrl.doSearch($event)" ng-model="$ctrl.searchObj.model">
+                    <input type="text" class="form-control" placeholder="Weight.." ng-keypress="$ctrl.doSearch($event)" ng-model="$ctrl.searchObj.weight">
+                    <input type="text" class="form-control" placeholder="Speed.." ng-keypress="$ctrl.doSearch($event)" ng-model="$ctrl.searchObj.speed">
+                    <input type="text" class="form-control" placeholder="Capacity.." ng-keypress="$ctrl.doSearch($event)" ng-model="$ctrl.searchObj.capacity">
+                    <input type="text" class="form-control" placeholder="Weight Capacity.." ng-keypress="$ctrl.doSearch($event)" ng-model="$ctrl.searchObj.weightCapacity">
+                    <input type="text" class="form-control" placeholder="Fuel Capacity.." ng-keypress="$ctrl.doSearch($event)" ng-model="$ctrl.searchObj.fuelCapacity">
+                    <input type="text" class="form-control" placeholder="Fuel Consumption.." ng-keypress="$ctrl.doSearch($event)" ng-model="$ctrl.searchObj.fuelConsumption">
+                    <input type="text" class="form-control" placeholder="is Available.." ng-keypress="$ctrl.doSearch($event)" ng-model="$ctrl.searchObj.isAvailable">
+                    <input type="text" class="form-control" placeholder="Fuel Level.." ng-keypress="$ctrl.doSearch($event)" ng-model="$ctrl.searchObj.fuelLevel">
+                    <input type="text" class="form-control" placeholder="Modal Year.." ng-keypress="$ctrl.doSearch($event)" ng-model="$ctrl.searchObj.modalYear">
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- /input-group -->
+</div>
+<!-- /.col-lg-6 -->

@@ -8,10 +8,20 @@
             <button class="btn btn-danger" ng-click="$ctrl.deleteMachine() "><span class="fa fa-remove"></span> Delete</button>
         </div>
     </div>
+
+
+    <div class="row" style="margin-left:25%; width:50%;">
+        <search-ui search-call="$ctrl.searchCallBack(searchObj)"></search-ui>
+    </div>
+
     <hr class="lblue">
 
+
     <div class="row" style="margin-left:8%">
-        <div ng-repeat="machine in $ctrl.machines" class="col-sm-3 box expanding-machine">
+        <div ng-if="$ctrl.filteredMachines != undefined" ng-repeat="machine in $ctrl.filteredMachines" class="col-sm-3 box expanding-machine">
+            <machine-ui machine="machine"></machine-ui>
+        </div>
+        <div ng-if="$ctrl.filteredMachines == undefined" ng-repeat="machine in $ctrl.machines" class="col-sm-3 box expanding-machine">
             <machine-ui machine="machine"></machine-ui>
         </div>
     </div>
