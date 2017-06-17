@@ -44,11 +44,16 @@
             return $http.get(DJANGOURL + '/maps/add-location', { params: location });
         }
 
+
+
         methods.addNewRoad = function() {
             var road = methods.addRoad([mapCoords, mapCoords], '#ffffff', 0.5, true, 4);
             roads.push(road)
             return road;
         }
+
+
+
 
         methods.setEditRoads = function(isEditable) {
             roads.forEach(function(road) {
@@ -56,29 +61,7 @@
             });
         }
 
-        methods.addRoad = function(path, color, opacity, editable, width) {
-            var road = new google.maps.Polyline({
-                editable: editable,
-                path: path,
-                geodesic: true,
-                strokeColor: color,
-                strokeOpacity: opacity,
-                strokeWeight: width
-            });
-            road.setMap(map);
 
-            var i = 0;
-            road.getPath().forEach(function(v) {
-                v.id = path[i].id;
-                i++;
-            })
-            google.maps.event.addListener(road, 'rightclick', function(e) {
-                if (e.vertex == undefined)
-                    return;
-                mapMenu.open(map, road.getPath(), e.vertex);
-            });
-            return road;
-        }
 
         methods.exportRoads = function() {
             var paths = [];
@@ -91,6 +74,34 @@
             });
             $log.debug(JSON.stringify(paths));
         }
+
+
+        methods.addRoad = function(path, color, opacity, editable, width) {
+            var road = new google.maps.Polyline({
+                editable: editable,
+                path: path,
+                geodesic: true,
+                strokeColor: color,
+                strokeOpacity: opacity,
+                strokeWeight: width,
+                map:map
+            });
+
+            var i = 0;
+            road.getPath().forEach(function(v) {
+                v.id = path[i].id;
+                i++;
+            });
+
+            google.maps.event.addListener(road, 'rightclick', function(e) {
+                if (e.vertex == undefined)
+                    return;
+                mapMenu.open(map, road.getPath(), e.vertex);
+            });
+            
+            return road;
+        }
+
 
         methods.getLocations = function() {
             return $http.get(DJANGOURL + '/maps/get-locations').then(function(response) {
@@ -163,6 +174,8 @@
             }
 
         }
+
+
 
         methods.clearRoutes = function() {
             for (var key in routes)

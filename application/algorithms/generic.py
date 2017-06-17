@@ -34,7 +34,7 @@ def getMissionCosts(schedule, map):
     return machines
 
 
-def serialAllocation(schedule, shovels, trucks, loaders, map):
+def serialAllocation(schedule, shovels, loaders, trucks, map):
     startTime = schedule.startTime + timedelta(hours=9)
     for shovel in shovels:
         t = DigTask(schedule.digLocation, startTime, (startTime +
