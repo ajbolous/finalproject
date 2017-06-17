@@ -57,7 +57,7 @@ class Database():
                 loaders.append(machine)
             if isinstance(machine, Shovel):
                 shovels.append(machine)
-        return shovels,loaders,trucks
+        return shovels, loaders, trucks
 
     def getMissions(self):
         return self.missions

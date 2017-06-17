@@ -5,6 +5,7 @@ from datetime import datetime
 from algorithms.routes import getTasksRoutes
 from algorithms.generic import getMissionCosts
 
+
 class Application():
     # static properties
     database = Database()
@@ -50,12 +51,13 @@ class Application():
             elif maxOffer[2] >= offer[2]:
                 maxOffer = offer
                 maxMachine = machine
-        
+
         return maxOffer, maxMachine
 
     @staticmethod
     def getMissionCosts():
-        machines =  getMissionCosts(Application.getMission().getSchedules()[0], Application.graph)
+        machines = getMissionCosts(Application.getMission().getSchedules()[
+                                   0], Application.graph)
         print machines
         return machines
 
@@ -100,15 +102,15 @@ class Application():
                 schedule.addTask(task)
                 maxMachine.tasks.append(task)
                 task.machine = maxMachine
-                print maxMachine
             schedule.updateRemaining()
 
         schedule.updateRemaining()
 
 
 Application.initialize()
-#Application.negotiation()
+Application.negotiation()
 
-shovels, loaders, trucks = Application.database.getMachinesSorted()
-from algorithms.generic import serialAllocation
-serialAllocation(Application.database.getMissions()[0].createNextSchedule(), shovels,loaders,trucks, Application.graph)
+# shovels, loaders, trucks = Application.database.getMachinesSorted()
+# from algorithms.generic import serialAllocation
+# serialAllocation(Application.database.getMissions()[
+#                  0].createNextSchedule(), shovels, loaders, trucks, Application.graph)

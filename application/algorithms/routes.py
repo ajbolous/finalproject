@@ -21,9 +21,6 @@ def getTasksRoutes(tasks, origin, map):
     if len(tasks) < 1:
         return []
 
-    if len(tasks) < 2:
-        return routes
-
     lastLocation = origin
     for i in range(0, len(tasks)):
         routes.append(getRoute(
