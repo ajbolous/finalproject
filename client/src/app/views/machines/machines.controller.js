@@ -42,12 +42,13 @@
             }
             $ctrl.machines.forEach(function(machine) {
                 for (var field in searchObj) {
-                    if (searchObj[field] != "" && machine[field] != searchObj[field]) {
+                    if (searchObj[field] != "" && machine[field].indexOf(searchObj[field]) == -1) {
                         return;
                     }
                 }
                 filteredMachines.push(machine);
             });
+            $log.debug($ctrl.filteredMachines);
             $ctrl.filteredMachines = filteredMachines;
         }
 

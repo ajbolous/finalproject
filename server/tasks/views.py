@@ -12,3 +12,10 @@ def getTasks(request):
 def getMissionCosts(request):
     return JsonResponse(Application.getMissionCosts(), safe=False)
     
+def getSchedules(request):
+    jsonSch = []
+    mission = Application.getMission()
+    for sch in mission.getSchedules():
+        jsonSch.append(sch.toJSON())
+        
+    return JsonResponse(jsonSch, safe=False)

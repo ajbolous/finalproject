@@ -16,6 +16,7 @@
             { label: 'Maps', path: '/maps', active: false, icon: "fa-map-marker" },
             { label: 'Machines', path: '/machines', active: false, icon: "fa-truck" },
             { label: 'Tasks', path: '/tasks', active: false, icon: "fa-tasks" },
+            { label: 'Algorithm', path: '/algorithm', active: false, icon: "fa-cog" },
         ]
 
         $ctrl.rightLinks = [
