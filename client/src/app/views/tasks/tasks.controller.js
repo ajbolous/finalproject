@@ -4,19 +4,33 @@
     angular.module('opmopApp').controller('TasksController', TasksController);
 
     /** @ngInject */
-    function TasksController(toastr, $scope, $log, TasksService) {
+    function TasksController(toastr, $scope, $log, TasksService, ngProgressFactory) {
         var $ctrl = this;
+        /* alert on eventClick */
 
-        $ctrl.gridOptions = {
-            enableFiltering: true,
-            onRegisterApi: function(gridApi) {
-                $ctrl.gridApi = gridApi;
-            }
-        };
+        $ctrl.events = [{ title: 'All Day Event', startsAt: new Date(2017, 5, 1) }];
 
-        TasksService.getAll().then(function(response) {
-            $ctrl.gridOptions.data = response.data;
-        });
+        $ctrl.calendarView = "day";
+        $ctrl.viewDate = new Date(2017, 5, 1, 9);
+
+        $ctrl.progressbar = ngProgressFactory.createInstance();
+        $ctrl.progressbar.start();
+
+
+        $ctrl.taskTypes = {
+            'dig': true,
+            'haulage': true,
+            'load': true
+        }
+
+        $ctrl.refresh = function() {
+            TasksService.getEvents($ctrl.taskTypes).then(function(data) {
+                $ctrl.events = data.events;
+                $ctrl.mission = data.mission;
+                $ctrl.progressbar.complete();
+            });
+        }
+        $ctrl.refresh();
     }
 
 })();

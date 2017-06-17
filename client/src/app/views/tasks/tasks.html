@@ -2,16 +2,49 @@
 
     <div class="top-menu">
         <h2 class="top-title"><span class="fa fa-tasks"></span> Tasks Editor</h2>
-        <div class="top-toolbar">
-            <button class="btn btn-default" ng-click="$ctrl.addLocation()">Edit Roads</button>
-
-            <button class="btn btn-default" ng-click="$ctrl.toggleEditRoads()">Edit Roads</button>
-            <button class="btn btn-default" ng-click="$ctrl.addRoad()" ng-disabled="!$ctrl.editRoads">Add Road</button>
-            <button class="btn btn-error" ng-click="$ctrl.addRoad()" ng-disabled="!$ctrl.editRoads">Delete Road</button>
-            <button class="btn btn-primary" ng-click="$ctrl.exportRoads()">Export Roads</button>
+        <div class="top-toolbar btn-group">
+            <button class="btn btn-default" ng-click="$ctrl.toggleEditRoads()">Add Mission</button>
+            <button class="btn btn-default" ng-click="$ctrl.addRoad()" ng-disabled="!$ctrl.editRoads">Edit Mission</button>
+            <button class="btn btn-error" ng-click="$ctrl.addRoad()" ng-disabled="!$ctrl.editRoads">Delete Mission</button>
+            <button class="btn btn-primary" ng-click="$ctrl.exportRoads()">Export Missions</button>
         </div>
     </div>
     <hr class="lblue">
-    <div ui-grid="$ctrl.gridOptions" style="height:650px"></div>
+
+    <div class="col-lg-12 box">
+        <h2 style="color:#444; margin-top:2px">Mission</h2>
+
+        <table class="table table-hover">
+            <tbody>
+                <tr>
+                    <td>Target</td>
+                    <td>{{$ctrl.mission.target}} Ton</td>
+                </tr>
+                <tr>
+                    <td>Start</td>
+                    <td>{{ $ctrl.mission.startTime}}</td>
+                </tr>
+                <tr>
+                    <td>End</td>
+                    <td>{{ $ctrl.mission.endTime }}</td>
+                </tr>
+                <tr>
+                    <td>Location</td>
+                    <td>Lat: {{$ctrl.mission.digLocation.lat }} Lng: {{$ctrl.mission.digLocation.lng }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <hr class="lblue-small">
+
+        <div class="btn-group" style="margin-bottom:20px;">
+            <label class="btn btn-primary" ng-model="$ctrl.taskTypes.dig" ng-click="$ctrl.refresh()" uib-btn-checkbox>Diging</label>
+            <label class="btn btn-primary" ng-model="$ctrl.taskTypes.load" ng-click="$ctrl.refresh()" uib-btn-checkbox>Loading</label>
+            <label class="btn btn-primary" ng-model="$ctrl.taskTypes.haulage" ng-click="$ctrl.refresh()" uib-btn-checkbox>Haulage</label>
+        </div>
+
+        <mwl-calendar view="$ctrl.calendarView" view-date="$ctrl.viewDate" day-view-start="09:00" day-view-end="18:00" events="$ctrl.events" view-title="calendarTitle" on-event-click="eventClicked(calendarEvent)" on-event-times-changed="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+            cell-is-open="false">
+        </mwl-calendar>
+    </div>
 </div>
 <div class="bottom-footer"> Opmop<sup>Ⓒ</sup> Application <br> By: Ahdab Serhan & Bolous AbuJaber.</div>

@@ -8,8 +8,6 @@
     function MapMenuService($q, $http, $log) {
 
         var MapMenu = function() {
-
-
             this.div_ = document.createElement('div');
             this.div_.innerHTML = "";
             this.div_.className = 'delete-menu';

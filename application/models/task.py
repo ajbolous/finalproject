@@ -1,44 +1,63 @@
 class Task():
-    def __init__(self, taskLocation, startTime, endTime, comments=""):
+    def __init__(self, taskLocation, startTime, endTime, target, comments=""):
         self.location = taskLocation
         self.startTime = startTime
         self.endTime = endTime
         self.comments = comments
+        self.machine = None
+        self.target = target
+        self.actualTarget = None
+        self.cost = -1
 
     def __repr__(self):
-        return "{}({},{},{})".format(self.__class__, self.location, self.startTime, self.endTime)
+        return "\n{}({},{},{})".format(self.__class__, self.target, self.startTime.time(), self.endTime.time())
+
+    def toJSON(self):
+        return {
+            'type': 'task',
+            'startTime': self.startTime.isoformat(),
+            'endTime': self.endTime.isoformat(),
+            'location': self.location.toJSON(),
+            'target': self.target,
+            'actualTarget': self.actualTarget,
+            'cost': self.cost,
+            'comments': self.comments,
+            'machine': self.machine.toJSON()
+        }
 
 
 class DigTask(Task):
-    def __init__(self, location, startTime, endTime, amount, power, comments=""):
-        Task.__init__(self, location, startTime, endTime, comments=comments)
-        self.amount = amount
+    def __init__(self, location, startTime, endTime, target, power, comments=""):
+        Task.__init__(self, location, startTime,
+                      endTime, target, comments=comments)
         self.power = power
+
+    def toJSON(self):
+        t = Task.toJSON(self)
+        t['type'] = 'dig'
+        return t
 
 
 class LoadTask(Task):
-    def __init__(self, location, startTime, endTime, amount, material, comments=""):
-        Task.__init__(self, location, startTime, endTime, comments=comments)
-        self.amount = amount
-        self.material = material
+    def __init__(self, location, startTime, endTime, target, comments=""):
+        Task.__init__(self, location, startTime,
+                      endTime, target, comments=comments)
+
+    def toJSON(self):
+        t = Task.toJSON(self)
+        t['type'] = 'load'
+        return t
 
 
 class HaulageTask(Task):
-    def __init__(self, location, dumpLocation, startTime, endTime, amount, material, comments=""):
-        Task.__init__(self, location, startTime, endTime, comments=comments)
+    def __init__(self, location, dumpLocation, startTime, endTime, target, comments=""):
+        Task.__init__(self, location, startTime,
+                      endTime, target, comments=comments)
         self.dumpLocation = dumpLocation
-        self.amount = amount
-        self.material = material
 
-class SubTask():
-    def __init__(self, startTime, endTime, location, machine, amount, cost):
-        self.startTime = startTime
-        self.endTime = endTime
-        self.location = location
-        self.machine = machine
-        self.amount = amount
-        self.cost = cost
-
-    def __repr__(self):
-        return "\n{}({},{})".format( self.startTime, self.endTime, self.cost)
+    def toJSON(self):
+        t = Task.toJSON(self)
+        t['type'] = 'haulage'
+        t['dumpLocation'] = self.dumpLocation.toJSON()
+        return t
 

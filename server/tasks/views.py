@@ -2,9 +2,13 @@
 from __future__ import unicode_literals
 from django.http import JsonResponse
 from django.shortcuts import render
-from tasks.models import Task
+from application.main import Application
 
-def getTasks(request):
-    tasks  = Task.objects.all()
-    tasksJson = [t.toJSON() for t in tasks]
-    return JsonResponse(tasksJson, safe=False)
+
+def getTasks(request):    
+    missions = [Application.getMission().toJSON()]
+    return JsonResponse(missions, safe=False)
+
+def getMissionCosts(request):
+    return JsonResponse(Application.getMissionCosts(), safe=False)
+    

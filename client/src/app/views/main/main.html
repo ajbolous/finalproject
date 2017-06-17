@@ -3,32 +3,38 @@
     <div class="top-menu">
         <h2 class="top-title"><span class="fa fa-desktop"></span> Monitor</h2>
         <div class="top-toolbar">
-            <button class="btn btn-success" ng-click="$ctrl.refresh()">Refresh</button>
         </div>
     </div>
     <hr class="lblue">
 
     <div class="row">
-        <div class="col-lg-4 box" style="margin-top:20px;width:650px;height:490px;">
-            <canvas id="videoCanvas" width="640" height="480"> </canvas>
-        </div>
 
-        <div class="col-md-3 box" style="margin-top:20px;">
+        <div class="col-lg-4 box" style="height:700px; overflow-y:auto; overflow-x:hidden">
+            <div class="btn-group" style="margin-bottom:20px;">
+                <label class="btn btn-primary" ng-model="$ctrl.taskTypes.dig" ng-click="$ctrl.refresh()" uib-btn-checkbox>Diging</label>
+                <label class="btn btn-primary" ng-model="$ctrl.taskTypes.load" ng-click="$ctrl.refresh()" uib-btn-checkbox>Loading</label>
+                <label class="btn btn-primary" ng-model="$ctrl.taskTypes.haulage" ng-click="$ctrl.refresh()" uib-btn-checkbox>Haulage</label>
+            </div>
+
+            <mwl-calendar style="Height:300px;" view="$ctrl.calendarView" view-date="$ctrl.viewDate" week-view-start="monday" week-view-end="saturday" events="$ctrl.events" view-title="calendarTitle" on-event-click="eventClicked(calendarEvent)" on-event-times-changed="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+                cell-is-open="false">
+            </mwl-calendar>
+        </div>
+        <div class="col-md-4 box" style="width:640; height:480;">
             <h4>Machines</h4>
             <nvd3 options="$ctrl.options" data="$ctrl.data"></nvd3>
         </div>
 
-        <div class="col-md-3 box" style="margin-top:20px;">
+        <div class="col-md-3 box" style="width:640; height:480;">
             <h4>Material</h4>
 
             <nvd3 options="$ctrl.options2" data="$ctrl.data2"></nvd3>
         </div>
-        <div class="col-md-3 box" style="margin-top:20px;">
+        <div class="col-md-3 box" style="width:640; height:480;">
             <h4>Fuel</h4>
 
             <nvd3 options="$ctrl.options3" data="$ctrl.data3"></nvd3>
         </div>
-
 
     </div>
 </div>

@@ -4,7 +4,7 @@
     angular.module('opmopApp').controller('MainController', MainController);
 
     /** @ngInject */
-    function MainController(toastr, $scope, $log, ngProgressFactory) {
+    function MainController(toastr, $scope, $log, ngProgressFactory, TasksService) {
         var $ctrl = this;
 
         $ctrl.eventSources = [];
@@ -12,37 +12,27 @@
         $ctrl.progressbar = ngProgressFactory.createInstance();
         $ctrl.progressbar.start();
 
-        var client = new WebSocket('ws://' + SERVERIP + ':8084/');
-        var canvas = document.getElementById('videoCanvas');
-        var player = new jsmpeg(client, { canvas: canvas });
-        // client.onmessage = function onmessage(event) {
-        //     if (event.data.size === undefined) {
-        //         var canvas = document.getElementById('videoCanvas');
-        //         var context = canvas.getContext('2d');
-        //         var imageObj = new Image();
-        //         imageObj.onload = function() {
-        //             context.drawImage(imageObj, 0, 0, 640, 480);
-        //         };
-        //         imageObj.src = event.data;
-        //     }
-        // }
+        $ctrl.player = new jsmpeg(new WebSocket('ws://' + SERVERIP + ':8084/'), { canvas: document.getElementById('videoCanvas') });
+        $ctrl.events = [{ title: 'All Day Event', startsAt: new Date(2017, 5, 1) }];
 
+        $ctrl.calendarView = "month";
+        $ctrl.viewDate = new Date(2017, 5, 1, 9);
 
-        $ctrl.uiConfig = {
-            calendar: {
-                height: 450,
-                editable: true,
-                header: {
-                    left: 'month basicWeek basicDay agendaWeek agendaDay',
-                    center: 'title',
-                    right: 'today prev,next'
-                },
-                eventClick: $scope.alertEventOnClick,
-                eventDrop: $scope.alertOnDrop,
-                eventResize: $scope.alertOnResize
-            }
-        };
+        $ctrl.taskTypes = {
+            'dig': true,
+            'haulage': true,
+            'load': true
+        }
 
+        $ctrl.refresh = function() {
+            TasksService.getMissionEvents($ctrl.taskTypes).then(function(data) {
+                $log.debug(data)
+                $ctrl.events = data.events;
+                $ctrl.mission = data.mission;
+                $ctrl.progressbar.complete();
+            });
+        }
+        $ctrl.refresh();
 
         $ctrl.options = {
             chart: {
@@ -131,7 +121,6 @@
                 }
             }
         };
-
         $ctrl.data = [{
             key: "Cumulative Return",
             values: [
@@ -145,6 +134,14 @@
                 { "label": "H", "value": -5.1387322875705 }
             ]
         }]
+
+        TasksService.getMissionCosts().then(function(mission) {
+            $log.debug(mission);
+            $ctrl.data = [{
+                key: "COsts",
+                values: mission
+            }]
+        });
 
 
         $ctrl.data3 = [{
@@ -188,6 +185,8 @@
         }
 
         $ctrl.data2 = generateData(4, 40);
+
+        $ctrl.progressbar.complete();
     }
 
 })();

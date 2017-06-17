@@ -22,6 +22,8 @@
             <machine-ui machine="machine"></machine-ui>
         </div>
         <div ng-if="$ctrl.filteredMachines == undefined" ng-repeat="machine in $ctrl.machines" class="col-sm-3 box expanding-machine">
+    <div class="row" ng-repeat="machines in $ctrl.machinesGroup">
+        <div ng-repeat="machine in machines" class="col-sm-3 box expanding-machine">
             <machine-ui machine="machine"></machine-ui>
         </div>
     </div>

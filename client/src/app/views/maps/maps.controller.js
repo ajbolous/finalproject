@@ -4,21 +4,35 @@
     angular.module('opmopApp').controller('MapsController', MapsController);
 
     /** @ngInject */
-    function MapsController(toastr, $scope, $log, $uibModal, MapsService, ngProgressFactory) {
+    function MapsController(toastr, $scope, $log, $uibModal, MapsService, MachinesService, ngProgressFactory) {
         var $ctrl = this;
 
         $ctrl.progressbar = ngProgressFactory.createInstance();
         $ctrl.progressbar.start();
-
-
+        $ctrl.sidePanels = {
+            markers: false,
+            machines: false
+        }
         $ctrl.editRoads = false;
 
+        $ctrl.mapMarkers = {
+            shovels: true,
+            trucks: true,
+            loaders: true,
+            locations: true,
+            roads: true
+        }
+
         MapsService.initMap();
+
         MapsService.buildRoads().then(function() {
             $ctrl.progressbar.complete()
         });
-        MapsService.setEditRoads($ctrl.editRoads);
 
+        $ctrl.refresh = function() {
+            for (var key in $ctrl.mapMarkers)
+                MapsService.showGroup(key, $ctrl.mapMarkers[key]);
+        }
         $ctrl.toggleEditRoads = function() {
             $ctrl.editRoads = !$ctrl.editRoads;
             MapsService.setEditRoads($ctrl.editRoads);
@@ -30,8 +44,20 @@
 
         $ctrl.exportRoads = function() {
             MapsService.exportRoads();
+        }
+
+        $ctrl.openSidePanel = function(panel) {
+
+            for (var key in $ctrl.sidePanels)
+                $ctrl.sidePanels[key] = false;
+
+            setTimeout(function() {
+                $ctrl.sidePanels[panel] = true;
+                $scope.$apply();
+            }, 5);
 
         }
+
 
         $ctrl.addLocation = function(path, vertex) {
 
@@ -56,9 +82,27 @@
             });
         }
 
+        $ctrl.showRoute = function(machine) {
+            MapsService.clearRoutes();
+            MachinesService.getMachineRoute(machine).then(function(route) {
+                MapsService.addRoute(machine, route);
+            });
+        }
+
+        MachinesService.getAll().then(function(machines) {
+            $ctrl.machines = machines;
+            machines.forEach(function(machine) {
+                MapsService.addMachineMarker(machine);
+            });
+        });
 
 
-        MapsService.addMapMenuOption('Set Location', $ctrl.addLocation);
+        MapsService.getLocations().then(function(locations) {
+            locations.forEach(function(mapLocation) {
+                MapsService.addLocationMarker(mapLocation);
+            });
+
+        });
 
     }
 
