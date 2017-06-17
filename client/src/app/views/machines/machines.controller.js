@@ -54,14 +54,7 @@
         $ctrl.refreshMachines = function() {
             MachinesService.getAll().then(function(machines) {
                 $ctrl.machines = machines;
-                var i = 0;
-                $ctrl.machines.forEach(function(machine) {
-                    var j = Math.floor(i / 4)
-                    if (i % 4 == 0)
-                        $ctrl.machinesGroup[j] = []
-                    $ctrl.machinesGroup[j].push(machine)
-                    i++;
-                });
+                $ctrl.filteredMachines = undefined;
                 $ctrl.progressbar.complete();
             });
         }

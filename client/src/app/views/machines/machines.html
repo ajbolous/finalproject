@@ -15,19 +15,21 @@
     </div>
 
     <hr class="lblue">
+    <div class="row" style=" width:100%;">
 
 
-    <div class="row" style="margin-left:8%">
-        <div ng-if="$ctrl.filteredMachines != undefined" ng-repeat="machine in $ctrl.filteredMachines" class="col-sm-3 box expanding-machine">
-            <machine-ui machine="machine"></machine-ui>
+        <div class="row" style="margin-left:8%">
+            <div ng-if="$ctrl.filteredMachines != undefined" ng-repeat="machine in $ctrl.filteredMachines" class="col-sm-3 box expanding-machine">
+                <machine-ui machine="machine"></machine-ui>
+            </div>
         </div>
-        <div ng-if="$ctrl.filteredMachines == undefined" ng-repeat="machine in $ctrl.machines" class="col-sm-3 box expanding-machine">
-    <div class="row" ng-repeat="machines in $ctrl.machinesGroup">
-        <div ng-repeat="machine in machines" class="col-sm-3 box expanding-machine">
-            <machine-ui machine="machine"></machine-ui>
+
+        <div class="row" style="margin-left:8%">
+            <div ng-if="$ctrl.filteredMachines == undefined" ng-repeat="machine in $ctrl.machines" class="col-sm-3 box expanding-machine">
+                <machine-ui machine="machine"></machine-ui>
+            </div>
         </div>
     </div>
-
 
 </div>
 <div class="bottom-footer"> Opmop<sup>Ⓒ</sup> Application <br> By: Ahdab Serhan & Bolous AbuJaber.</div>
