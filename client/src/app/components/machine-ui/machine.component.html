@@ -1,20 +1,53 @@
-<div style="overflow:hidden">
+<div style="overflow:hidden" data-toggle="modal" data-target="#machineModal{{$ctrl.machine.id}}">
+    {{$ctrl.machine.id}}
 
-    <h4>{{$ctrl.machine.type}} - {{$ctrl.machine.id}} - {{$ctrl.machine.model}}</h4>
+    <div style="float:right;margin-right:5px;margin-top:5px;" ng-switch="$ctrl.machine.type">
+        <span ng-switch-when="truck" class="fa fa-truck"></span>
+        <span ng-switch-when="shovel" class="fa fa-wrench"></span>
+        <span ng-switch-when="loader" class="fa fa-steam"></span>
+    </div>
 
-    <h5>Parameters</h5>
-    <ul class="list-group">
-        <li class="list-group-item list-group-item-default">Fuel Capacity : {{$ctrl.machine.fuelCapacity}}</li>
-        <li class="list-group-item list-group-item-default">Fuel Consumption: {{$ctrl.machine.fuelConsumption}}</li>
-        <li class="list-group-item list-group-item-default">Speed : {{$ctrl.machine.speed}}</li>
-        <li class="list-group-item list-group-item-default">Weight : {{$ctrl.machine.weight}}</li>
-        <li class="list-group-item list-group-item-default">Capacity : {{$ctrl.machine.weightCapacity}}</li>
+    <h4>{{$ctrl.machine.model}}</h4>
+</div>
 
-    </ul>
-    <h5>Location</h5>
-    <ul class="list-group">
-        <li class="list-group-item list-group-item-info">Node: {{$ctrl.machine.location.nid}}</li>
-        <li class="list-group-item list-group-item-default">Lat : {{$ctrl.machine.location.lat}} </li>
-        <li class="list-group-item list-group-item-default">Lng : {{$ctrl.machine.location.lng}}</li>
-    </ul>
+<div id="machineModal{{$ctrl.machine.id}}" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Machine Details ({{$ctrl.machine.model}}) </h4>
+            </div>
+            <div class="modal-body">
+                <h5>Information</h5>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-default">Type: {{$ctrl.machine.type}}</li>
+                    <li class="list-group-item list-group-item-default">ID: {{$ctrl.machine.id}}</li>
+                    <li class="list-group-item list-group-item-default">Model: {{$ctrl.machine.model}}</li>
+
+                </ul>
+
+                <h5>Parameters</h5>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-default">Fuel Capacity : {{$ctrl.machine.fuelCapacity}}</li>
+                    <li class="list-group-item list-group-item-default">Fuel Consumption: {{$ctrl.machine.fuelConsumption}}</li>
+                    <li class="list-group-item list-group-item-default">Speed : {{$ctrl.machine.speed}}</li>
+                    <li class="list-group-item list-group-item-default">Weight : {{$ctrl.machine.weight}}</li>
+                    <li class="list-group-item list-group-item-default">Capacity : {{$ctrl.machine.weightCapacity}}</li>
+
+                </ul>
+                <h5>Location</h5>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-info">Node: {{$ctrl.machine.location.nid}}</li>
+                    <li class="list-group-item list-group-item-default">Lat : {{$ctrl.machine.point.lat}} </li>
+                    <li class="list-group-item list-group-item-default">Lng : {{$ctrl.machine.point.lng}}</li>
+                </ul>
+
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+
+    </div>
 </div>

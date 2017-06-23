@@ -23,10 +23,9 @@ import maps.views as mapViews
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^tasks/get-all', tasksViews.getTasks),
-    url(r'^tasks/get-cost', tasksViews.getMissionCosts), 
-        url(r'^tasks/get-schedules', tasksViews.getSchedules),
-
+    url(r'^tasks/get-cost', tasksViews.getMissionCosts),
+    url(r'^tasks/get-missions', tasksViews.getMissions),
+    url(r'^tasks/alloc-sched', tasksViews.allocateSchedule),
     url(r'^machines/add', machineViews.addMachine),
     url(r'^machines/edit', machineViews.editMachine),
     url(r'^machines/get-all', machineViews.getMachines),

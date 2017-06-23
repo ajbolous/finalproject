@@ -9,37 +9,20 @@
         $ctrl.selectedMachine;
         $ctrl.machines = []
 
-        $ctrl.filteredMachines = undefined;
+        $ctrl.filteredMachines = [];
 
         $ctrl.machinesGroup = [];
         $ctrl.progressbar = ngProgressFactory.createInstance();
         $ctrl.progressbar.start();
 
-
-        $ctrl.gridOptions = {
-            enableFiltering: true,
-            enableRowSelection: true,
-            enableSelectAll: true,
-            selectionRowHeaderWidth: 35,
-            rowHeight: 35,
-            showGridFooter: true,
-            multiSelect: false,
-
-            onRegisterApi: function(gridApi) {
-                $ctrl.gridApi = gridApi;
-                $ctrl.gridApi.selection.on.rowSelectionChanged($scope, function(row) {
-                    $ctrl.selectedMachine = row.entity;
-                });
-            }
-        };
-
         $ctrl.searchCallBack = function(searchObj) {
             var filteredMachines = [];
 
             if (searchObj == undefined) {
-                $ctrl.filteredMachines = undefined;
+                $ctrl.filteredMachines = $ctrl.machines;
                 return;
             }
+
             $ctrl.machines.forEach(function(machine) {
                 for (var field in searchObj) {
                     if (searchObj[field] != "" && machine[field].indexOf(searchObj[field]) == -1) {
@@ -48,14 +31,40 @@
                 }
                 filteredMachines.push(machine);
             });
-            $log.debug($ctrl.filteredMachines);
             $ctrl.filteredMachines = filteredMachines;
         }
 
+        $ctrl.getFilteredTrucks = function() {
+            var trucks = [];
+            $ctrl.filteredMachines.forEach(function(machine) {
+                if (machine.type == "truck")
+                    trucks.push(machine);
+            })
+            return trucks;
+        }
+
+        $ctrl.getFilteredLoaders = function() {
+            var trucks = [];
+            $ctrl.filteredMachines.forEach(function(machine) {
+                if (machine.type == "loader")
+                    trucks.push(machine);
+            })
+            return trucks;
+        }
+
+
+        $ctrl.getFilteredShovels = function() {
+            var trucks = [];
+            $ctrl.filteredMachines.forEach(function(machine) {
+                if (machine.type == "shovel")
+                    trucks.push(machine);
+            })
+            return trucks;
+        }
         $ctrl.refreshMachines = function() {
             MachinesService.getAll().then(function(machines) {
                 $ctrl.machines = machines;
-                $ctrl.filteredMachines = undefined;
+                $ctrl.filteredMachines = machines;
                 $ctrl.progressbar.complete();
             });
         }
@@ -87,6 +96,7 @@
             });
 
         }
+
         $ctrl.editMachine = function() {
             var modalInstance = $uibModal.open({
                 animation: true,

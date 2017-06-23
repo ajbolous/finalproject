@@ -5,7 +5,7 @@
         .module('opmopApp')
         .service('MapsService', MapsService);
 
-    function MapsService($q, $http, $log, MapMenuService, TasksService, MachinesService) {
+    function MapsService($q, $http, $log, MapMenuService, MissionsService, MachinesService) {
         var methods = {}
         var map = undefined;
         var mapCoords = { lat: 40.519897, lng: -112.148473 }
@@ -84,7 +84,7 @@
                 strokeColor: color,
                 strokeOpacity: opacity,
                 strokeWeight: width,
-                map:map
+                map: map
             });
 
             var i = 0;
@@ -98,7 +98,7 @@
                     return;
                 mapMenu.open(map, road.getPath(), e.vertex);
             });
-            
+
             return road;
         }
 
@@ -135,7 +135,7 @@
 
         methods.addMachineMarker = function(machine) {
             var icon = undefined;
-            var marker = methods.addMarker(machine.location, icon, " " + machine.id, machine.type + " - " + machine.model);
+            var marker = methods.addMarker(machine.point, icon, " " + machine.id, machine.type + " - " + machine.model);
 
             switch (machine.type) {
                 case 'shovel':
@@ -159,7 +159,7 @@
 
         methods.addLocationMarker = function(mapLocation) {
 
-            var marker = methods.addMarker(mapLocation.location, undefined, "", mapLocation.type);
+            var marker = methods.addMarker(mapLocation.point, undefined, "", mapLocation.type);
             markers.locations.push(marker);
             switch (mapLocation.type) {
                 case 'fuel':
@@ -228,6 +228,7 @@
                 response.data.forEach(function(road) {
                     roads.push(methods.addRoad(road.points, '#0000aa', 0.4, false, 4));
                 });
+                $log.debug(roads)
             });
         }
 

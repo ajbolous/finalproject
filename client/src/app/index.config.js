@@ -41,23 +41,11 @@ var DJANGOURL = "http://" + SERVERIP + ":8000";
             controllerAs: '$ctrl'
         });
 
-        $routeProvider.when('/tasks', {
-            templateUrl: 'app/views/tasks/tasks.html',
-            controller: 'TasksController',
+        $routeProvider.when('/missions', {
+            templateUrl: 'app/views/missions/missions.html',
+            controller: 'MissionsController',
             controllerAs: '$ctrl'
         });
-
-        $routeProvider.when('/maps', {
-            templateUrl: 'app/views/maps/maps.html',
-            controller: 'MapsController',
-            controllerAs: '$ctrl'
-        });
-        $routeProvider.when('/algorithm', {
-            templateUrl: 'app/views/algorithm/algorithm.html',
-            controller: 'AlgorithmController',
-            controllerAs: '$ctrl'
-        });
-
     }
 
 })();

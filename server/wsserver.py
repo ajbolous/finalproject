@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from flask_socketio import SocketIO,send,emit
 import random
-from application.main import Application
+from opmop.main import Application
 import threading
 import time
 
@@ -21,7 +21,7 @@ def echo_handler(message):
 
 def updateMachines():
     data = [];
-    for machine in Application.getMachines():
+    for machine in Application.database.getMachines():
         data.append({'label': machine.id , 'value':machine.fuelCapacity})
     socketio.emit('service_response',{'data': data})
 

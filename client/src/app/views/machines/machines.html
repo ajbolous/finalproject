@@ -18,17 +18,35 @@
     <div class="row" style=" width:100%;">
 
 
-        <div class="row" style="margin-left:8%">
-            <div ng-if="$ctrl.filteredMachines != undefined" ng-repeat="machine in $ctrl.filteredMachines" class="col-sm-3 box expanding-machine">
+
+        <h4>Trucks</h4>
+
+        <div class="row" style="margin-left:2%">
+            <div ng-repeat="machine in $ctrl.getFilteredTrucks()" class="col-sm-1 box">
                 <machine-ui machine="machine"></machine-ui>
             </div>
         </div>
 
-        <div class="row" style="margin-left:8%">
-            <div ng-if="$ctrl.filteredMachines == undefined" ng-repeat="machine in $ctrl.machines" class="col-sm-3 box expanding-machine">
+
+
+        <h4>Loaders</h4>
+
+        <div class="row" style="margin-left:2%">
+            <div ng-repeat="machine in $ctrl.getFilteredLoaders()" class="col-sm-1 box">
                 <machine-ui machine="machine"></machine-ui>
             </div>
         </div>
+
+
+
+        <h4>Shovels</h4>
+
+        <div class="row" style="margin-left:2%">
+            <div ng-repeat="machine in $ctrl.getFilteredShovels()" class="col-sm-1 box">
+                <machine-ui machine="machine"></machine-ui>
+            </div>
+        </div>
+
     </div>
 
 </div>

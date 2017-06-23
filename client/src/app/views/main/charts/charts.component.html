@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-md-3 box" style="overflow:auto;height:400px;">
+        <h4>Mission Calendar</h4>
+
+        <div class="btn-group" style="margin-bottom:20px;">
+            <label class="btn btn-primary" ng-click="$ctrl.calendarView='year'">Year</label>
+            <label class="btn btn-primary" ng-click="$ctrl.calendarView='month'">Month</label>
+            <label class="btn btn-primary" ng-click="$ctrl.calendarView='week'">Week</label>
+            <label class="btn btn-primary" ng-click="$ctrl.calendarView='day'">Day</label>
+        </div>
+
+        <mwl-calendar view="$ctrl.calendarView" view-date="$ctrl.viewDate" week-view-start="monday" week-view-end="saturday" events="$ctrl.events" view-title="calendarTitle" on-event-click="eventClicked(calendarEvent)" on-event-times-changed="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+            cell-is-open="false">
+        </mwl-calendar>
+    </div>
+
+
+    <div class="col-md-3 box">
+        <h4>Machines Cost</h4>
+        <nvd3 options="$ctrl.options" data="$ctrl.data"></nvd3>
+    </div>
+</div>

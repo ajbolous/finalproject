@@ -1,20 +1,23 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 import json
-from application.main import Application
-from application.models.machine import Machine
-# Create your views here.
+from opmop.main import Application
+from opmop.models.machine import Machine
+from opmop.missions import planner
 
+def getMachineId(request):
+    machineId = request.GET.get('id')
+    machine = Application.database.getMachineById(machineId)
+    return JsonResponse(machine, safe = False)
 
 def getMachines(request):
-    machinesJson = [machine.toJSON() for machine in Application.getMachines()]
+    machinesJson = [machine.toJSON() for machine in Application.database.getMachines()]
     return JsonResponse(machinesJson, safe=False)
 
 
 def getMachineRoute(request):
     machineId = request.GET.get('id')
-    route = Application.getRoutes(int(machineId))
-    print(route);
+    route = planner.calculateMachineRoute(int(machineId))
     return JsonResponse(route,safe = False)
 
 def addMachine(request):
