@@ -1,6 +1,8 @@
 import pickle
 import jsonpickle
 import os
+import json
+
 from models.map import Map
 from models.machine import Truck, Shovel, Loader
 
@@ -64,3 +66,7 @@ class Database():
 
     def getLocations(self):
         return self.locations
+
+    def getRoadsJson(self):
+        with open(os.path.join(PATH, 'roads.json'), 'r') as f:
+            return json.load(f)

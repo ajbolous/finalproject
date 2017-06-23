@@ -1,10 +1,8 @@
 import networkx as nx
-import os
 from point import Point
 from road import Road
 import json
-
-from algorithms import utils as utils
+import application.utils as utils
 
 
 class Map():
@@ -17,7 +15,7 @@ class Map():
 
     def addRoad(self, points):
         r = Road(len(self.roads), 'R', 'dirt')
-        points = sorted(points,key=lambda el: el['index'])
+        points = sorted(points, key=lambda el: el['index'])
         for p in points:
             r.addPoint(Point(p['index'], p['nid'], p['lat'], p['lng']))
         self.roads.append(r)
@@ -30,17 +28,16 @@ class Map():
                     for point2 in road2:
                         if point == point2:
                             continue
-                        dist = utils.haversine(point['lat'], point['lng'], point2['lat'], point2['lng'])
+                        dist = utils.haversine(
+                            point['lat'], point['lng'], point2['lat'], point2['lng'])
                         if dist < threshold:
                             point['lat'] = point2['lat']
                             point['lng'] = point2['lng']
 
             self.addRoad(road)
 
-    def loadFromJson(self):
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        with open(dir_path + '/roads.json') as data:
-            self.buildRoads(json.load(data))
+    def buildFromJson(self, jsonData):
+        self.buildRoads(jsonData)
 
     def getClosestPoint(self, lat, lng):
         minDist = 999999
@@ -51,7 +48,6 @@ class Map():
                 if dist < minDist:
                     minDist = dist
                     minPoint = point
-
         return minPoint
 
 
@@ -71,10 +67,10 @@ class MapGraph():
             points = road.getPoints()
             points = sorted(points, key=lambda el: el.index)
             self.addNode(points[0])
-            for i in range(1,len(points)):
+            for i in range(1, len(points)):
                 self.addNode(points[i])
-                self.addEdge(points[i-1], points[i])
-                self.addEdge(points[i], points[i-1])
+                self.addEdge(points[i - 1], points[i])
+                self.addEdge(points[i], points[i - 1])
 
         self.connectGraph()
 
@@ -114,8 +110,8 @@ class MapGraph():
             print "Didnt find a path", e
             return None, -1
 
-        for i in range(len(shortestPath)-1):
-            w += self.graph[shortestPath[i]][shortestPath[i+1]]['weight']
+        for i in range(len(shortestPath) - 1):
+            w += self.graph[shortestPath[i]][shortestPath[i + 1]]['weight']
 
         for node in shortestPath:
             path.append(self.graph.node[node]['point'])
