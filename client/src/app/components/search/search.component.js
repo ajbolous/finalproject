@@ -22,16 +22,16 @@
         };
 
         $ctrl.doSearch = function($event) {
-            if ($event.which == 13) {
-                for (var field in $ctrl.searchObj) {
-                    if ($ctrl.searchObj[field] != "") {
-                        $ctrl.searchCall({ searchObj: $ctrl.searchObj });
-                        return;
-                    }
+            // if ($event.which == 13) {
+            for (var field in $ctrl.searchObj) {
+                if ($ctrl.searchObj[field] != "") {
+                    $ctrl.searchCall({ searchObj: $ctrl.searchObj });
+                    return;
                 }
-                $ctrl.searchCall({ searchObj: undefined });
-
             }
+            $ctrl.searchCall({ searchObj: undefined });
+
+            //}
         }
 
     }

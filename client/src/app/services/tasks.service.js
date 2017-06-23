@@ -108,8 +108,22 @@
             });
         }
 
+        function _getSchedules(date) {
+            return $http.get(DJANGOURL + '/tasks/get-schedules').then(function(response) {
+                response.data.forEach(function(schedule) {
+                    schedule.startTime = fixDate(schedule.startTime);
+                    schedule.endTime = fixDate(schedule.endTime);
+                    schedule.date = fixDate(schedule.date);
+
+
+
+                })
+                return response.data;
+            });
+        }
         return {
             getMissionEvents: _getMissionsEvents,
+            getSchedules: _getSchedules,
             getEvents: _getEvents,
             getMissionCosts: _getMissionCosts,
             getAll: getAll,

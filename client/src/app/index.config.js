@@ -52,6 +52,11 @@ var DJANGOURL = "http://" + SERVERIP + ":8000";
             controller: 'MapsController',
             controllerAs: '$ctrl'
         });
+        $routeProvider.when('/algorithm', {
+            templateUrl: 'app/views/algorithm/algorithm.html',
+            controller: 'AlgorithmController',
+            controllerAs: '$ctrl'
+        });
 
     }
 
