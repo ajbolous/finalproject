@@ -3,7 +3,7 @@
 
     angular.module('opmopApp')
         .component('chartsUi', {
-            templateUrl: 'app/views/main/charts/charts.component.html',
+            templateUrl: 'app/main/charts/charts.component.html',
             controller: ChartsUiController,
             bindings: {}
         });

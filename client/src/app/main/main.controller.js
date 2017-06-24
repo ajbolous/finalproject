@@ -65,7 +65,7 @@
 
             var modalInstance = $uibModal.open({
                 animation: true,
-                templateUrl: 'app/views/maps/location-modal/location-modal.html',
+                templateUrl: 'app/maps/location-modal/location-modal.html',
                 controller: 'LocationModalController',
                 controllerAs: '$ctrl',
                 resolve: {

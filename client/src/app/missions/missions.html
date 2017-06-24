@@ -1,0 +1,37 @@
+<div class="container" style="width:95%" ng-if="$ctrl.selectedMission==undefined">
+
+    <div class="top-menu">
+        <h2 class="top-title"><span class="fa fa-tasks"></span> Mission Control</h2>
+        <div class="top-toolbar btn-group">
+            <button class="btn btn-default" ng-click="$ctrl.toggleEditRoads()">Add Mission</button>
+            <button class="btn btn-primary" ng-click="$ctrl.exportRoads()">Export Missions</button>
+        </div>
+    </div>
+    <hr class="lblue">
+
+    <div class="col-lg-12">
+        <h2 style="color:#333; margin-top:2px">Missions</h2>
+        <div class="row">
+            <div class="box col-sm-2" ng-repeat="mission in $ctrl.missions">
+                <mission-ui mission="mission" ng-click="$ctrl.showMission(mission)" display-mode="minimum"></mission-ui>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container" style="width:95%" ng-if="$ctrl.selectedMission!=undefined">
+
+    <div class="top-menu">
+        <h2 class="top-title"><span class="fa fa-pencil"></span> Mission {{$ctrl.selectedMission.getMission().id}}</h2>
+        <div class="top-toolbar btn-group">
+            <button class="btn btn-default" ng-click="$ctrl.selectedMission=undefined">Back</button>
+        </div>
+    </div>
+    <hr class="lblue">
+
+    <mission-ui mission="$ctrl.selectedMission" display-mode="full"></mission-ui>
+
+</div>
+
+</div>
+<div class="bottom-footer"> Opmop<sup>Ⓒ</sup> Application <br> By: Ahdab Serhan & Bolous AbuJaber.</div>

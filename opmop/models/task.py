@@ -29,9 +29,8 @@ class Task():
 
 
 class DigTask(Task):
-    def __init__(self, tid,location, startTime, endTime, target, power, machineId,  comments=""):
+    def __init__(self, tid,location, startTime, endTime, target, machineId,  comments=""):
         Task.__init__(self, tid, location, startTime, endTime, target, machineId,  comments=comments)
-        self.power = power
 
     def toJSON(self):
         t = Task.toJSON(self)

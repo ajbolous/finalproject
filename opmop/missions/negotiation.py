@@ -2,10 +2,10 @@ from opmop.models.schedule import Schedule
 from opmop.missions.offers.offer import makeOffer
 
 
-def getMaxOffer(machines, schedule, target):
+def getMaxOffer(machines, schedule):
     maxOffer, maxMachine = None, None
     for machine in machines:
-        offer = makeOffer(machine, schedule, target)
+        offer = makeOffer(machine, schedule)
         if offer[0] == False:
             continue
         if maxOffer == None:
@@ -18,38 +18,32 @@ def getMaxOffer(machines, schedule, target):
     return maxOffer, maxMachine
 
 
-def MASNegotiation(mission, date, target, shovels, loaders, trucks):
+def MASNegotiation(mission, schedule, shovels, loaders, trucks, custromTarget=None):
 
-    schedule = Schedule(len(mission.schedules), date, mission, target)
-
+    schedule.tasks = []
     schedule.updateRemaining()
 
     while schedule.remainingDig > 0:
-        schedule.updateRemaining()
-        maxOffer, maxMachine = getMaxOffer(
-            shovels, schedule, schedule.remainingDig)
+        maxOffer, maxMachine = getMaxOffer(shovels, schedule)
         if maxOffer is None:
             break
         for task in maxOffer[1]:
             schedule.addTask(task)
-
         schedule.updateRemaining()
 
-
+    schedule.updateRemaining()
     while schedule.remainingLoad > 0:
-        maxOffer, maxMachine = getMaxOffer(
-            loaders, schedule, schedule.remainingLoad)
+        maxOffer, maxMachine = getMaxOffer(loaders, schedule)
         if maxOffer is None:
             break
         for task in maxOffer[1]:
             schedule.addTask(task)
 
         schedule.updateRemaining()
+    schedule.updateRemaining()
 
-    while schedule.remainingHaulage >= 0:
-        maxOffer, maxMachine = getMaxOffer(
-            trucks, schedule, schedule.remainingHaulage)
-
+    while schedule.remainingHaulage > 0:
+        maxOffer, maxMachine = getMaxOffer(trucks, schedule)
         if maxOffer is None:
             break
 

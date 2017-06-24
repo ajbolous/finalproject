@@ -9,6 +9,8 @@ class Schedule():
         self.target = target
         self.tasks = []
 
+        self.allocated = False
+
         self.remainingDig = target
         self.remainingLoad = target
         self.remainingHaulage = target
@@ -47,5 +49,6 @@ class Schedule():
             'remainingDig': self.remainingDig,
             'remainingLoad': self.remainingLoad,
             'remainingHaulage': self.remainingHaulage,
-            'tasks': [t.toJSON() for t in self.tasks]
+            'tasks': [t.toJSON() for t in self.tasks],
+            'allocated': self.allocated
         }

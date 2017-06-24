@@ -30,19 +30,19 @@ var DJANGOURL = "http://" + SERVERIP + ":8000";
 
         //ROUTES 
         $routeProvider.when('/', {
-            templateUrl: 'app/views/main/main.html',
+            templateUrl: 'app/main/main.html',
             controller: 'MainController',
             controllerAs: '$ctrl'
         });
 
         $routeProvider.when('/machines', {
-            templateUrl: 'app/views/machines/machines.html',
+            templateUrl: 'app/machines/machines.html',
             controller: 'MachinesController',
             controllerAs: '$ctrl'
         });
 
         $routeProvider.when('/missions', {
-            templateUrl: 'app/views/missions/missions.html',
+            templateUrl: 'app/missions/missions.html',
             controller: 'MissionsController',
             controllerAs: '$ctrl'
         });

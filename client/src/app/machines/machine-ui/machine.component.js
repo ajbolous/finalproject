@@ -3,7 +3,7 @@
 
     angular.module('opmopApp')
         .component('machineUi', {
-            templateUrl: 'app/components/machine-ui/machine.component.html',
+            templateUrl: 'app/machines/machine-ui/machine.component.html',
             controller: MachineUI,
             bindings: {
                 machine: "="

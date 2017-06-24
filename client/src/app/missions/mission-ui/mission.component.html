@@ -1,0 +1,102 @@
+<div style="overflow:hidden">
+
+    <div ng-if="$ctrl.displayMode==='minimum'">
+        <h3>Mission {{$ctrl.mission.getMission().id}}</h3>
+        <h4>{{$ctrl.mission.getMission().title}}</h4>
+        {{ $ctrl.mission.getMission().startTime.toLocaleDateString() }} - {{ $ctrl.mission.getMission().endTime.toLocaleDateString() }}
+    </div>
+
+    <div ng-if="$ctrl.displayMode==='full'">
+        <h3>Details</h3>
+        <table class="table table-striped table-condensed box" style="Background-color:white;">
+            <tbody>
+
+                <tr>
+                    <td>Target</td>
+                    <td>{{$ctrl.mission.getMission().target}} Ton</td>
+                    <td>Remaining</td>
+                    <td>{{$ctrl.mission.getMission().target}} Ton</td>
+                </tr>
+
+                <tr>
+                    <td>Start</td>
+                    <td>{{ $ctrl.mission.getMission().startTime.toLocaleDateString() }}</td>
+                    <td>End</td>
+                    <td>{{ $ctrl.mission.getMission().endTime.toLocaleDateString() }}</td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <h3>Locations</h3>
+        <table class="table table-striped table-condensed box" style="Background-color:white;">
+            <tbody>
+                <tr>
+                    <td>Dig {{$ctrl.mission.getMission().digLocation.index}}</td>
+                    <td>{{$ctrl.mission.getMission().digLocation.point.lat}}</td>
+                    <td>{{$ctrl.mission.getMission().digLocation.point.lng}}</td>
+                </tr>
+                <tr ng-repeat="dump in $ctrl.mission.getMission().dumpLocations">
+                    <td>Dump {{dump.id}}</td>
+                    <td>{{dump.point.lat}}</td>
+                    <td>{{dump.point.lng}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+        <h3>Schedules</h3>
+        <table class="table table-hover table-condensed box" style="Background-color:white;" ng-if="$ctrl.schedule == undefined">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Tasks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="schedule in $ctrl.mission.getSchedules()" ng-class="{info: schedule.allocated, default: !schedule.allocated}" style="cursor: -webkit-zoom-in" ng-click="$ctrl.showSchedule(schedule)">
+                    <td>{{schedule.id}}</td>
+                    <td>{{schedule.date.toLocaleDateString()}}</td>
+                    <td>{{schedule.tasks.length}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="box" ng-if="$ctrl.schedule != undefined">
+            <button class="btn btn-danger" ng-click="$ctrl.schedule= undefined">Back</button>
+            <button class="btn btn-default" ng-click="$ctrl.allocateSchedule()">Allocate Schedule</button>
+            <h3>Details</h3>
+            <table class="table table-striped table-condensed" style="Background-color:white;">
+                <tbody>
+
+                    <tr>
+                        <td>ID</td>
+                        <td>{{$ctrl.schedule.id}}</td>
+                        <td>Date</td>
+                        <td>{{$ctrl.schedule.date}}</td>
+                        <td>Tasks</td>
+                        <td>{{ $ctrl.schedule.tasks.length }}</td>
+                        <td>Allocated</td>
+                        <td>{{ $ctrl.schedule.allocated }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <div class="btn-group" style="margin-bottom:20px;">
+                <label class="btn btn-primary" ng-model="$ctrl.taskTypes.dig" ng-click="$ctrl.refresh()" uib-btn-checkbox>Diging</label>
+                <label class="btn btn-primary" ng-model="$ctrl.taskTypes.load" ng-click="$ctrl.refresh()" uib-btn-checkbox>Loading</label>
+                <label class="btn btn-primary" ng-model="$ctrl.taskTypes.haulage" ng-click="$ctrl.refresh()" uib-btn-checkbox>Haulage</label>
+            </div>
+
+            <mwl-calendar view="'day'" view-date="$ctrl.schedule.date" day-view-start="09:00" day-view-end="18:00" events="$ctrl.schedule.events" view-title="calendarTitle" on-event-click="eventClicked(calendarEvent)" on-event-times-changed="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+                cell-is-open="false">
+            </mwl-calendar>
+        </div>
+
+    </div>
+
+    <h4>{{$ctrl.getMission().mission.comments}}</h4>
+</div>

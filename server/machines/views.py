@@ -5,20 +5,24 @@ from opmop.main import Application
 from opmop.models.machine import Machine
 from opmop.missions import planner
 
+
 def getMachineId(request):
     machineId = request.GET.get('id')
     machine = Application.database.getMachineById(machineId)
-    return JsonResponse(machine, safe = False)
+    return JsonResponse(machine, safe=False)
+
 
 def getMachines(request):
-    machinesJson = [machine.toJSON() for machine in Application.database.getMachines()]
+    machinesJson = [machine.toJSON()
+                    for machine in Application.database.getMachines()]
     return JsonResponse(machinesJson, safe=False)
 
 
 def getMachineRoute(request):
     machineId = request.GET.get('id')
     route = planner.calculateMachineRoute(int(machineId))
-    return JsonResponse(route,safe = False)
+    return JsonResponse(route, safe=False)
+
 
 def addMachine(request):
     m = Machine()
@@ -35,7 +39,7 @@ def addMachine(request):
     m.lat = float(request.GET.get('lat'))
     m.isAvailable = bool(request.GET.get('isAvailable'))
     m.fuelLevel = float(request.GET.get('fuelLevel'))
-    
+
     return HttpResponse("Called add machine", 200)
 
 

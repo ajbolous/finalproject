@@ -11,11 +11,14 @@ def getMissions(request):
     return JsonResponse(missions, safe=False)
 
 def allocateSchedule(request):
-    missionId = int(request.GET.get('id'))
-    date = datetime(request.GET.get('date'))
-    target = int(request.GET.get('date'))
+    missionId = int(request.GET.get('mid'))
+    scheduldeId = int(request.GET.get('sid'))
     mission = Application.database.getMissionById(missionId)
-    planner.calculateSchedule(mission, date, target)
+    schedule = mission.getScheduleById(scheduldeId)
+    planner.calculateSchedule(mission, schedule)
+    schedule.allocated = True
+    Application.database.save()
+    return JsonResponse(schedule.toJSON(), safe=False)
 
 def getMissionCosts(request):
-    return JsonResponse(planner.calculateScheduleCost(), safe=False)
+    return JsonResponse([], safe=False)

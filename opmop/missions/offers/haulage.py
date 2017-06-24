@@ -1,15 +1,16 @@
 from opmop.models.task import HaulageTask
-from opmop.missions.utils import getLocationAtTime, getTimeWindows
+import opmop.missions.utils as utils
 from opmop.main import Application
 
-def makeOffer(machine, date, digLocation, dumpLocations,  target):
+
+def makeOffer(machine, schedule):
 
     bestDump = None
     minDistance = 10000
 
-    for dumpLocation in dumpLocations:
+    for dumpLocation in schedule.mission.dumpLocations:
         path, distance = Application.mapping.calcShortestPath(
-            dumpLocation.point, digLocation.point)
+            dumpLocation.point, schedule.mission.digLocation.point)
         if (distance is not -1 and distance < minDistance):
             bestDump = dumpLocation
             minDistance = distance
@@ -18,16 +19,15 @@ def makeOffer(machine, date, digLocation, dumpLocations,  target):
         return False, []
 
     consumedFuel = minDistance * machine.fuelConsumption
-    travelTime = minDistance / machine.speed
+    travelTime = minDistance / (machine.speed/4)
     averageFillTime = 0.2
-    numberOfTravels = target / machine.weightCapacity
-    numberOfTravels = max(numberOfTravels, 1)
+    numberOfTravels = 1
     numberOfRefeuls = (consumedFuel * numberOfTravels) / machine.fuelCapacity
 
-    tripTime = travelTime + averageFillTime + \
-        (numberOfRefeuls * 1) / numberOfTravels
+    tripTime = 2*travelTime + averageFillTime + (numberOfRefeuls * 1)
 
-    windows = getTimeWindows(machine, date, tripTime)
+    windows, numOfTasks = utils.getTimeWindows(
+        machine, schedule.date, tripTime)
 
     if len(windows) <= 0:
         return False, []
@@ -35,32 +35,35 @@ def makeOffer(machine, date, digLocation, dumpLocations,  target):
     tripCost = tripTime + consumedFuel * 10 + distance * 10 + \
         averageFillTime * numberOfTravels * machine.staticFuelConsumption
 
-    subtasks = []
 
     totalTarget = 0
     totalCosts = 0
 
+    minWindowCost = 9999999
+    bestWindow = None
 
     for window in windows:
-        currentLocation = getLocationAtTime(machine, window[0])
 
-        path, distance = Application.mapping.calcShortestPath(
-            currentLocation, digLocation.point)
+        currentLocation = utils.getLocationAtTime(machine, window[0])
 
-        stask = HaulageTask('TID', digLocation, bestDump, window[0], window[1], machine.weightCapacity, machine.id, "None")
+        numOfHaulers = utils.getNumberOfHaulers(schedule, window)
+        wasteAtTime = utils.getWasteAtTime(schedule, window[0])
 
-        totalCosts += distance * machine.fuelConsumption
-        subtasks.append(stask)
+        print wasteAtTime, window[0]
+        if(numOfHaulers < 1 and wasteAtTime > machine.weightCapacity):
+            path, distance = Application.mapping.calcShortestPath(
+                currentLocation, schedule.mission.digLocation.point)
 
-        numberOfTravels -= 1
-        if numberOfTravels == 0:
-            break
+            windowCost = distance * machine.fuelConsumption + 20 * numOfHaulers
 
-        totalTarget += machine.weightCapacity
-        if totalTarget > target:
-            break
+            if windowCost < minWindowCost:
+                bestWindow = window
+                minWindowCost = windowCost
 
-    if len(subtasks) > 0:
-        return True, subtasks, tripCost * len(subtasks) + totalCosts
+    if bestWindow == None:
+        return False, []
 
-    return False, []
+    task = HaulageTask('{}-{}'.format(schedule.id, numberOfTravels), schedule.mission.digLocation,
+                       bestDump, bestWindow[0], bestWindow[1], machine.weightCapacity, machine.id, "None")
+
+    return True, [task], windowCost + totalCosts + numOfTasks * 50

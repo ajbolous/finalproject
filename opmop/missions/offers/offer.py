@@ -4,12 +4,12 @@ import opmop.missions.offers.haulage as haulage
 from opmop.models.machine import Truck, Shovel, Loader
 
 
-def makeOffer(machine, schedule, target):
+def makeOffer(machine, schedule):
     if isinstance(machine, Truck):
-        return haulage.makeOffer(machine, schedule.date, schedule.mission.digLocation, schedule.mission.dumpLocations, target)
+        return haulage.makeOffer(machine, schedule)
     if isinstance(machine, Loader):
-        return load.makeOffer(machine, schedule.date, schedule.mission.digLocation, target)
+        return load.makeOffer(machine, schedule)
     if isinstance(machine, Shovel):
-        return dig.makeOffer(machine, schedule.date, schedule.mission.digLocation, target)
+        return dig.makeOffer(machine, schedule)
 
     return False, None

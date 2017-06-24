@@ -15,22 +15,22 @@
 
         $ctrl.progressbar = ngProgressFactory.createInstance();
         $ctrl.progressbar.start();
+        $ctrl.missions = [];
 
 
-        $ctrl.taskTypes = {
-            'dig': true,
-            'haulage': true,
-            'load': true
-        }
-
-        $ctrl.refresh = function() {
-            MissionsService.getTasksEvents($ctrl.taskTypes).then(function(data) {
-                $ctrl.events = data.events;
-                $ctrl.mission = data.mission;
+        $ctrl.fetchMissions = function() {
+            MissionsService.getMissions().then(function(missions) {
+                $log.debug(missions);
+                $ctrl.missions = missions;
                 $ctrl.progressbar.complete();
             });
         }
-        $ctrl.refresh();
+
+        $ctrl.showMission = function(mission) {
+            $ctrl.selectedMission = mission;
+        }
+
+        $ctrl.fetchMissions();
     }
 
 })();

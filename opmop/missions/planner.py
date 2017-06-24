@@ -11,6 +11,7 @@ def calculateMachineRoute(machine, date):
     tasks = utils.getMachineSchedule(machine, date)
     return routes.getTasksRoutes(tasks, machine.point)
 
-def calculateSchedule(mission, date, target):
+def calculateSchedule(mission, schedule, customTarget=None):
     shovels, loaders, trucks = Application.database.getMachinesSorted()
-    return negotiation.MASNegotiation(mission, date, target, shovels, loaders, trucks)
+    return negotiation.MASNegotiation(mission, schedule, shovels, loaders, trucks, customTarget)
+

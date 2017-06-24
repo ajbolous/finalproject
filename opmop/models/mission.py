@@ -1,4 +1,6 @@
 from datetime import datetime, timedelta
+from opmop.models.schedule import Schedule
+from datetime import timedelta
 
 
 class Mission():
@@ -14,8 +16,25 @@ class Mission():
         self.dumpLocations = dumpLocations
         self.schedules = []
 
+        for i in range(self.numDays):
+            self.schedules.append(Schedule(i, self.startDate + timedelta(days=i), self, target / self.numDays))
+        
     def getSchedules(self):
         return self.schedules
+
+    def getScheduleById(self, id):
+        print self.schedules
+        for s in self.schedules:
+            print s
+            if s.id == id:
+                return s
+        return None
+
+    def getScheduleByDate(self, date):
+        for s in self.schedules:
+            if s.date == date:
+                return s
+        return None
 
     def addSchedule(self, schedule):
         self.schedules.append(schedule)
