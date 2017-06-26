@@ -24,6 +24,18 @@
             'load': true
         }
 
+        $ctrl.refresh = function() {
+            var events = [];
+            $ctrl.mission.getScheduleEvents($ctrl.schedule).forEach(function(event) {
+                if ($ctrl.taskTypes[event.type] == true) {
+                    events.push(event);
+                }
+            });
+
+            $ctrl.schedule.events = events;
+
+        }
+
         $ctrl.showSchedule = function(schedule) {
             var events = $ctrl.mission.getScheduleEvents(schedule);
             $ctrl.schedule = schedule;

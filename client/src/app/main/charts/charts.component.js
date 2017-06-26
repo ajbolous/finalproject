@@ -22,18 +22,18 @@
         $ctrl.calendarView = "week";
         $ctrl.viewDate = new Date(2017, 5, 1, 9);
 
-        $ctrl.refresh = function() {
-            MissionsService.getMissionsEvents().then(function(missionEvents) {
+        // $ctrl.refresh = function() {
+        //     MissionsService.getMission().then(function(missionEvents) {
 
-                missionEvents.forEach(function(mission) {
-                    $log.debug(mission);
-                    $ctrl.events.push(mission.events);
-                });
-                $ctrl.progressbar.complete();
-            });
-        }
+        //         missionEvents.forEach(function(mission) {
+        //             $log.debug(mission);
+        //             $ctrl.events.push(mission.events);
+        //         });
+        //         $ctrl.progressbar.complete();
+        //     });
+        // }
 
-        $ctrl.refresh();
+        // $ctrl.refresh();
 
         $ctrl.options = {
             chart: {

@@ -33,7 +33,7 @@ def createMachines():
 
     for i in range(10, 20):
         machines.append(Loader(i, 'LOD' + str(i), random.randint(250000, 400000), random.randint(40, 50), random.randint(
-            8000, 12000), random.randint(150, 200), random.randint(80, 120), randomPoint(), True, random.randint(40, 80)))
+            8000, 12000), random.randint(150, 200), random.randint(80, 120), randomPoint(), True, random.randint(25, 60)))
 
     for i in range(20, 50):
         machines.append(Truck(i,  'TRK' + str(i), random.randint(250, 400), random.randint(40, 50), random.randint(

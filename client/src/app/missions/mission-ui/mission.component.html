@@ -1,13 +1,13 @@
 <div style="overflow:hidden">
 
     <div ng-if="$ctrl.displayMode==='minimum'">
-        <h3>Mission {{$ctrl.mission.getMission().id}}</h3>
+        <h3><span class="fa fa-rocket"></span> Mission {{$ctrl.mission.getMission().id}}</h3>
         <h4>{{$ctrl.mission.getMission().title}}</h4>
         {{ $ctrl.mission.getMission().startTime.toLocaleDateString() }} - {{ $ctrl.mission.getMission().endTime.toLocaleDateString() }}
     </div>
 
     <div ng-if="$ctrl.displayMode==='full'">
-        <h3>Details</h3>
+        <h3><span class="fa fa-pencil"></span> Details</h3>
         <table class="table table-striped table-condensed box" style="Background-color:white;">
             <tbody>
 
@@ -28,7 +28,7 @@
             </tbody>
         </table>
 
-        <h3>Locations</h3>
+        <h3><span class="fa fa-map-marker"></span> Locations</h3>
         <table class="table table-striped table-condensed box" style="Background-color:white;">
             <tbody>
                 <tr>
@@ -46,12 +46,14 @@
 
 
 
-        <h3>Schedules</h3>
+        <h3><span class="fa fa-calendar"></span> Schedules</h3>
         <table class="table table-hover table-condensed box" style="Background-color:white;" ng-if="$ctrl.schedule == undefined">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Date</th>
+                    <th>Target</th>
+
                     <th>Tasks</th>
                 </tr>
             </thead>
@@ -59,6 +61,8 @@
                 <tr ng-repeat="schedule in $ctrl.mission.getSchedules()" ng-class="{info: schedule.allocated, default: !schedule.allocated}" style="cursor: -webkit-zoom-in" ng-click="$ctrl.showSchedule(schedule)">
                     <td>{{schedule.id}}</td>
                     <td>{{schedule.date.toLocaleDateString()}}</td>
+                    <td>{{schedule.target}}</td>
+
                     <td>{{schedule.tasks.length}}</td>
                 </tr>
             </tbody>
@@ -75,7 +79,7 @@
                         <td>ID</td>
                         <td>{{$ctrl.schedule.id}}</td>
                         <td>Date</td>
-                        <td>{{$ctrl.schedule.date}}</td>
+                        <td>{{$ctrl.schedule.date.toLocaleDateString()}}</td>
                         <td>Tasks</td>
                         <td>{{ $ctrl.schedule.tasks.length }}</td>
                         <td>Allocated</td>

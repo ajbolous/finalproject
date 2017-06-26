@@ -74,7 +74,7 @@
         $ctrl.addMachine = function() {
             var modalInstance = $uibModal.open({
                 animation: true,
-                templateUrl: 'app/views/machines/machines-modal/machines-modal.html',
+                templateUrl: 'app/machines/machines-modal/machines-modal.html',
                 controller: 'MachinesModalController',
                 controllerAs: '$ctrl',
                 resolve: {

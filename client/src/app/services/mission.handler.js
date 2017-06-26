@@ -58,7 +58,8 @@
                     color: {
                         primary: '#0071c5',
                         secondary: color
-                    }
+                    },
+                    type: task.type
                 });
             });
             return events;

@@ -1,0 +1,67 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2>Add Mission</h2>
+        Please fill the required fields and press save to add Mission.
+    </div>
+
+    <div class="panel-body">
+
+        <div class="form-group">
+
+            <label for="name">Title:</label>
+            <input ng-model="$ctrl.machine.title" type="text" class="form-control" id="name">
+
+            <label for="lat">Start Date:</label>
+            <input ng-model="$ctrl.machine.startDate" type="text" class="form-control" id="lat">
+
+            <label for="lat">End Date:</label>
+            <input ng-model="$ctrl.machine.endDate" type="text" class="form-control" id="lat">
+
+            <label for="name">Target:</label>
+            <input ng-model="$ctrl.machine.target" type="text" class="form-control" id="name">
+
+
+            <label for="type">Dig Site:</label>
+            <select ng-model="$ctrl.machine.digSite" class="form-control" id="type">
+                <option>Shovel</option>
+                <option>Truck</option>
+                <option>Loader</option>
+            </select>
+
+            <label for="type">Dump Site:</label>
+            <select ng-model="$ctrl.machine.dumps[0]" class="form-control" id="type">
+                <option>Shovel</option>
+                <option>Truck</option>
+                <option>Loader</option>
+            </select>
+
+
+            <label for="type">Dump Site:</label>
+            <select ng-model="$ctrl.machine.dumps[1]" class="form-control" id="type">
+                <option>Shovel</option>
+                <option>Truck</option>
+                <option>Loader</option>
+            </select>
+
+
+
+            <label for="type">Dump Site:</label>
+            <select ng-model="$ctrl.machine.dumps[2]" class="form-control" id="type">
+                <option>Shovel</option>
+                <option>Truck</option>
+                <option>Loader</option>
+            </select>
+
+        </div>
+
+    </div>
+
+    <div class="panel-footer">
+        <button class="btn btn-default" ng-click="$ctrl.save()">Save</button>
+        <button class="btn btn-error" ng-click="$ctrl.discard()">Discard</button>
+
+    </div>
+
+
+
+</div>

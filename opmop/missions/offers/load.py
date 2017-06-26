@@ -30,4 +30,4 @@ def makeOffer(machine, schedule):
     task = LoadTask('{}-{}'.format(schedule.id, 0), schedule.mission.digLocation,
                     windows[0][0], windows[0][1], loads * machine.weightCapacity, machine.id, "None")
 
-    return True,  [task], tripCost + 20* numOfTasks
+    return True,  [task], tripCost + 20 * numOfTasks
