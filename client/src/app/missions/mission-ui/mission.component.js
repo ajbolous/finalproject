@@ -33,7 +33,6 @@
             });
 
             $ctrl.schedule.events = events;
-
         }
 
         $ctrl.showSchedule = function(schedule) {

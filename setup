@@ -1,3 +1,2 @@
-
 echo "Setting up env"
 export PYTHONPATH=$PYTHONPATH:$(pwd)/application:$(pwd)

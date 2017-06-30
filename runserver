@@ -1,9 +1,7 @@
-
 echo "Setting up env"
 export PYTHONPATH=$PYTHONPATH:$(pwd)/application:$(pwd)
 echo "Stopping running servers"
 pkill python
 pkill gulp
 echo "Starting Django Server..."
-python server/manage.py runserver 0.0.0.0:8000 &
-python server/wsserver.py
+python server/manage.py runserver 0.0.0.0:8000
