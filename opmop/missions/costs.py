@@ -1,5 +1,6 @@
 from opmop.models.task import HaulageTask, LoadTask, DigTask
 from opmop.main import Application
+from opmop.missions import utils as utils
 
 def getScheduleCost(schedule):
     cost = {
@@ -7,34 +8,36 @@ def getScheduleCost(schedule):
         'total': 0
     }
 
+    return cost
+
 def getScheduleCostPerMachine(schedule):
     machines = {}
     for task in schedule.tasks:
         cost = 0
-        loc = task.machine.getLocationAtTime(task.startTime)
-        path, distance = Application.mapping.calcShortestPath(
-            loc, task.location.location)
-        cost += distance * task.machine.fuelConsumption
+        machine = Application.database.getMachineById(task.machineId)
+        loc = utils.getLocationAtTime(machine, task.startTime)
+        path, distance = Application.mapping.calcShortestPath(loc, task.location.point)
+        cost += distance * machine.fuelConsumption
         if isinstance(task, HaulageTask):
             path, distance = Application.mapping.calcShortestPath(
-                task.location.location, task.dumpLocation.location)
-            cost += distance * task.machine.fuelConsumption
-            cost += 0.2 * task.machine.staticFuelConsumption
+                task.location.point, task.dumpLocation.point)
+            cost += distance * machine.fuelConsumption
+            cost += 0.2 * machine.staticFuelConsumption
 
         else:
             time = (task.endTime - task.startTime).seconds // 3600
-            cost += time * task.machine.staticFuelConsumption
+            cost += time * machine.staticFuelConsumption
 
         t = task.toJSON()
         t['cost'] = cost
-        if task.machine.id not in machines:
-            machines[task.machine.id] = {
+        if machine.id not in machines:
+            machines[machine.id] = {
                 'tasks': [t],
-                'machine': task.machine.toJSON(),
+                'machine': machine.toJSON(),
                 'total': cost
             }
         else:
-            machines[task.machine.id]['tasks'].append(t)
-            machines[task.machine.id]['total'] += cost
+            machines[machine.id]['tasks'].append(t)
+            machines[machine.id]['total'] += cost
 
     return machines

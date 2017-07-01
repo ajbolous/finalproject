@@ -26,6 +26,8 @@ urlpatterns = [
     url(r'^tasks/get-cost', tasksViews.getMissionCosts),
     url(r'^tasks/get-missions', tasksViews.getMissions),
     url(r'^tasks/alloc-sched', tasksViews.allocateSchedule),
+    url(r'^tasks/machine-tasks', tasksViews.getMachineTasks),
+    url(r'^tasks/schedule-cost', tasksViews.getScheduleCost),
     url(r'^machines/add', machineViews.addMachine),
     url(r'^machines/edit', machineViews.editMachine),
     url(r'^machines/get-all', machineViews.getMachines),
