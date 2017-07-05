@@ -6,5 +6,9 @@ from missions import planner
 for mission in Application.database.getMissions():
     for schedule in mission.getSchedules():
         planner.calculateSchedule(mission, schedule)
+        break
+    break
 
 Application.database.save()
+
+

@@ -26,7 +26,10 @@
         }
 
         function _getMachineRoute(machine) {
-            return $http.get(DJANGOURL + '/machines/get-route', { params: machine }).then(function(response) {
+            var today = new Date();
+
+            var todayStr = today.getDate() + "/" + (today.getMonth() + 1) + "/" + today.getFullYear();
+            return $http.get(DJANGOURL + '/tasks/machine-tasks', { params: { mid: machine.id, date: todayStr } }).then(function(response) {
                 return response.data;
             });
         }

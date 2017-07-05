@@ -18,7 +18,7 @@ def getScheduleCost(request):
 
 def getMachineTasks(request):
     machineId = int(request.GET.get('mid'))
-    scheddate =  datetime.strptime(request.GET.get('date'), '%d/%m/%Y')
+    scheddate = datetime.strptime(request.GET.get('date'), '%d/%m/%Y')
     machine = Application.database.getMachineById(machineId)
 
     machineTasks = planner.calculateMachineRoute(machine, scheddate)
@@ -35,10 +35,10 @@ def allocateSchedule(request):
     scheduldeId = int(request.GET.get('sid'))
     mission = Application.database.getMissionById(missionId)
     schedule = mission.getScheduleById(scheduldeId)
-    planner.calculateSchedule(mission, schedule)
+    mas, masCost, rand, randCost = planner.calculateSchedule(mission, schedule)
     schedule.allocated = True
     Application.database.save()
-    return JsonResponse(schedule.toJSON(), safe=False)
+    return JsonResponse({'mas': {'schedule': mas.toJSON(), 'cost': masCost}, 'rand': {'schedule': rand.toJSON(), 'cost': randCost}}, safe=False)
 
 
 def getMissionCosts(request):

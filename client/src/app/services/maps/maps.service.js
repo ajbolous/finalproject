@@ -175,10 +175,10 @@
                     marker.setIcon("https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/gas-32.png");
                     break;
                 case 'dump':
-                    marker.setIcon("https://cdn2.iconfinder.com/data/icons/thesquid-ink-40-free-flat-icon-pack/64/power-plant-32.png");
+                    marker.setIcon("https://cdn4.iconfinder.com/data/icons/gardening-tools-3/64/garden_wheelbarrow-64.png");
                     break;
                 case 'dig':
-                    marker.setIcon("https://cdn3.iconfinder.com/data/icons/snowish/32x32/apps/inkscape.png");
+                    marker.setIcon("https://cdn3.iconfinder.com/data/icons/snowish/64x64/apps/inkscape.png");
                     break;
             }
 
@@ -210,13 +210,13 @@
             }
             routes[machine.id] = [];
 
-            routesToAdd.forEach(function(route) {
+            routesToAdd.route.forEach(function(route) {
                 var mapRoute = {};
-                mapRoute.road = methods.addRoad(route.path, colors[machine.id % 6], 0.4, false, 8);
-                var icon = "https://cdn1.iconfinder.com/data/icons/hawcons/32/698879-icon-14-flag-32.png";
+                mapRoute.road = methods.addRoad(route.path, colors[machine.id % 6], 0.6, false, 8);
+                var icon = "https://cdn1.iconfinder.com/data/icons/hawcons/32/698893-icon-15-flag-64.png";
                 mapRoute.marker = methods.addMarker({
-                        lat: route.to.lat + (0.0001 * (Math.random() - 0.5)),
-                        lng: route.to.lng + (0.0001 * (Math.random() - 0.5))
+                        lat: route.to.lat + (0.0003 * (Math.random() - 0.5)),
+                        lng: route.to.lng + (0.0003 * (Math.random() - 0.5))
                     },
                     icon,
                     machine.id + "-" + i,

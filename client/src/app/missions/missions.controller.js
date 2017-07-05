@@ -41,7 +41,6 @@
                 miss.getSchedules().forEach(function(sched) {
                     if (sched.date.getDate() == $ctrl.todayDate.getDate()) {
                         var events = miss.getScheduleEvents(sched);
-
                         todayMissions.push({ mission: miss, schedule: sched, events: events });
                     }
                 });

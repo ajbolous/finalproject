@@ -35,26 +35,7 @@
 
         // $ctrl.refresh();
 
-        $ctrl.options = {
-            chart: {
-                type: 'discreteBarChart',
-                height: 350,
-                x: function(d) { return d.label; },
-                y: function(d) { return d.value; },
-                showValues: true,
-                valueFormat: function(d) {
-                    return d3.format(',.4f')(d);
-                },
-                transitionDuration: 500,
-                xAxis: {
-                    axisLabel: 'X Axis'
-                },
-                yAxis: {
-                    axisLabel: 'Y Axis',
-                    axisLabelDistance: 30
-                }
-            }
-        };
+
 
 
         $ctrl.options3 = {
@@ -78,6 +59,27 @@
             }
         };
 
+
+        $ctrl.options = {
+            chart: {
+                type: 'discreteBarChart',
+                height: 350,
+                x: function(d) { return d.label; },
+                y: function(d) { return d.value; },
+                showValues: true,
+                valueFormat: function(d) {
+                    return d3.format(',.4f')(d);
+                },
+                transitionDuration: 500,
+                xAxis: {
+                    axisLabel: 'X Axis'
+                },
+                yAxis: {
+                    axisLabel: 'Y Axis',
+                    axisLabelDistance: 30
+                }
+            }
+        };
         $ctrl.data = [{
             key: "Cumulative Return",
             values: [

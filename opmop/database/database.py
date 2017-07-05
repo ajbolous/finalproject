@@ -22,7 +22,8 @@ class Database():
     def __init__(self):
         self.machines = []
         self.missions = None
-
+        self.locations = []
+        
     def load(self):
 
         data = load('data.pkl')
@@ -62,6 +63,7 @@ class Database():
                 loaders.append(machine)
             if isinstance(machine, Shovel):
                 shovels.append(machine)
+
         return shovels, loaders, trucks
 
     def getMissions(self):

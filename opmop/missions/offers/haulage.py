@@ -49,7 +49,6 @@ def makeOffer(machine, schedule):
         numOfHaulers = utils.getNumberOfHaulers(schedule, window)
         wasteAtTime = utils.getWasteAtTime(schedule, window[0])
 
-        print wasteAtTime, window[0]
         if(numOfHaulers < 1 and wasteAtTime > machine.weightCapacity):
             path, distance = Application.mapping.calcShortestPath(
                 currentLocation, schedule.mission.digLocation.point)

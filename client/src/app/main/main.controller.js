@@ -87,6 +87,7 @@
         $ctrl.showRoute = function(machine) {
             MapsService.clearRoutes();
             MachinesService.getMachineRoute(machine).then(function(route) {
+                $log.debug(route);
                 MapsService.addRoute(machine, route);
             });
         }

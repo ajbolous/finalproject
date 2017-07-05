@@ -3,9 +3,15 @@ from opmop.main import Application
 from opmop.missions import utils as utils
 
 def getScheduleCost(schedule):
+    
+    machinesCost = getScheduleCostPerMachine(schedule);
+    totalCost = 0
+    for machine in machinesCost:
+        totalCost+= machinesCost[machine]['total'] 
+
     cost = {
-        'machines': getScheduleCostPerMachine(schedule),
-        'total': 0
+        'machines': machinesCost,
+        'total': totalCost
     }
 
     return cost
@@ -17,15 +23,20 @@ def getScheduleCostPerMachine(schedule):
         machine = Application.database.getMachineById(task.machineId)
         loc = utils.getLocationAtTime(machine, task.startTime)
         path, distance = Application.mapping.calcShortestPath(loc, task.location.point)
+        if distance < 0:
+            distance = -1 * distance
         cost += distance * machine.fuelConsumption
         if isinstance(task, HaulageTask):
             path, distance = Application.mapping.calcShortestPath(
                 task.location.point, task.dumpLocation.point)
+            
             cost += distance * machine.fuelConsumption
             cost += 0.2 * machine.staticFuelConsumption
 
         else:
             time = (task.endTime - task.startTime).seconds // 3600
+            if time < 0:
+                time = -1 * time
             cost += time * machine.staticFuelConsumption
 
         t = task.toJSON()

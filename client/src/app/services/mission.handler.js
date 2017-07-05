@@ -83,14 +83,25 @@
         MissionHandler.prototype.allocateSchedule = function(schedule) {
             var self = this;
             return $http.get(DJANGOURL + '/tasks/alloc-sched', { params: { mid: this.getMission().id, sid: schedule.id } }).then(function(response) {
-                var sched = response.data
+
+
+                var sched = response.data.mas.schedule
                 sched.date = fixDate(sched.date);
                 sched.tasks.forEach(function(task) {
                     task.startTime = fixDate(task.startTime);
                     task.endTime = fixDate(task.endTime);
                 });
-                self.getMission().schedules[schedule.id] = sched;
-                return sched;
+
+                self.getMission().schedules[sched.id] = sched;
+
+                sched = response.data.rand.schedule
+                sched.date = fixDate(sched.date);
+                sched.tasks.forEach(function(task) {
+                    task.startTime = fixDate(task.startTime);
+                    task.endTime = fixDate(task.endTime);
+                });
+
+                return response.data;
             });
 
         }

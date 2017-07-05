@@ -7,6 +7,7 @@ def getRoute(p1, p2, ltype):
 
     if path == None:
         path=[]
+        
     return {
         'from': p1.toJSON(),
         'to': p2.toJSON(),

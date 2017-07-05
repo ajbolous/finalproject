@@ -23,9 +23,7 @@ class Mission():
         return self.schedules
 
     def getScheduleById(self, id):
-        print self.schedules
         for s in self.schedules:
-            print s
             if s.id == id:
                 return s
         return None

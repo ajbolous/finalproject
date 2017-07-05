@@ -53,7 +53,6 @@
                     <th>ID</th>
                     <th>Date</th>
                     <th>Target</th>
-
                     <th>Tasks</th>
                 </tr>
             </thead>
@@ -68,9 +67,11 @@
             </tbody>
         </table>
 
+
         <div class="box" ng-if="$ctrl.schedule != undefined">
             <button class="btn btn-danger" ng-click="$ctrl.schedule= undefined">Back</button>
-            <button class="btn btn-default" ng-click="$ctrl.allocateSchedule()">Allocate Schedule</button>
+            <button class="btn btn-default" ng-click="$ctrl.allocateSchedule()">Allocate new schedule</button>
+
             <h3>Details</h3>
             <table class="table table-striped table-condensed" style="Background-color:white;">
                 <tbody>
@@ -94,13 +95,157 @@
                 <label class="btn btn-primary" ng-model="$ctrl.taskTypes.load" ng-click="$ctrl.refresh()" uib-btn-checkbox>Loading</label>
                 <label class="btn btn-primary" ng-model="$ctrl.taskTypes.haulage" ng-click="$ctrl.refresh()" uib-btn-checkbox>Haulage</label>
             </div>
-
             <mwl-calendar view="'day'" view-date="$ctrl.schedule.date" day-view-start="09:00" day-view-end="18:00" events="$ctrl.schedule.events" view-title="calendarTitle" on-event-click="eventClicked(calendarEvent)" on-event-times-changed="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
                 cell-is-open="false">
             </mwl-calendar>
+
+        </div>
+
+
+
+        <div class="box" ng-if="$ctrl.allocatedSchedule != undefined">
+            <h3>New Schedule</h3>
+            <h3>MAS Negotiation</h3>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <table class="table table-striped table-condensed box" style="Background-color:white;">
+                        <tbody>
+                            <tr>
+                                <td>Target</td>
+                                <td>{{$ctrl.allocatedSchedule.mas.schedule.target }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>Remaining Dig</td>
+                                <td>{{$ctrl.allocatedSchedule.mas.schedule.remainingDig}} Ton</td>
+                            </tr>
+                            <tr>
+                                <td>Remaining Load</td>
+                                <td>{{$ctrl.allocatedSchedule.mas.schedule.remainingLoad}} Ton</td>
+                            </tr>
+
+                            <tr>
+                                <td>Remaining Haulage</td>
+                                <td>{{$ctrl.allocatedSchedule.mas.schedule.remainingHaulage}} Ton</td>
+                            </tr>
+
+                            <tr>
+                                <td>Tasks</td>
+                                <td>{{ $ctrl.allocatedSchedule.mas.schedule.tasks.length }}</td>
+                            </tr>
+                            <tr>
+                                <td>Total Cost</td>
+                                <td>{{ $ctrl.allocatedSchedule.mas.cost.total }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-5">
+                    <mwl-calendar view="'day'" view-date="$ctrl.schedule.date" day-view-start="09:00" day-view-end="18:00" events="$ctrl.allocatedSchedule.mas.events" view-title="calendarTitle" on-event-click="eventClicked(calendarEvent)" on-event-times-changed="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+                        cell-is-open="false">
+                    </mwl-calendar>
+                </div>
+                <div class="col-sm-4 box">
+
+                    <nvd3 options="$ctrl.options" data="$ctrl.masCosts"></nvd3>
+                    <table class="table table-striped table-condensed" style="Background-color:white;">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Type</th>
+                                <th>Model</th>
+                                <th>Capacity</th>
+                                <th>Feul Consumption</th>
+                                <th>Static Consumption</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="(key, machine) in $ctrl.allocatedSchedule.mas.cost.machines">
+                                <td>{{machine.machine.id}}</td>
+                                <td>{{machine.machine.type}}</td>
+                                <td>{{machine.machine.model}}</td>
+                                <td>{{machine.machine.weightCapacity}}</td>
+                                <td>{{machine.machine.fuelConsumption}}</td>
+                                <td>{{machine.machine.staticFuelConsumption}}</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+            <h3>Random</h3>
+
+            <div class="row">
+                <div class="col-md-2 box">
+                    <table class="table table-striped table-condensed" style="Background-color:white;">
+                        <tbody>
+                            <tr>
+                                <td>Target</td>
+                                <td>{{$ctrl.allocatedSchedule.rand.schedule.target }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>Remaining Dig</td>
+                                <td>{{$ctrl.allocatedSchedule.rand.schedule.remainingDig}} Ton</td>
+                            </tr>
+                            <tr>
+                                <td>Remaining Load</td>
+                                <td>{{$ctrl.allocatedSchedule.rand.schedule.remainingLoad}} Ton</td>
+                            </tr>
+
+                            <tr>
+                                <td>Remaining Haulage</td>
+                                <td>{{$ctrl.allocatedSchedule.rand.schedule.remainingHaulage}} Ton</td>
+                            </tr>
+
+                            <tr>
+                                <td>Tasks</td>
+                                <td>{{ $ctrl.allocatedSchedule.rand.schedule.tasks.length }}</td>
+                            </tr>
+                            <tr>
+                                <td>Total Cost</td>
+                                <td>{{ $ctrl.allocatedSchedule.rand.cost.total }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-5">
+                    <mwl-calendar view="'day'" view-date="$ctrl.schedule.date" day-view-start="09:00" day-view-end="18:00" events="$ctrl.allocatedSchedule.rand.events" view-title="calendarTitle" on-event-click="eventClicked(calendarEvent)" on-event-times-changed="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+                        cell-is-open="false">
+                    </mwl-calendar>
+                </div>
+                <div class="col-sm-4 box">
+                    <nvd3 options="$ctrl.options" data="$ctrl.randCosts"></nvd3>
+                    <table class="table table-striped table-condensed" style="Background-color:white;">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Type</th>
+                                <th>Model</th>
+                                <th>Capacity</th>
+                                <th>Feul Consumption</th>
+                                <th>Static Consumption</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="(key, machine) in $ctrl.allocatedSchedule.rand.cost.machines">
+                                <td>{{machine.machine.id}}</td>
+                                <td>{{machine.machine.type}}</td>
+                                <td>{{machine.machine.model}}</td>
+                                <td>{{machine.machine.weightCapacity}}</td>
+                                <td>{{machine.machine.fuelConsumption}}</td>
+                                <td>{{machine.machine.staticFuelConsumption}}</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
 
     </div>
-
-    <h4>{{$ctrl.getMission().mission.comments}}</h4>
 </div>

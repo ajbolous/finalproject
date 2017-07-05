@@ -42,7 +42,6 @@ def getWasteAtTime(schedule, time):
     waste = 0
     for task in schedule.tasks:
         if isinstance(task, LoadTask) and time>task.startTime:
-            print task
             ratio = float((time - task.startTime).seconds) / \
                 (task.endTime - task.startTime).seconds
             waste += int(ratio * task.target)
