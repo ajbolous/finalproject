@@ -88,8 +88,10 @@
             });
 
             var i = 0;
+            console.log(path);
             road.getPath().forEach(function(v) {
-                v.id = path[i].id;
+                v.index = i;
+                v.nid = path[i].nid;
                 i++;
             });
 
@@ -97,7 +99,14 @@
                 if (e.vertex == undefined)
                     return;
                 mapMenu.open(map, road.getPath(), e.vertex);
+                road.getPath().forEach(function(v) {
+                    if (v.index == e.vertex) {
+                        console.log(v);
+                    }
+                });
+
             });
+
 
             return road;
         }

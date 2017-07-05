@@ -50,7 +50,7 @@ def createMission(mid, title, location, dumpLocations, startDate, endDate, targe
 def createLocations():
     locations = []
     for i in range(0, 5):
-        l = Location(i, 'Site{}'.format(i), 'dig', randomPoint())
+        l = Location(i, 'Site{}'.format(i), 'dig', map.getPointById(12))
         locations.append(l)
 
     for i in range(5, 10):
@@ -64,9 +64,6 @@ def createLocations():
     return locations
 
 
-db.map = map
-db.machines = createMachines()
-db.locations = createLocations()
 
 mission1 = createMission(1, "Iron min", db.locations[1], db.locations[5:10], datetime(
     2017, 6, 1, hour=0, minute=0, second=0), datetime(2017, 6, 30, hour=0, minute=0, second=0), 80000)
@@ -82,7 +79,9 @@ mission3 = createMission(3, "Metal june", db.locations[3], db.locations[5:10], d
 mission4 = createMission(4, "Gold rush", db.locations[4], db.locations[5:10], datetime(
     2017, 6, 1, hour=0, minute=0, second=0), datetime(2017, 6, 30, hour=0, minute=0, second=0), 50000)
 
-
+db.map = map
+db.machines = createMachines()
+db.locations = createLocations()
 db.missions = [mission1, mission2, mission3, mission4]
 
 db.save()

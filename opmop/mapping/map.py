@@ -11,6 +11,14 @@ class Map():
     def getRoads(self):
         return self.roads
 
+    def getPointById(self, nid):
+        for road in self.roads:
+            for point in road.points:
+                if point.nid == nid:
+                    return point
+        return None
+
+
     def addRoad(self, points):
         r = Road(len(self.roads), 'R', 'dirt')
         points = sorted(points, key=lambda el: el['index'])
