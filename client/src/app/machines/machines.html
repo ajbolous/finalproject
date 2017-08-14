@@ -42,6 +42,69 @@
             </div>
         </div>
 
+
+    </div>
+    <br>
+
+    <div class="row" style=" width:50%;">
+        <hr class="lblue">
+
+        <h3>Machines</h3>
+        <table class="table table-striped table-condensed" style="Background-color:white;">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Model</th>
+                    <th>Capacity [ton]</th>
+                    <th>Weight [ton]</th>
+                    <th>Speed [km/h]</th>
+                    <th>Feul Consumption [l/km]</th>
+                    <th>Static Consumption [l/h]</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="machine in $ctrl.machines">
+                    <td>{{machine.id}}</td>
+                    <td>{{machine.type}}</td>
+                    <td>{{machine.model}}</td>
+                    <td>{{machine.weight}}</td>
+                    <td>{{machine.speed}}</td>
+                    <td>{{machine.weightCapacity}}</td>
+                    <td>{{machine.fuelConsumption}}</td>
+                    <td>{{machine.staticFuelConsumption}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <br>
+
+    <div class="row" style=" width:50%;">
+        <hr class="lblue">
+
+        <h3>Sites</h3>
+        <table class="table table-striped table-condensed" style="Background-color:white;">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Latitude</th>
+                    <th>Longtitude</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="location in $ctrl.locations">
+                    <td>{{location.id}}</td>
+                    <td>{{location.type}}</td>
+                    <td>{{location.name}}</td>
+                    <td>{{location.point.lat}}</td>
+                    <td>{{location.point.lng}}</td>
+
+                </tr>
+            </tbody>
+        </table>
     </div>
 
 </div>

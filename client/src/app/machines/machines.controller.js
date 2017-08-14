@@ -4,7 +4,7 @@
     angular.module('opmopApp').controller('MachinesController', MachinesController);
 
     /** @ngInject */
-    function MachinesController(toastr, $scope, $log, $uibModal, MachinesService, ngProgressFactory) {
+    function MachinesController(toastr, $scope, $log, $uibModal, MachinesService, ngProgressFactory, MapsService) {
         var $ctrl = this;
         $ctrl.selectedMachine;
         $ctrl.machines = []
@@ -66,6 +66,10 @@
                 $ctrl.machines = machines;
                 $ctrl.filteredMachines = machines;
                 $ctrl.progressbar.complete();
+            });
+
+            MapsService.getLocations().then(function(locations) {
+                $ctrl.locations = locations;
             });
         }
 
