@@ -35,10 +35,13 @@ def allocateSchedule(request):
     scheduldeId = int(request.GET.get('sid'))
     mission = Application.database.getMissionById(missionId)
     schedule = mission.getScheduleById(scheduldeId)
-    mas, masCost, rand, randCost = planner.calculateSchedule(mission, schedule)
+    mas, masCost, rand, randCost, greedy, greedyCost = planner.calculateSchedule(mission, schedule)
     schedule.allocated = True
     Application.database.save()
-    return JsonResponse({'mas': {'schedule': mas.toJSON(), 'cost': masCost}, 'rand': {'schedule': rand.toJSON(), 'cost': randCost}}, safe=False)
+    return JsonResponse({'mas': {'schedule': mas.toJSON(), 'cost': masCost}, 
+                        'rand': {'schedule': rand.toJSON(), 'cost': randCost},
+                        'greedy': {'schedule': greedy.toJSON(), 'cost': greedyCost},
+                        }, safe=False)
 
 
 def getMissionCosts(request):

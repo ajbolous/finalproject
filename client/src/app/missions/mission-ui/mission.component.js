@@ -30,21 +30,24 @@
 
         $ctrl.options = {
             chart: {
-                type: 'discreteBarChart',
+                type: 'lineChart',
                 height: 250,
                 x: function(d) { return d.label; },
                 y: function(d) { return d.value; },
                 showValues: true,
                 valueFormat: function(d) {
-                    return d3.format(',.4f')(d);
+                    return d3.format(',.2f')(d);
                 },
                 transitionDuration: 500,
                 xAxis: {
-                    axisLabel: 'X Axis'
+                    axisLabel: 'Machine id',
                 },
                 yAxis: {
-                    axisLabel: 'Y Axis',
-                    axisLabelDistance: 30
+                    axisLabel: 'Total Cost',
+                    axisLabelDistance: 30,
+                    tickFormat: function(d) {
+                        return d3.format(',.2f')(d);
+                    }
                 }
             }
         };
@@ -60,6 +63,10 @@
             values: []
         }]
 
+        $ctrl.greedyCosts = [{
+            key: "Greedy Cost",
+            values: []
+        }]
         $ctrl.refresh = function() {
             var events = [];
             $ctrl.mission.getScheduleEvents($ctrl.schedule).forEach(function(event) {
@@ -81,15 +88,23 @@
             $ctrl.allocatedSchedule = schedule;
             $ctrl.allocatedSchedule.mas.events = $ctrl.mission.getScheduleEvents(schedule.mas.schedule);
             $ctrl.allocatedSchedule.rand.events = $ctrl.mission.getScheduleEvents(schedule.rand.schedule);
-            $log.debug(schedule);
+            $ctrl.allocatedSchedule.greedy.events = $ctrl.mission.getScheduleEvents(schedule.greedy.schedule);
+
             $ctrl.masCosts[0].values = [];
-            for (var mid in schedule.mas.cost.machines) {
-                $ctrl.masCosts[0].values.push({ 'label': '' + mid, 'value': schedule.mas.cost.machines[mid].total });
-            }
+            Object.keys(schedule.mas.cost.machines).map(function(val) { return parseInt(val); }).sort(function(a, b) { return a - b }).forEach(function(mid) {
+                $ctrl.masCosts[0].values.push({ 'label': parseInt(mid), 'value': schedule.mas.cost.machines[mid].total });
+            });
+
             $ctrl.randCosts[0].values = [];
-            for (var mid in schedule.rand.cost.machines) {
-                $ctrl.randCosts[0].values.push({ 'label': '' + mid, 'value': schedule.rand.cost.machines[mid].total });
-            }
+            Object.keys(schedule.rand.cost.machines).map(function(val) { return parseInt(val); }).sort(function(a, b) { return a - b }).forEach(function(mid) {
+                $ctrl.randCosts[0].values.push({ 'label': parseInt(mid), 'value': schedule.rand.cost.machines[mid].total });
+            });
+
+            $ctrl.greedyCosts[0].values = [];
+            Object.keys(schedule.greedy.cost.machines).map(function(val) { return parseInt(val); }).sort(function(a, b) { return a - b }).forEach(function(mid) {
+                console.log(mid);
+                $ctrl.greedyCosts[0].values.push({ 'label': parseInt(mid), 'value': schedule.greedy.cost.machines[mid].total });
+            });
         }
 
         $ctrl.allocateSchedule = function() {

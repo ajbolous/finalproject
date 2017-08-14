@@ -19,11 +19,12 @@ def calculateSchedule(mission, schedule, customTarget=None):
 
     schedCopy = copy.copy(schedule)
     masSchedule =  negotiation.MASNegotiation(mission, schedule, shovels, loaders, trucks, customTarget)
-    randSchedule = negotiation.randomAllocation(schedCopy, shovels, loaders,trucks)
+    randSchedule = negotiation.randomAllocation(copy.copy(schedule), shovels, loaders,trucks)
+    greedySchedule = negotiation.greedyAllocation(copy.copy(schedule), shovels, loaders,trucks)
 
     masCost = calculateScheduleCost(masSchedule)
     randCost = calculateScheduleCost(randSchedule)
-
+    greedyCost = calculateScheduleCost(greedySchedule)
     schedule = masSchedule
 
-    return masSchedule, masCost, randSchedule, randCost
+    return masSchedule, masCost, randSchedule, randCost, greedySchedule, greedyCost

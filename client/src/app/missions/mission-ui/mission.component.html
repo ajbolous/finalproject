@@ -158,6 +158,8 @@
                                 <th>Capacity</th>
                                 <th>Feul Consumption</th>
                                 <th>Static Consumption</th>
+                                <th>Cost</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -168,6 +170,7 @@
                                 <td>{{machine.machine.weightCapacity}}</td>
                                 <td>{{machine.machine.fuelConsumption}}</td>
                                 <td>{{machine.machine.staticFuelConsumption}}</td>
+                                <td>{{machine.total.toFixed(2)}}</td>
 
                             </tr>
                         </tbody>
@@ -176,6 +179,8 @@
 
 
             </div>
+            <hr class="lblue">
+
             <h3>Random</h3>
 
             <div class="row">
@@ -228,6 +233,8 @@
                                 <th>Capacity</th>
                                 <th>Feul Consumption</th>
                                 <th>Static Consumption</th>
+                                <th>Cost</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -238,7 +245,80 @@
                                 <td>{{machine.machine.weightCapacity}}</td>
                                 <td>{{machine.machine.fuelConsumption}}</td>
                                 <td>{{machine.machine.staticFuelConsumption}}</td>
+                                <td>{{machine.total.toFixed(2)}}</td>
 
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <h3>Greedy</h3>
+
+            <div class="row">
+                <div class="col-md-2 box">
+                    <table class="table table-striped table-condensed" style="Background-color:white;">
+                        <tbody>
+                            <tr>
+                                <td>Target</td>
+                                <td>{{$ctrl.allocatedSchedule.greedy.schedule.target }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>Remaining Dig</td>
+                                <td>{{$ctrl.allocatedSchedule.greedy.schedule.remainingDig}} Ton</td>
+                            </tr>
+                            <tr>
+                                <td>Remaining Load</td>
+                                <td>{{$ctrl.allocatedSchedule.greedy.schedule.remainingLoad}} Ton</td>
+                            </tr>
+
+                            <tr>
+                                <td>Remaining Haulage</td>
+                                <td>{{$ctrl.allocatedSchedule.greedy.schedule.remainingHaulage}} Ton</td>
+                            </tr>
+
+                            <tr>
+                                <td>Tasks</td>
+                                <td>{{ $ctrl.allocatedSchedule.greedy.schedule.tasks.length }}</td>
+                            </tr>
+                            <tr>
+                                <td>Total Cost</td>
+                                <td>{{ $ctrl.allocatedSchedule.greedy.cost.total }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-5">
+                    <mwl-calendar view="'day'" view-date="$ctrl.schedule.date" day-view-start="09:00" day-view-end="18:00" events="$ctrl.allocatedSchedule.greedy.events" view-title="calendarTitle" on-event-click="eventClicked(calendarEvent)" on-event-times-changed="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+                        cell-is-open="false">
+                    </mwl-calendar>
+                </div>
+                <div class="col-sm-4 box">
+                    <nvd3 options="$ctrl.options" data="$ctrl.greedyCosts"></nvd3>
+                    <table class="table table-striped table-condensed" style="Background-color:white;">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Type</th>
+                                <th>Model</th>
+                                <th>Capacity</th>
+                                <th>Feul Consumption</th>
+                                <th>Static Consumption</th>
+                                <th>Cost</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="(key, machine) in $ctrl.allocatedSchedule.greedy.cost.machines">
+                                <td>{{machine.machine.id}}</td>
+                                <td>{{machine.machine.type}}</td>
+                                <td>{{machine.machine.model}}</td>
+                                <td>{{machine.machine.weightCapacity}}</td>
+                                <td>{{machine.machine.fuelConsumption}}</td>
+                                <td>{{machine.machine.staticFuelConsumption}}</td>
+                                <td>{{machine.total.toFixed(2)}}</td>
                             </tr>
                         </tbody>
                     </table>
